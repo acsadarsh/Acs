@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta name="google-site-verification" content="2nslICfitlZaKX6jqNLEHAMXa6fEUGiUM-ecwCgKPnM" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adarsh Computer Services & Solve</title>
@@ -48,7 +47,6 @@
             padding-top: 80px;
             transition: 0.4s;
             z-index: 1000;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
         }
 
         .nav-links.active { right: 0; }
@@ -75,7 +73,6 @@
             margin-bottom: 15px;
         }
 
-        /* --- Service Cards on Home --- */
         .services-home-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -89,59 +86,45 @@
             overflow: hidden;
             border: 1px solid #333;
             transition: 0.3s;
-            text-align: left;
         }
 
         .service-item:hover {
             transform: translateY(-10px);
             border-color: var(--neon-blue);
-            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
         }
 
-        .service-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            border-bottom: 2px solid var(--neon-purple);
-        }
-
+        .service-img { width: 100%; height: 160px; object-fit: cover; }
         .service-info { padding: 20px; }
-        .service-info h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.3rem; }
-        .service-info p { font-size: 0.9rem; color: #bbb; margin: 0; }
 
-        /* --- Big Button --- */
         .big-service-btn {
             display: block;
             margin: 40px auto;
             padding: 20px;
-            width: 85%;
-            max-width: 500px;
+            max-width: 400px;
             background: var(--neon-purple);
             color: white;
             text-align: center;
             text-decoration: none;
-            font-size: 1.4rem;
             font-weight: bold;
             border-radius: 12px;
-            box-shadow: 0 0 20px var(--neon-purple);
-            animation: pulse-blink 2s infinite alternate;
+            animation: pulse 2s infinite alternate;
         }
 
-        @keyframes pulse-blink {
-            0% { transform: scale(1); filter: brightness(1); }
-            100% { transform: scale(1.03); filter: brightness(1.2); box-shadow: 0 0 30px var(--neon-blue); }
+        @keyframes pulse {
+            100% { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-blue); }
         }
 
-        /* --- Sections Visibility --- */
         .section { display: none; padding: 100px 20px 40px; min-height: 90vh; }
         .section.active { display: block; }
         .container { max-width: 1100px; margin: auto; }
 
-        /* --- Album Section --- */
-        .album-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
-        .album-grid img { width: 100%; border-radius: 15px; border: 2px solid var(--neon-blue); }
+        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .album-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--neon-blue); }
 
-        footer { text-align: center; padding: 40px; border-top: 1px solid #222; color: #666; }
+        .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+        .contact-links a { padding: 10px 20px; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
+
+        footer { text-align: center; padding: 40px; margin-top: 50px; border-top: 1px solid #222; }
 
         #welcome-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -154,147 +137,91 @@
 
 <div id="welcome-overlay" onclick="closeOverlay()">
     <div style="text-align:center">
-        <h1 style="color:var(--neon-blue); letter-spacing: 3px;">ADARSH COMPUTER SERVICE</h1>
+        <h1 style="color:var(--neon-blue);">ADARSH COMPUTER SERVICES</h1>
         <p style="color:#888;">Tap to Enter</p>
     </div>
 </div>
 
 <nav class="navbar">
-    <div class="nav-logo">
-        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo">
-    </div>
+    <div class="nav-logo"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="Logo"></div>
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
 </nav>
 
 <div class="nav-links" id="navLinks">
     <a href="#" onclick="showSection('home')">🏠 Home</a>
-    <a href="#" onclick="showSection('album')">🖼️ Photo Album</a>
-    <a href="#" onclick="showSection('owner')">👤 Owner Info</a>
-    <a href="#" onclick="showSection('contact')">📞 Contact Us</a>
-    <a href="#" onclick="showSection('----------')">🚏 Rate & review</a>
+    <a href="#" onclick="showSection('album')">🖼️ Album</a>
+    <a href="#" onclick="showSection('owner')">👤 Owner</a>
+    <a href="#" onclick="showSection('contact')">📞 Contact</a>
+    <a href="#" onclick="showSection('review')">⭐ Rate & Review</a>
 </div>
 
 <div id="home" class="section active">
     <header>
-        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="logo-main" alt="Logo">
-        <h1 style="margin:0;">Adarsh Computer Services & Solve</h1>
-        <p style="color: var(--neon-blue); font-weight: bold;">Expert Tech Solutions in Itkhori</p>
+        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="logo-main">
+        <h1>Adarsh Computer Services & Solve</h1>
+        <p style="color: var(--neon-blue);">Expert Tech Solutions in Itkhori</p>
     </header>
 
     <div class="container">
-        <h2 style="text-align: center; border-bottom: 2px solid var(--neon-purple); display: inline-block; padding-bottom: 5px;">Our Premium Services</h2>
-        
         <div class="services-home-grid">
             <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070" class="service-img" alt="Cyber Cafe">
-                <div class="service-info">
-                    <h3>Cyber Cafe & Online Services</h3>
-                    <p>Aadhaar download, PAN Card, Birth Certificates, and all types of Government online forms.</p>
-                </div>
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" class="service-img">
+                <div class="service-info"><h3>Online Services</h3><p>Aadhaar, PAN, & Govt Forms.</p></div>
             </div>
-
             <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070" class="service-img" alt="Hardware">
-                <div class="service-info">
-                    <h3>Computer Hardware & Repair</h3>
-                    <p>Laptop/Desktop repairing, OS Installation (Windows), and Hardware upgrades.</p>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <img src="https://ibb.co/qLDJqvrM" class="service-img" alt="website">
-                <div class="service-info">
-                    <h3>website creation</h3>
-                    <p>all type website creation, PC and phone, and all time upgrades.</p>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <img src="https://ibb.co/v4mzh0MH" class="service-img" alt="Hardware">
-                <div class="service-info">
-                    <h3>app creation</h3>
-                    <p>all types app creation (only Android), education, myself and etc all.</p>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <img src="https://i.ibb.co/Sw1j4wvj/image.jpg" class="service-img" alt="JCB">
-                <div class="service-info">
-                    <h3>JCB & Excavator Spare Parts</h3>
-                    <p>High-quality spare parts for JCB machines and heavy machinery at best prices.</p>
-                </div>
-            </div>
-
-            <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2071" class="service-img" alt="Design">
-                <div class="service-info">
-                    <h3>Graphic Design & Printing</h3>
-                    <p>Professional Logo design, Banner making, Video editing, and Digital Marketing.</p>
-                </div>
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=500" class="service-img">
+                <div class="service-info"><h3>Hardware Repair</h3><p>Laptop & Desktop Solutions.</p></div>
             </div>
         </div>
-
-        <a href="https://acsadarsh.github.io/SERVICE/" class="big-service-btn">
-            CLICK HERE FOR SERVICE REQUEST<br>
-            <span style="font-size: 0.8rem; font-weight: normal; opacity: 0.8;">(Fast Response Guaranteed)</span>
-        </a>
+        <a href="https://acsadarsh.github.io/SERVICE/" class="big-service-btn">REQUEST SERVICE NOW</a>
     </div>
 </div>
 
 <div id="album" class="section">
     <div class="container">
-        <h2 style="text-align:center; color:var(--neon-blue)">WORK ALBUM</h2>
+        <h2 style="text-align:center">Work Album</h2>
         <div class="album-grid">
-            <div class="album-item"><img src="https://i.ibb.co/8D8dxmGF/image.jpg" alt="Work 1"></div>
-            <div class="album-item"><img src="https://i.ibb.co/Sw1j4wvj/image.jpg" alt="Work 2"></div>
-            <div class="album-item"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="Work 3"></div>
+            <img src="https://i.ibb.co/8D8dxmGF/image.jpg">
+            <img src="https://i.ibb.co/Sw1j4wvj/image.jpg">
+            <img src="https://i.ibb.co/hFRHRQ97/image.jpg">
         </div>
     </div>
 </div>
 
 <div id="owner" class="section">
     <div class="container" style="text-align:center">
-        <h2>OWNER PROFILE</h2>
-        <div style="background:rgba(255,255,255,0.05); padding:40px; border-radius:20px; border: 1px solid var(--neon-purple);">
-            <p style="font-size:1.8rem; margin:0;"><strong>Adarsh Kumar Chandravanshi</strong></p>
-            <p style="color:var(--neon-blue)">Founder & Technical Lead</p>
-            <hr style="width:50px; border-color:var(--neon-purple)">
-            <p>Expertise in Cyber Services, Hardware Engineering, and IT Solutions. Serving Itkhori with dedication since 2023.</p>
+        <h2>Owner Profile</h2>
+        <div style="background:#16161a; padding:30px; border-radius:15px; border:1px solid var(--neon-purple)">
+            <h3>Adarsh Kumar Chandravanshi</h3>
+            <p>Founder & Technical Lead</p>
+            <p>Serving Itkhori with dedication since 2023.</p>
         </div>
     </div>
 </div>
 
 <div id="contact" class="section">
     <div class="container" style="text-align:center">
-        <h2>GET IN TOUCH</h2>
-        <div style="background:#111; padding:30px; border-radius:15px;">
-            <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
-            <p>📞 WhatsApp: <a href="https://wa.me/918252900810" style="color:var(--neon-blue); text-decoration:none;">8252900810</a></p>
-            <h3>Hamara Location</h3>
-        <div class="map-wrapper">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3635.8458742468724!2d85.1384061!3d24.3168661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f379f826068305%3A0x64b0f02e6c40683a!2sAdarsh%20Computer%20Services%20%26%20Solve!5e0!3m2!1sen!2sin!4v1700000000000" 
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-            </iframe>
-            <div style="margin-top:30px; display: flex; justify-content: center; gap: 15px;">
-                <a href="https://youtube.com/@hk_gaming_india_yt" style="background:#ff0000; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">YouTube</a>
-                <a href="https://www.instagram.com/royal_chandravanshi_0.7" style="background:#e1306c; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">Instagram</a>
-                <a href="https://t.me/adarsh24361" style="background:#e1306c; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">Telegram</a>
-                <a href="https://whatsapp.com/channel/0029Vb72goSFSAt3aaSAp11y" style="background:#e1306c; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">WhatsApp Channel</a>
-                <a href="https://www.linkedin.com/in/adarsh-kumar-chandravanshi-562b75375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" style="background:#e1306c; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">in linked</a>
-                <a href="https://wa.me/message/63ES2UJAXGDGE1" style="background:#e1306c; padding:12px 25px; color:white; text-decoration:none; border-radius:8px;">WhatsApp</a>
-            </div>
+        <h2>Get In Touch</h2>
+        <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
+        <p>📞 WhatsApp: 8252900810</p>
+        
+        <div class="contact-links">
+            <a href="https://wa.me/918252900810" style="background:#25D366">WhatsApp</a>
+            <a href="https://youtube.com/@hk_gaming_india_yt" style="background:#FF0000">YouTube</a>
+            <a href="https://www.instagram.com/royal_chandravanshi_0.7" style="background:#E1306C">Instagram</a>
         </div>
     </div>
-        
-<div id="Rate & review" class="section">
-    <iframe 
-    src="https://www.google.com/search?sca_esv=d7358c9ad4b11281&biw=1280&bih=593&sxsrf=ANbL-n6RvwlJHjM2vUR4LINn5fZN_IG7pQ:1771085575351&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOVjWJk5JP2LInTcHxRptW4NuZVnRLMC4_VfEOBE_lPp3HIBSFsgJBwgupFnLNSEHC_w3SvML1ftlOI8hSQmE_8c7PV_RIT4wbM9oFXhHXnFqJcWI8g%3D%3D&q=ADARSH+COMPUTER+SERVICE+Reviews&sa=X&ved=2ahUKEwi6q9f0r9mSAxUYdfUHHUA5FogQ0bkNegQIIxAF" 
-    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
-    
+</div>
+
+<div id="review" class="section">
+    <div class="container" style="text-align:center">
+        <h2>Rate & Review</h2>
+        <p>Please search "Adarsh Computer Service" on Google to leave a review!</p>
+    </div>
+</div>
 
 <footer>
-    <p>© 2026 Adarsh Computer Services & Solve | Itkhori</p>
+    <p>© 2026 Adarsh Computer Services & Solve</p>
 </footer>
 
 <script>
@@ -304,7 +231,8 @@
 
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
+        const target = document.getElementById(sectionId);
+        if(target) target.classList.add('active');
         document.getElementById('navLinks').classList.remove('active');
         window.scrollTo(0,0);
     }
@@ -313,7 +241,6 @@
         document.getElementById('welcome-overlay').style.display = 'none';
         if ('speechSynthesis' in window) {
             let msg = new SpeechSynthesisUtterance("Welcome to Adarsh Computer Services");
-            msg.rate = 0.9;
             window.speechSynthesis.speak(msg);
         }
     }
