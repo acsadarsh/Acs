@@ -58,73 +58,63 @@
             border-bottom: 1px solid #222;
         }
 
-        /* --- Hero Section --- */
-        header {
-            padding: 120px 20px 40px;
-            text-align: center;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #0a0a0c 100%);
-        }
+        /* --- Sections --- */
+        .section { display: none; padding: 100px 20px 40px; min-height: 90vh; }
+        .section.active { display: block; }
+        .container { max-width: 1100px; margin: auto; }
 
-        .logo-main {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            border: 3px solid var(--neon-blue);
-            box-shadow: 0 0 20px var(--neon-blue);
-            margin-bottom: 15px;
-        }
-
-        .services-home-grid {
+        /* --- Service Cards (Home) --- */
+        .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 30px;
         }
 
-        .service-item {
+        .service-card {
             background: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #333;
             transition: 0.3s;
-        }
-
-        .service-item:hover {
-            transform: translateY(-10px);
-            border-color: var(--neon-blue);
-        }
-
-        .service-img { width: 100%; height: 160px; object-fit: cover; }
-        .service-info { padding: 20px; }
-
-        .big-service-btn {
-            display: block;
-            margin: 40px auto;
-            padding: 20px;
-            max-width: 400px;
-            background: var(--neon-purple);
+            cursor: pointer;
+            text-decoration: none;
             color: white;
+            display: block;
+        }
+
+        .service-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 20px rgba(0,212,255,0.2); }
+        .service-img { width: 100%; height: 160px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
+        .service-info { padding: 20px; }
+        .service-info h3 { color: var(--neon-blue); margin: 0 0 10px; }
+
+        /* --- Social Buttons --- */
+        .social-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
             text-align: center;
             text-decoration: none;
+            color: white;
             font-weight: bold;
-            border-radius: 12px;
-            animation: pulse 2s infinite alternate;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        /* --- Animations & Effects --- */
+        .big-btn {
+            display: block; width: 90%; max-width: 500px; margin: 30px auto;
+            padding: 20px; background: var(--neon-purple); color: white;
+            text-align: center; text-decoration: none; font-size: 1.3rem;
+            font-weight: bold; border-radius: 12px; animation: pulse 2s infinite alternate;
         }
 
         @keyframes pulse {
-            100% { transform: scale(1.05); box-shadow: 0 0 20px var(--neon-blue); }
+            0% { transform: scale(1); box-shadow: 0 0 10px var(--neon-purple); }
+            100% { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-blue); }
         }
-
-        .section { display: none; padding: 100px 20px 40px; min-height: 90vh; }
-        .section.active { display: block; }
-        .container { max-width: 1100px; margin: auto; }
-
-        .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .album-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--neon-blue); }
-
-        .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
-        .contact-links a { padding: 10px 20px; color: white; text-decoration: none; border-radius: 5px; font-size: 14px; }
-
-        footer { text-align: center; padding: 40px; margin-top: 50px; border-top: 1px solid #222; }
 
         #welcome-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -137,106 +127,104 @@
 
 <div id="welcome-overlay" onclick="closeOverlay()">
     <div style="text-align:center">
-        <h1 style="color:var(--neon-blue);">ADARSH COMPUTER SERVICES</h1>
+        <h1 style="color:var(--neon-blue)">ADARSH COMPUTER SERVICES</h1>
         <p style="color:#888;">Tap to Enter</p>
     </div>
 </div>
 
 <nav class="navbar">
-    <div class="nav-logo"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="Logo"></div>
+    <div class="nav-logo"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo"></div>
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
 </nav>
 
 <div class="nav-links" id="navLinks">
     <a href="#" onclick="showSection('home')">🏠 Home</a>
-    <a href="#" onclick="showSection('album')">🖼️ Album</a>
-    <a href="#" onclick="showSection('owner')">👤 Owner</a>
-    <a href="#" onclick="showSection('contact')">📞 Contact</a>
-    <a href="#" onclick="showSection('review')">⭐ Rate & Review</a>
+    <a href="#" onclick="showSection('album')">🖼️ Photo Album</a>
+    <a href="#" onclick="showSection('owner')">👤 Owner Info</a>
+    <a href="#" onclick="showSection('contact')">📞 Contact Us</a>
+    <a href="https://share.google/7bQp0x94iQ9wAqf2E" target="_blank" style="color:#ffcc00;">⭐ Rate & Review</a>
 </div>
 
 <div id="home" class="section active">
-    <header>
-        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="logo-main">
+    <header style="text-align:center; padding-bottom: 20px;">
+        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" style="width:100px; border-radius:50%; border:3px solid var(--neon-blue);" alt="Logo">
         <h1>Adarsh Computer Services & Solve</h1>
-        <p style="color: var(--neon-blue);">Expert Tech Solutions in Itkhori</p>
+        <p style="color:var(--neon-blue)">Expert IT & Digital Solutions in Itkhori</p>
     </header>
 
     <div class="container">
-        <div class="services-home-grid">
-            <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" class="service-img">
-                <div class="service-info"><h3>Online Services</h3><p>Aadhaar, PAN, & Govt Forms.</p></div>
-            </div>
-            <div class="service-item">
-                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=500" class="service-img">
-                <div class="service-info"><h3>Hardware Repair</h3><p>Laptop & Desktop Solutions.</p></div>
-            </div>
+        <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Our Premium IT Services</h2>
+        
+        <div class="services-grid">
+            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072" class="service-img" alt="Web">
+                <div class="service-info"><h3>Website Development</h3><p>Custom professional websites for your business.</p></div>
+            </a>
+            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070" class="service-img" alt="App">
+                <div class="service-info"><h3>App Development</h3><p>Android & iOS mobile applications.</p></div>
+            </a>
+            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=2070" class="service-img" alt="Edit">
+                <div class="service-info"><h3>Photo & Video Editing</h3><p>High-quality creative editing for YouTube & Ads.</p></div>
+            </a>
+            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=2070" class="service-img" alt="Hosting">
+                <div class="service-info"><h3>Hosting & Domain</h3><p>Fast server hosting and domain registration.</p></div>
+            </a>
+            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015" class="service-img" alt="Publish">
+                <div class="service-info"><h3>Website Publishing</h3><p>Deploying and managing your site online.</p></div>
+            </a>
+             <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                <img src="https://i.ibb.co/8D8dxmGF/image.jpg" class="service-img" alt="Cyber">
+                <div class="service-info"><h3>Cyber Cafe Services</h3><p>Aadhaar, PAN, and Online Form filling.</p></div>
+            </a>
         </div>
-        <a href="https://acsadarsh.github.io/SERVICE/" class="big-service-btn">REQUEST SERVICE NOW</a>
-    </div>
-</div>
 
-<div id="album" class="section">
-    <div class="container">
-        <h2 style="text-align:center">Work Album</h2>
-        <div class="album-grid">
-            <img src="https://i.ibb.co/8D8dxmGF/image.jpg">
-            <img src="https://i.ibb.co/Sw1j4wvj/image.jpg">
-            <img src="https://i.ibb.co/hFRHRQ97/image.jpg">
-        </div>
+        <a href="https://acsadarsh.github.io/SERVICE/" class="big-btn">FOR SERVICE REQUEST CLICK HERE</a>
     </div>
 </div>
 
 <div id="owner" class="section">
     <div class="container" style="text-align:center">
-        <h2>Owner Profile</h2>
-        <div style="background:#16161a; padding:30px; border-radius:15px; border:1px solid var(--neon-purple)">
+        <h2>OWNER INFORMATION</h2>
+        <div style="background:rgba(255,255,255,0.05); padding:30px; border-radius:20px; border:1px solid var(--neon-blue);">
+            <h3>⭐ ADARSH COMPUTER SERVICES & SOLVE 🖥️ 💻 ⭐</h3>
             <h3>Adarsh Kumar Chandravanshi</h3>
-            <p>Founder & Technical Lead</p>
-            <p>Serving Itkhori with dedication since 2023.</p>
+            <p>Founder & IT Professional</p>
+            <hr style="border-color: #333; margin: 20px 0;">
+            
+            <p>Follow us on Social Media:</p>
+            
+            <a href="https://youtube.com/@hk_gaming_india_yt?si=1q2o9oqvGcp0nxck" target="_blank" class="social-btn" style="background:#ff0000;">YouTube Channel</a>
+            <a href="https://www.instagram.com/royal_chandravanshi_0.7?igsh=NDU3aDBlbmRvbXk1" target="_blank" class="social-btn" style="background:#e1306c;">Instagram</a>
+            <a href="https://t.me/adarsh24361" target="_blank" class="social-btn" style="background:#0088cc;">Telegram Channel</a>
+            <a href="https://whatsapp.com/channel/0029Vb72goSFSAt3aaSAp11y" target="_blank" class="social-btn" style="background:#25d366;">WhatsApp Channel</a>
+            <a href="https://wa.me/message/63ES2UJAXGDGE1" target="_blank" class="social-btn" style="background:#fffc00; color: black;">WHATSAPP</a>
+            <a href="https://www.linkedin.com/in/adarsh-kumar-chandravanshi-562b75375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn" style="background:#0077b5;">LinkedIn Profile</a>
         </div>
     </div>
 </div>
 
 <div id="contact" class="section">
     <div class="container" style="text-align:center">
-        <h2>Get In Touch</h2>
+        <h2>CONTACT US</h2>
+        <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
         <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
-        <p>📞 WhatsApp: 8252900810</p>
-        
-        <div class="contact-links">
-            <a href="https://wa.me/918252900810" style="background:#25D366">WhatsApp</a>
-            <a href="https://youtube.com/@hk_gaming_india_yt" style="background:#FF0000">YouTube</a>
-            <a href="https://www.instagram.com/royal_chandravanshi_0.7" style="background:#E1306C">Instagram</a>
-        </div>
+        <p>📞 WhatsApp: <a href="https://wa.me/918252900810" style="color:var(--neon-blue)">8252900810</a></p>
+        <p><strong>MAIL:</strong> acs.adarsh.com@gmail.com</p>
     </div>
 </div>
-
-<div id="review" class="section">
-    <div class="container" style="text-align:center">
-        <h2>Rate & Review</h2>
-        <p>Please search "Adarsh Computer Service" on Google to leave a review!</p>
-    </div>
-</div>
-
-<footer>
-    <p>© 2026 Adarsh Computer Services & Solve</p>
-</footer>
 
 <script>
-    function toggleMenu() {
-        document.getElementById('navLinks').classList.toggle('active');
-    }
-
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        const target = document.getElementById(sectionId);
-        if(target) target.classList.add('active');
+        document.getElementById(sectionId).classList.add('active');
         document.getElementById('navLinks').classList.remove('active');
         window.scrollTo(0,0);
     }
-
     function closeOverlay() {
         document.getElementById('welcome-overlay').style.display = 'none';
         if ('speechSynthesis' in window) {
