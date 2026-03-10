@@ -121,6 +121,75 @@
             background: #000; z-index: 2000; display: flex;
             justify-content: center; align-items: center; cursor: pointer;
         }
+
+        /* --- Album Section Styles --- */
+        .tab-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .tab-btn { padding: 10px 30px; background: #333; color: white; border: 2px solid var(--neon-blue); border-radius: 30px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
+        .tab-btn.active { background: var(--neon-blue); color: black; font-weight: bold; box-shadow: 0 0 15px var(--neon-blue); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        
+        .media-item { 
+            width: 100%; height: 150px; border-radius: 10px; 
+            border: 2px solid var(--neon-purple); object-fit: cover; 
+            cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .media-item:hover { 
+            transform: scale(1.05); 
+            border-color: var(--neon-blue); 
+            box-shadow: 0 0 15px var(--neon-blue); 
+        }
+
+        .video-thumbnail {
+            background: #222; display: flex; justify-content: center; align-items: center;
+            color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: center;
+        }
+
+        /* --- Full Screen Modal --- */
+        #mediaModal {
+            display: none; position: fixed; z-index: 3000; top: 0; left: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        #modalContent { max-width: 95%; max-height: 85%; border-radius: 10px; border: 2px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue);}
+        #modalClose {
+            position: absolute; top: 20px; right: 30px; color: white;
+            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        #modalClose:hover { color: red; }
+
+        /* --- Floating Chat Assistant (Right Side Niche) --- */
+        .floating-chat-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 60px; height: 60px; border-radius: 50%;
+            background: var(--neon-purple); color: white;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px; cursor: pointer; z-index: 1500;
+            box-shadow: 0 0 15px var(--neon-purple); transition: 0.3s;
+            border: 2px solid white;
+        }
+        .floating-chat-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); background: var(--neon-blue); border-color: black; color: black;}
+
+        .chat-container { 
+            display: none; position: fixed; bottom: 90px; right: 20px;
+            width: 320px; background: var(--card-bg); border-radius: 15px; 
+            border: 2px solid var(--neon-blue); overflow: hidden; z-index: 1500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .chat-header { background: var(--neon-purple); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center;}
+        .close-chat { cursor: pointer; font-size: 1.2rem; color: white; }
+        .chat-box { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; background: #0a0a0c; }
+        .message { max-width: 85%; padding: 10px; border-radius: 10px; font-size: 0.95rem; }
+        .bot-msg { background: #333; color: white; align-self: flex-start; border-bottom-left-radius: 0; }
+        .user-msg { background: var(--neon-blue); color: black; align-self: flex-end; border-bottom-right-radius: 0; }
+        .chat-input-area { display: flex; padding: 10px; background: #111; border-top: 1px solid #333; }
+        .chat-input-area input { flex: 1; padding: 10px; border-radius: 5px; border: none; outline: none; background: #222; color: white; }
+        .chat-input-area button { padding: 10px 15px; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;}
     </style>
 </head>
 <body>
@@ -187,6 +256,51 @@
     </div>
 </div>
 
+<div id="album" class="section">
+    <div class="container">
+        <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Photo & Video Album</h2>
+        
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchMediaTab('photos', this)">📷 Photos</button>
+            <button class="tab-btn" onclick="switchMediaTab('videos', this)">🎥 Videos</button>
+        </div>
+
+        <div id="photos" class="tab-content active">
+            <p style="text-align:center; color:#888; font-size:0.9rem;">Click any photo to view full size</p>
+            <div class="media-grid">
+                <img src="https://i.ibb.co/DfCxCQfb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/zWtvsR6s/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/8gTPHg6z/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/4Z00SLpj/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/rRdQ2rKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/5gdwg40v/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/v6gbPdWV/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/8D2pYVtB/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/chTCzNKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/21gqJGjX/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/ymzjnq1f/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/7JvLCtW8/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/1tRQ502B/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/5x1yz6HT/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/bR5DzjD9/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/4Rv31Bxm/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/1YwTY6kb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/7tfbrbqq/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                <img src="https://i.ibb.co/tMh6bCRp/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+            </div>
+        </div>
+
+        <div id="videos" class="tab-content">
+             <p style="text-align:center; color:#888; font-size:0.9rem;">Click any video to play full screen</p>
+            <div class="media-grid">
+                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1a2D7As_4DzMIOrUYZAQ-K2yMIjWT9LkS/preview')">🎥 Play Video 1</div>
+                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ntFSbwDpDqX6erbUkIeZc3HEtB0eUlCI/preview')">🎥 Play Video 2</div>
+                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ZmHVy25oa_01sQJUL_-iMSq3yDGW2eZ3/preview')">🎥 Play Video 3</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="owner" class="section">
     <div class="container" style="text-align:center">
         <h2>OWNER INFORMATION</h2>
@@ -218,6 +332,28 @@
     </div>
 </div>
 
+<div class="floating-chat-btn" onclick="toggleChat()">💬</div>
+
+<div class="chat-container" id="chatbotWindow">
+    <div class="chat-header">
+        🤖 ACS Assistant
+        <span class="close-chat" onclick="toggleChat()">✖</span>
+    </div>
+    <div class="chat-box" id="chatBox">
+        <div class="message bot-msg">Namaste! Welcome to Adarsh Computer Services. Main aapki kya madad kar sakta hoon?</div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" id="userInput" placeholder="Type here..." onkeypress="handleChatPress(event)">
+        <button onclick="sendChat()">Send</button>
+    </div>
+</div>
+
+<div id="mediaModal">
+    <span id="modalClose" onclick="closeModal()">&times;</span>
+    <div id="modalContentContainer" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+        </div>
+</div>
+
 <script>
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     function showSection(sectionId) {
@@ -232,6 +368,81 @@
             let msg = new SpeechSynthesisUtterance("Welcome to Adarsh Computer Services");
             window.speechSynthesis.speak(msg);
         }
+    }
+
+    /* --- Album Tabs Script --- */
+    function switchMediaTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    /* --- Lightbox / Full Screen Modal Script --- */
+    function openModal(type, src) {
+        const modal = document.getElementById('mediaModal');
+        const container = document.getElementById('modalContentContainer');
+        modal.style.display = "flex";
+        
+        if(type === 'image') {
+            container.innerHTML = `<img id="modalContent" src="${src}" alt="Full Screen Image">`;
+        } else if(type === 'video') {
+            container.innerHTML = `<iframe id="modalContent" src="${src}" width="90%" height="80%" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('mediaModal').style.display = "none";
+        document.getElementById('modalContentContainer').innerHTML = ""; // Stop video when closed
+    }
+
+    /* --- Chatbot Script --- */
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatbotWindow');
+        if(chatWindow.style.display === "block") {
+            chatWindow.style.display = "none";
+        } else {
+            chatWindow.style.display = "block";
+        }
+    }
+
+    function sendChat() {
+        let inputField = document.getElementById("userInput");
+        let msg = inputField.value.trim();
+        if(msg === "") return;
+        
+        let chatBox = document.getElementById("chatBox");
+        
+        let userDiv = document.createElement("div");
+        userDiv.className = "message user-msg";
+        userDiv.textContent = msg;
+        chatBox.appendChild(userDiv);
+        
+        inputField.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(() => {
+            let botDiv = document.createElement("div");
+            botDiv.className = "message bot-msg";
+            
+            let lowerMsg = msg.toLowerCase();
+            if(lowerMsg.includes("service") || lowerMsg.includes("kam") || lowerMsg.includes("work")) {
+                botDiv.textContent = "Hum website/app development, editing aur sabhi cyber cafe services dete hain. Aapko kis service ki jankari chahiye?";
+            } else if(lowerMsg.includes("contact") || lowerMsg.includes("number") || lowerMsg.includes("phone")) {
+                botDiv.textContent = "Aap hume WhatsApp par 8252900810 ya 9661180776 par message kar sakte hain.";
+            } else if(lowerMsg.includes("address") || lowerMsg.includes("location") || lowerMsg.includes("kahan")) {
+                botDiv.textContent = "Humara address hai: Chhota Basti, Itkhori, Chatra, Jharkhand.";
+            } else {
+                botDiv.textContent = "Aapke message ka shukriya! Jaldi hi reply kiya jayega. Emergency ke liye aap hume direct WhatsApp kar sakte hain.";
+            }
+            
+            chatBox.appendChild(botDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    function handleChatPress(event) {
+        if(event.key === "Enter") { sendChat(); }
     }
 </script>
 
