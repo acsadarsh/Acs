@@ -163,7 +163,7 @@
         }
         #modalClose:hover { color: red; }
 
-        /* --- Floating Chat Assistant (Right Side Niche) --- */
+        /* --- Floating Chat Assistant --- */
         .floating-chat-btn {
             position: fixed; bottom: 20px; right: 20px;
             width: 60px; height: 60px; border-radius: 50%;
@@ -175,21 +175,48 @@
         }
         .floating-chat-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); background: var(--neon-blue); border-color: black; color: black;}
 
+        /* --- FULL PAGE CHATBOT STYLES --- */
         .chat-container { 
-            display: none; position: fixed; bottom: 90px; right: 20px;
-            width: 320px; background: var(--card-bg); border-radius: 15px; 
-            border: 2px solid var(--neon-blue); overflow: hidden; z-index: 1500;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: var(--dark-bg); 
+            z-index: 4000; flex-direction: column; 
         }
-        .chat-header { background: var(--neon-purple); color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 1.1rem; display: flex; justify-content: space-between; align-items: center;}
-        .close-chat { cursor: pointer; font-size: 1.2rem; color: white; }
-        .chat-box { height: 300px; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; background: #0a0a0c; }
-        .message { max-width: 85%; padding: 10px; border-radius: 10px; font-size: 0.95rem; }
-        .bot-msg { background: #333; color: white; align-self: flex-start; border-bottom-left-radius: 0; }
-        .user-msg { background: var(--neon-blue); color: black; align-self: flex-end; border-bottom-right-radius: 0; }
-        .chat-input-area { display: flex; padding: 10px; background: #111; border-top: 1px solid #333; }
-        .chat-input-area input { flex: 1; padding: 10px; border-radius: 5px; border: none; outline: none; background: #222; color: white; }
-        .chat-input-area button { padding: 10px 15px; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;}
+        .chat-header { background: var(--neon-purple); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.4rem; display: flex; justify-content: space-between; align-items: center;}
+        .close-chat { cursor: pointer; font-size: 1.8rem; color: white; }
+        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: #0a0a0c; }
+        .message { max-width: 85%; padding: 15px; border-radius: 10px; font-size: 1.1rem; line-height: 1.4; }
+        .bot-msg { background: #222; color: white; align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid var(--neon-purple); }
+        .user-msg { background: var(--neon-blue); color: black; align-self: flex-end; border-bottom-right-radius: 0; font-weight: bold; }
+        .chat-input-area { display: flex; padding: 15px; background: #111; border-top: 1px solid #333; padding-bottom: 30px; }
+        .chat-input-area input { flex: 1; padding: 15px; font-size: 1.1rem; border-radius: 5px; border: 1px solid var(--neon-blue); outline: none; background: #222; color: white; }
+        .chat-input-area button { padding: 15px 25px; font-size: 1.1rem; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;}
+
+        /* --- OFFLINE GAME UI & STYLES --- */
+        #offlineGameContainer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center;
+        }
+        .offline-banner {
+            width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem;
+            font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5);
+            animation: blinker 2s linear infinite; box-sizing: border-box;
+        }
+        @keyframes blinker { 50% { opacity: 0.8; } }
+        
+        #offlineMenu { text-align: center; margin-top: 50px; width: 100%; }
+        .game-menu-btn {
+            display: block; width: 80%; max-width: 300px; margin: 15px auto; padding: 20px;
+            font-size: 1.3rem; background: var(--card-bg); color: var(--neon-blue);
+            font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue);
+            cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.2);
+        }
+        .game-menu-btn:hover { background: var(--neon-blue); color: black; transform: scale(1.05); }
+        
+        .game-view { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 20px; }
+        .back-btn { margin-top: 20px; padding: 10px 20px; background: #444; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1rem; }
+        
+        /* Tic Tac Toe classes */
+        .ttt-cell { width: 80px; height: 80px; background: #222; border: 2px solid var(--neon-purple); font-size: 40px; color: white; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -336,25 +363,92 @@
 
 <div class="chat-container" id="chatbotWindow">
     <div class="chat-header">
-        🤖 ACS Assistant
+        🤖 ACS Full Assistant
         <span class="close-chat" onclick="toggleChat()">✖</span>
     </div>
     <div class="chat-box" id="chatBox">
-        <div class="message bot-msg">Namaste! Welcome to Adarsh Computer Services. Main aapki kya madad kar sakta hoon?</div>
+        <div class="message bot-msg">Namaste! Main ACS ka Smart Assistant hoon. Aapko Adarsh Sir ke bare me, services ya contact number ki jankari chahiye toh mujhse puchiye!</div>
     </div>
     <div class="chat-input-area">
-        <input type="text" id="userInput" placeholder="Type here..." onkeypress="handleChatPress(event)">
+        <input type="text" id="userInput" placeholder="Type message..." onkeypress="handleChatPress(event)">
         <button onclick="sendChat()">Send</button>
     </div>
 </div>
 
 <div id="mediaModal">
     <span id="modalClose" onclick="closeModal()">&times;</span>
-    <div id="modalContentContainer" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+    <div id="modalContentContainer" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"></div>
+</div>
+
+<div id="offlineGameContainer">
+    <div class="offline-banner">🔴 YOU ARE OFFLINE - Aapka internet band hai! Tab tak game kheliye:</div>
+    
+    <div id="offlineMenu">
+        <h2 style="color:var(--neon-blue);">OFFLINE GAME ZONE 🎮</h2>
+        <p style="color:#aaa; margin-bottom:30px;">Choose a game to pass the time:</p>
+        <button class="game-menu-btn" onclick="openGame('gameAir')">✈️ Air Fighter</button>
+        <button class="game-menu-btn" onclick="openGame('gameDino')">🦖 Dino Jump</button>
+        <button class="game-menu-btn" onclick="openGame('gameTtt')">❌⭕ Tic Tac Toe</button>
+        <button class="game-menu-btn" onclick="openGame('gameVirus')">🦠 Virus Catcher</button>
+        <p style="color:#666; margin-top: 30px;">Data on hote hi website apne aap chalu ho jayegi.</p>
+    </div>
+
+    <div id="gameAir" class="game-view">
+        <h2 style="color:var(--neon-blue);">✈️ Air Fighter</h2>
+        <h3 style="color:white; margin:0;">Score: <span id="airScore">0</span></h3>
+        <div id="airGameArea" style="position:relative; width:300px; height:350px; background:#000; overflow:hidden; border:2px solid var(--neon-purple); border-radius:10px; margin-top:10px;">
+            </div>
+        <div style="display:flex; justify-content:space-between; width:300px; margin-top:15px;">
+            <button onclick="movePlane(-30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">⬅️</button>
+            <button onclick="shootBullet()" style="padding:15px 30px; font-size:20px; background:red; border:none; border-radius:10px; color:white;">🔥 FIRE</button>
+            <button onclick="movePlane(30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">➡️</button>
         </div>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
+    <div id="gameDino" class="game-view">
+        <h2 style="color:var(--neon-blue);">🦖 Dino Jump</h2>
+        <h3 style="color:white; margin:0;">Score: <span id="dinoScore">0</span></h3>
+        <div id="dinoGameArea" style="position:relative; width:300px; height:200px; background:#222; overflow:hidden; border-bottom:3px solid white; margin-top:20px;" onclick="jumpDino()">
+            <div id="dinoPlayer" style="position:absolute; bottom:0; left:30px; font-size:40px;">🦖</div>
+            <div id="cactusEnemy" style="position:absolute; bottom:0; left:300px; font-size:40px;">🌵</div>
+        </div>
+        <p style="color:#aaa; margin-top:15px;">Tap the box to JUMP!</p>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
+    <div id="gameTtt" class="game-view">
+        <h2 style="color:var(--neon-blue);">❌ Tic Tac Toe ⭕</h2>
+        <h3 id="tttStatus" style="color:white; margin:10px 0;">Player X's turn</h3>
+        <div id="tttBoard" style="display:grid; grid-template-columns:repeat(3, 80px); gap:5px; margin-top:10px;">
+            <div class="ttt-cell" onclick="playTtt(this, 0)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 1)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 2)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 3)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 4)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 5)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 6)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 7)"></div>
+            <div class="ttt-cell" onclick="playTtt(this, 8)"></div>
+        </div>
+        <button onclick="resetTtt()" style="margin-top:20px; padding:10px 20px; background:var(--neon-purple); color:white; border:none; border-radius:5px; font-size:1.1rem; cursor:pointer;">🔄 Restart Game</button>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
+    <div id="gameVirus" class="game-view">
+        <h2 style="color:var(--neon-blue);">🦠 Virus Catcher</h2>
+        <h3 style="color:white; margin:0;">Score: <span id="virusScore">0</span></h3>
+        <div style="position:relative; width:300px; height:350px; background:#111; border:2px solid var(--neon-purple); border-radius:10px; overflow:hidden; margin-top:10px;">
+            <div id="virusTarget" onclick="catchVirus()" style="position:absolute; width:50px; height:50px; background:red; border-radius:50%; top:0; left:125px; cursor:pointer; box-shadow:0 0 15px red; display:flex; justify-content:center; align-items:center; font-size:25px;">👾</div>
+        </div>
+        <p style="color:#aaa; margin-top:15px;">Tap the Virus before it hits the bottom!</p>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
 </div>
 
 <script>
+    /* --- Normal Website Scripts --- */
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -369,80 +463,247 @@
             window.speechSynthesis.speak(msg);
         }
     }
-
-    /* --- Album Tabs Script --- */
     function switchMediaTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         btn.classList.add('active');
     }
-
-    /* --- Lightbox / Full Screen Modal Script --- */
     function openModal(type, src) {
         const modal = document.getElementById('mediaModal');
         const container = document.getElementById('modalContentContainer');
         modal.style.display = "flex";
-        
         if(type === 'image') {
             container.innerHTML = `<img id="modalContent" src="${src}" alt="Full Screen Image">`;
         } else if(type === 'video') {
             container.innerHTML = `<iframe id="modalContent" src="${src}" width="90%" height="80%" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
         }
     }
-
     function closeModal() {
         document.getElementById('mediaModal').style.display = "none";
-        document.getElementById('modalContentContainer').innerHTML = ""; // Stop video when closed
+        document.getElementById('modalContentContainer').innerHTML = ""; 
     }
 
     /* --- Chatbot Script --- */
     function toggleChat() {
         const chatWindow = document.getElementById('chatbotWindow');
-        if(chatWindow.style.display === "block") {
-            chatWindow.style.display = "none";
-        } else {
-            chatWindow.style.display = "block";
-        }
+        chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
     }
-
     function sendChat() {
         let inputField = document.getElementById("userInput");
         let msg = inputField.value.trim();
         if(msg === "") return;
         
         let chatBox = document.getElementById("chatBox");
-        
         let userDiv = document.createElement("div");
         userDiv.className = "message user-msg";
         userDiv.textContent = msg;
         chatBox.appendChild(userDiv);
-        
         inputField.value = "";
         chatBox.scrollTop = chatBox.scrollHeight;
 
         setTimeout(() => {
             let botDiv = document.createElement("div");
             botDiv.className = "message bot-msg";
-            
             let lowerMsg = msg.toLowerCase();
-            if(lowerMsg.includes("service") || lowerMsg.includes("kam") || lowerMsg.includes("work")) {
-                botDiv.textContent = "Hum website/app development, editing aur sabhi cyber cafe services dete hain. Aapko kis service ki jankari chahiye?";
-            } else if(lowerMsg.includes("contact") || lowerMsg.includes("number") || lowerMsg.includes("phone")) {
-                botDiv.textContent = "Aap hume WhatsApp par 8252900810 ya 9661180776 par message kar sakte hain.";
-            } else if(lowerMsg.includes("address") || lowerMsg.includes("location") || lowerMsg.includes("kahan")) {
-                botDiv.textContent = "Humara address hai: Chhota Basti, Itkhori, Chatra, Jharkhand.";
-            } else {
-                botDiv.textContent = "Aapke message ka shukriya! Jaldi hi reply kiya jayega. Emergency ke liye aap hume direct WhatsApp kar sakte hain.";
-            }
             
+            if(lowerMsg.includes("service") || lowerMsg.includes("kam") || lowerMsg.includes("work")) {
+                botDiv.innerHTML = "Hum website/app development, editing, aur cyber cafe services dete hain.";
+            } else if(lowerMsg.includes("contact") || lowerMsg.includes("number") || lowerMsg.includes("phone")) {
+                botDiv.innerHTML = "Sirf ek hi Official Number hai: <br><b style='color:var(--neon-blue); font-size:1.3rem;'>8252900810</b>";
+            } else if(lowerMsg.includes("address") || lowerMsg.includes("location")) {
+                botDiv.textContent = "Humara address hai: Chhota Basti, Itkhori, Chatra, Jharkhand.";
+            } else if(lowerMsg.includes("owner") || lowerMsg.includes("malik") || lowerMsg.includes("adarsh")) {
+                botDiv.innerHTML = "Is business ke Owner aur Founder ka naam hai: <b style='color:var(--neon-blue); font-size:1.2rem;'>Adarsh Kumar Chandravanshi</b>.<br>Unka direct WhatsApp number <b>8252900810</b> hai.";
+            } else {
+                botDiv.textContent = "Mujhe iski poori jankari nahi hai. Main aapko Adarsh Sir ke direct WhatsApp par bhej raha hoon...";
+                setTimeout(() => {
+                    let waMessage = encodeURIComponent("Hello Adarsh Sir, mera ek sawal hai: " + msg);
+                    window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
+                }, 2000); 
+            }
             chatBox.appendChild(botDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 1000);
     }
+    function handleChatPress(event) { if(event.key === "Enter") sendChat(); }
 
-    function handleChatPress(event) {
-        if(event.key === "Enter") { sendChat(); }
+    /* --- OFFLINE ZONE MANAGER --- */
+    let gameInterval = null;
+
+    function checkConnection() {
+        if(!navigator.onLine) {
+            document.getElementById('offlineGameContainer').style.display = 'flex';
+            closeGame(); // show menu by default
+        } else {
+            document.getElementById('offlineGameContainer').style.display = 'none';
+            closeGame();
+        }
+    }
+    window.addEventListener('offline', checkConnection);
+    window.addEventListener('online', checkConnection);
+    window.onload = checkConnection;
+
+    function openGame(gameId) {
+        document.getElementById('offlineMenu').style.display = 'none';
+        document.getElementById(gameId).style.display = 'flex';
+        clearInterval(gameInterval); // clear any running game
+        
+        if(gameId === 'gameAir') startAirGame();
+        if(gameId === 'gameDino') startDinoGame();
+        if(gameId === 'gameTtt') resetTtt();
+        if(gameId === 'gameVirus') startVirusGame();
+    }
+
+    function closeGame() {
+        document.querySelectorAll('.game-view').forEach(g => g.style.display = 'none');
+        document.getElementById('offlineMenu').style.display = 'block';
+        clearInterval(gameInterval);
+    }
+
+    /* 1. AIR FIGHTER LOGIC */
+    let planeX = 130; let airEnemies = []; let airBullets = []; let airScoreVal = 0;
+    function startAirGame() {
+        document.getElementById('airGameArea').innerHTML = '<div id="airPlayer" style="position:absolute; bottom:10px; left:130px; font-size:35px; transition:0.1s;">✈️</div>';
+        planeX = 130; airEnemies = []; airBullets = []; airScoreVal = 0;
+        document.getElementById('airScore').innerText = airScoreVal;
+        gameInterval = setInterval(updateAirGame, 50);
+    }
+    function movePlane(val) {
+        planeX += val;
+        if(planeX < 0) planeX = 0;
+        if(planeX > 260) planeX = 260;
+        if(document.getElementById('airPlayer')) document.getElementById('airPlayer').style.left = planeX + 'px';
+    }
+    function shootBullet() {
+        let b = document.createElement('div'); b.innerText = '🔥';
+        b.style.position = 'absolute'; b.style.left = (planeX + 8) + 'px'; b.style.bottom = '50px';
+        document.getElementById('airGameArea').appendChild(b);
+        airBullets.push({el: b, x: planeX + 8, y: 50});
+    }
+    function updateAirGame() {
+        // Move Bullets
+        for(let i=0; i<airBullets.length; i++) {
+            airBullets[i].y += 15;
+            airBullets[i].el.style.bottom = airBullets[i].y + 'px';
+            if(airBullets[i].y > 350) { airBullets[i].el.remove(); airBullets.splice(i, 1); i--; }
+        }
+        // Spawn Enemy
+        if(Math.random() < 0.08) {
+            let e = document.createElement('div'); e.innerText = '🛸'; e.style.position = 'absolute';
+            let ex = Math.random() * 260; e.style.left = ex + 'px'; e.style.top = '0px'; e.style.fontSize = '30px';
+            document.getElementById('airGameArea').appendChild(e);
+            airEnemies.push({el: e, x: ex, y: 0});
+        }
+        // Move Enemy & Check Collision
+        for(let i=0; i<airEnemies.length; i++) {
+            airEnemies[i].y += 5;
+            airEnemies[i].el.style.top = airEnemies[i].y + 'px';
+            
+            // Check hit by bullet
+            for(let j=0; j<airBullets.length; j++) {
+                if(Math.abs(airEnemies[i].x - airBullets[j].x) < 30 && (350 - airEnemies[i].y - airBullets[j].y) < 30) {
+                    airEnemies[i].el.innerText = '💥';
+                    setTimeout((el) => el.remove(), 100, airEnemies[i].el);
+                    airBullets[j].el.remove();
+                    airEnemies.splice(i, 1); airBullets.splice(j, 1); i--;
+                    airScoreVal += 10; document.getElementById('airScore').innerText = airScoreVal;
+                    break;
+                }
+            }
+            if(airEnemies[i] && airEnemies[i].y > 350) {
+                // Game Over if UFO reaches bottom
+                alert("Game Over! UFO Zameen par aa gaya. Score: " + airScoreVal);
+                startAirGame(); break;
+            }
+        }
+    }
+
+    /* 2. DINO JUMP LOGIC */
+    let dinoScoreVal = 0; let cactusX = 300; let isJumping = false;
+    function startDinoGame() {
+        dinoScoreVal = 0; cactusX = 300; isJumping = false;
+        document.getElementById('dinoScore').innerText = dinoScoreVal;
+        document.getElementById('dinoPlayer').style.bottom = '0px';
+        gameInterval = setInterval(() => {
+            cactusX -= 8;
+            if(cactusX < -40) { cactusX = 300; dinoScoreVal+=10; document.getElementById('dinoScore').innerText = dinoScoreVal; }
+            document.getElementById('cactusEnemy').style.left = cactusX + 'px';
+
+            let dinoBottom = parseInt(document.getElementById('dinoPlayer').style.bottom || 0);
+            if(cactusX > 10 && cactusX < 60 && dinoBottom < 40) {
+                alert("Out! Dino Cactus se takra gaya. Score: " + dinoScoreVal);
+                startDinoGame();
+            }
+        }, 30);
+    }
+    function jumpDino() {
+        if(isJumping) return;
+        isJumping = true;
+        let d = document.getElementById('dinoPlayer');
+        let upInt = setInterval(() => {
+            let b = parseInt(d.style.bottom || 0);
+            if(b >= 100) {
+                clearInterval(upInt);
+                let downInt = setInterval(() => {
+                    let b2 = parseInt(d.style.bottom || 0);
+                    if(b2 <= 0) { clearInterval(downInt); d.style.bottom = '0px'; isJumping = false; }
+                    else { d.style.bottom = (b2 - 8) + 'px'; }
+                }, 20);
+            } else { d.style.bottom = (b + 8) + 'px'; }
+        }, 20);
+    }
+
+    /* 3. TIC TAC TOE LOGIC */
+    let tttBoard = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer = "X"; let gameActive = true;
+    function resetTtt() {
+        tttBoard = ["", "", "", "", "", "", "", "", ""];
+        currentPlayer = "X"; gameActive = true;
+        document.getElementById('tttStatus').innerText = "Player X's turn";
+        let cells = document.querySelectorAll('.ttt-cell');
+        cells.forEach(cell => { cell.innerText = ""; cell.style.color = "white"; });
+    }
+    function playTtt(cell, index) {
+        if(tttBoard[index] !== "" || !gameActive) return;
+        tttBoard[index] = currentPlayer;
+        cell.innerText = currentPlayer;
+        cell.style.color = currentPlayer === "X" ? "var(--neon-blue)" : "red";
+        checkTttWin();
+    }
+    function checkTttWin() {
+        const winConditions = [
+            [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
+        ];
+        let roundWon = false;
+        for(let i=0; i<8; i++) {
+            let [a, b, c] = winConditions[i];
+            if(tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) { roundWon = true; break; }
+        }
+        if(roundWon) { document.getElementById('tttStatus').innerText = "🎉 Player " + currentPlayer + " WINS!"; gameActive = false; return; }
+        if(!tttBoard.includes("")) { document.getElementById('tttStatus').innerText = "It's a DRAW!"; gameActive = false; return; }
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        document.getElementById('tttStatus').innerText = "Player " + currentPlayer + "'s turn";
+    }
+
+    /* 4. VIRUS CATCHER LOGIC */
+    let virusY = 0; let vSpeed = 3; let vScore = 0;
+    function startVirusGame() {
+        virusY = 0; vSpeed = 3; vScore = 0;
+        document.getElementById('virusScore').innerText = vScore;
+        gameInterval = setInterval(() => {
+            virusY += vSpeed;
+            if(virusY > 350) { 
+                alert("Game Over! Virus fail gaya. Score: " + vScore);
+                startVirusGame(); return;
+            }
+            document.getElementById('virusTarget').style.top = virusY + 'px';
+        }, 30);
+    }
+    function catchVirus() {
+        vScore++; document.getElementById('virusScore').innerText = vScore;
+        virusY = 0; vSpeed += 0.5;
+        document.getElementById('virusTarget').style.left = (Math.random() * 250) + 'px';
     }
 </script>
 
