@@ -194,29 +194,44 @@
         /* --- OFFLINE GAME UI & STYLES --- */
         #offlineGameContainer {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center;
+            background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center; overflow-y:auto; padding-bottom: 50px;
         }
         .offline-banner {
             width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem;
             font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5);
-            animation: blinker 2s linear infinite; box-sizing: border-box;
+            animation: blinker 2s linear infinite; box-sizing: border-box; position: sticky; top: 0; z-index: 5001;
         }
         @keyframes blinker { 50% { opacity: 0.8; } }
         
-        #offlineMenu { text-align: center; margin-top: 50px; width: 100%; }
+        #offlineMenu { text-align: center; margin-top: 30px; width: 100%; }
         .game-menu-btn {
-            display: block; width: 80%; max-width: 300px; margin: 15px auto; padding: 20px;
-            font-size: 1.3rem; background: var(--card-bg); color: var(--neon-blue);
+            display: block; width: 85%; max-width: 320px; margin: 15px auto; padding: 20px;
+            font-size: 1.2rem; background: var(--card-bg); color: var(--neon-blue);
             font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue);
             cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.2);
         }
         .game-menu-btn:hover { background: var(--neon-blue); color: black; transform: scale(1.05); }
         
-        .game-view { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 20px; }
-        .back-btn { margin-top: 20px; padding: 10px 20px; background: #444; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1rem; }
+        .game-view { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
+        .back-btn { margin-top: 25px; padding: 12px 25px; background: #444; color: white; border: 2px solid #666; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold;}
         
+        .mode-btn { padding: 10px 20px; margin: 5px; background: var(--neon-purple); color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+        .mode-btn.active { background: var(--neon-blue); color: black; font-weight: bold; box-shadow: 0 0 10px var(--neon-blue); }
+
         /* Tic Tac Toe classes */
         .ttt-cell { width: 80px; height: 80px; background: #222; border: 2px solid var(--neon-purple); font-size: 40px; color: white; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        
+        /* Ludo Goti classes */
+        #ludoBoard { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin-top: 15px; background: #111; padding: 10px; border-radius: 10px; border: 2px solid var(--neon-purple); }
+        .ludo-cell { width: 50px; height: 50px; background: #333; border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 25px; position: relative; }
+        .ludo-home { background: #4caf50; border: 2px solid white; }
+        #diceBtn { margin-top: 20px; padding: 15px 30px; font-size: 1.5rem; background: var(--neon-blue); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .goti { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; position: absolute; box-shadow: 0 0 5px black; }
+        .goti-red { background: red; z-index: 2; margin-top:-10px; margin-left:-10px;}
+        .goti-blue { background: #00d4ff; z-index: 1; margin-top:10px; margin-left:10px;}
+
+        /* Snake classes */
+        #snakeCanvas { background: #111; border: 2px solid var(--neon-purple); margin-top: 15px; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -384,64 +399,76 @@
     <div class="offline-banner">🔴 YOU ARE OFFLINE - Aapka internet band hai! Tab tak game kheliye:</div>
     
     <div id="offlineMenu">
-        <h2 style="color:var(--neon-blue);">OFFLINE GAME ZONE 🎮</h2>
-        <p style="color:#aaa; margin-bottom:30px;">Choose a game to pass the time:</p>
-        <button class="game-menu-btn" onclick="openGame('gameAir')">✈️ Air Fighter</button>
-        <button class="game-menu-btn" onclick="openGame('gameDino')">🦖 Dino Jump</button>
+        <h2 style="color:var(--neon-blue);">OFFLINE ARCADE 🎮</h2>
+        <p style="color:#aaa; margin-bottom:20px;">Choose a game to pass the time:</p>
+        <button class="game-menu-btn" onclick="openGame('gameLudo')">🎲 Ludo Goti Race</button>
         <button class="game-menu-btn" onclick="openGame('gameTtt')">❌⭕ Tic Tac Toe</button>
-        <button class="game-menu-btn" onclick="openGame('gameVirus')">🦠 Virus Catcher</button>
-        <p style="color:#666; margin-top: 30px;">Data on hote hi website apne aap chalu ho jayegi.</p>
+        <button class="game-menu-btn" onclick="openGame('gameSnake')">🐍 Snake Game</button>
+        <button class="game-menu-btn" onclick="openGame('gameAir')">✈️ Air Fighter</button>
+        <p style="color:#666; margin-top: 30px;">Data on hote hi website chalu ho jayegi.</p>
+    </div>
+
+    <div id="gameLudo" class="game-view">
+        <h2 style="color:var(--neon-blue);">🎲 Mini Ludo Goti</h2>
+        <div>
+            <button class="mode-btn active" id="ludoModeRobot" onclick="setLudoMode('robot')">Play with Robot 🤖</button>
+            <button class="mode-btn" id="ludoModeHuman" onclick="setLudoMode('human')">2 Players 👨‍🤝‍👨</button>
+        </div>
+        <h3 id="ludoStatus" style="color:white; margin:10px 0;">Red's Turn!</h3>
+        
+        <div id="ludoBoard">
+            </div>
+
+        <button id="diceBtn" onclick="rollLudoDice()">Roll Dice 🎲</button>
+        <p style="color:#aaa; margin-top:10px; font-size:0.9rem;">Roll & reach Box 24 first! Kattne par wapas Start.</p>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
+    <div id="gameTtt" class="game-view">
+        <h2 style="color:var(--neon-blue);">❌ Tic Tac Toe ⭕</h2>
+        <div>
+            <button class="mode-btn active" id="tttModeRobot" onclick="setTttMode('robot')">Play with Robot 🤖</button>
+            <button class="mode-btn" id="tttModeHuman" onclick="setTttMode('human')">2 Players 👨‍🤝‍👨</button>
+        </div>
+        <h3 id="tttStatus" style="color:white; margin:10px 0;">Player X's turn</h3>
+        <div id="tttBoard" style="display:grid; grid-template-columns:repeat(3, 80px); gap:5px; margin-top:10px;">
+            <div class="ttt-cell" id="ttt0" onclick="playTtt(0)"></div>
+            <div class="ttt-cell" id="ttt1" onclick="playTtt(1)"></div>
+            <div class="ttt-cell" id="ttt2" onclick="playTtt(2)"></div>
+            <div class="ttt-cell" id="ttt3" onclick="playTtt(3)"></div>
+            <div class="ttt-cell" id="ttt4" onclick="playTtt(4)"></div>
+            <div class="ttt-cell" id="ttt5" onclick="playTtt(5)"></div>
+            <div class="ttt-cell" id="ttt6" onclick="playTtt(6)"></div>
+            <div class="ttt-cell" id="ttt7" onclick="playTtt(7)"></div>
+            <div class="ttt-cell" id="ttt8" onclick="playTtt(8)"></div>
+        </div>
+        <button onclick="resetTtt()" style="margin-top:20px; padding:10px 20px; background:var(--neon-purple); color:white; border:none; border-radius:5px; font-size:1.1rem; cursor:pointer;">🔄 Restart Game</button>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
+    </div>
+
+    <div id="gameSnake" class="game-view">
+        <h2 style="color:var(--neon-blue);">🐍 Classic Snake</h2>
+        <h3 style="color:white; margin:0;">Score: <span id="snakeScore">0</span></h3>
+        <canvas id="snakeCanvas" width="300" height="300"></canvas>
+        <div style="display:grid; grid-template-columns: 60px 60px 60px; gap:10px; margin-top:15px; justify-content:center;">
+            <div></div><button class="mode-btn" onclick="changeSnakeDir('UP')">⬆️</button><div></div>
+            <button class="mode-btn" onclick="changeSnakeDir('LEFT')">⬅️</button>
+            <button class="mode-btn" onclick="changeSnakeDir('DOWN')">⬇️</button>
+            <button class="mode-btn" onclick="changeSnakeDir('RIGHT')">➡️</button>
+        </div>
+        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
     </div>
 
     <div id="gameAir" class="game-view">
         <h2 style="color:var(--neon-blue);">✈️ Air Fighter</h2>
         <h3 style="color:white; margin:0;">Score: <span id="airScore">0</span></h3>
         <div id="airGameArea" style="position:relative; width:300px; height:350px; background:#000; overflow:hidden; border:2px solid var(--neon-purple); border-radius:10px; margin-top:10px;">
-            </div>
+        </div>
         <div style="display:flex; justify-content:space-between; width:300px; margin-top:15px;">
             <button onclick="movePlane(-30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">⬅️</button>
             <button onclick="shootBullet()" style="padding:15px 30px; font-size:20px; background:red; border:none; border-radius:10px; color:white;">🔥 FIRE</button>
             <button onclick="movePlane(30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">➡️</button>
         </div>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameDino" class="game-view">
-        <h2 style="color:var(--neon-blue);">🦖 Dino Jump</h2>
-        <h3 style="color:white; margin:0;">Score: <span id="dinoScore">0</span></h3>
-        <div id="dinoGameArea" style="position:relative; width:300px; height:200px; background:#222; overflow:hidden; border-bottom:3px solid white; margin-top:20px;" onclick="jumpDino()">
-            <div id="dinoPlayer" style="position:absolute; bottom:0; left:30px; font-size:40px;">🦖</div>
-            <div id="cactusEnemy" style="position:absolute; bottom:0; left:300px; font-size:40px;">🌵</div>
-        </div>
-        <p style="color:#aaa; margin-top:15px;">Tap the box to JUMP!</p>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameTtt" class="game-view">
-        <h2 style="color:var(--neon-blue);">❌ Tic Tac Toe ⭕</h2>
-        <h3 id="tttStatus" style="color:white; margin:10px 0;">Player X's turn</h3>
-        <div id="tttBoard" style="display:grid; grid-template-columns:repeat(3, 80px); gap:5px; margin-top:10px;">
-            <div class="ttt-cell" onclick="playTtt(this, 0)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 1)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 2)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 3)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 4)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 5)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 6)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 7)"></div>
-            <div class="ttt-cell" onclick="playTtt(this, 8)"></div>
-        </div>
-        <button onclick="resetTtt()" style="margin-top:20px; padding:10px 20px; background:var(--neon-purple); color:white; border:none; border-radius:5px; font-size:1.1rem; cursor:pointer;">🔄 Restart Game</button>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameVirus" class="game-view">
-        <h2 style="color:var(--neon-blue);">🦠 Virus Catcher</h2>
-        <h3 style="color:white; margin:0;">Score: <span id="virusScore">0</span></h3>
-        <div style="position:relative; width:300px; height:350px; background:#111; border:2px solid var(--neon-purple); border-radius:10px; overflow:hidden; margin-top:10px;">
-            <div id="virusTarget" onclick="catchVirus()" style="position:absolute; width:50px; height:50px; background:red; border-radius:50%; top:0; left:125px; cursor:pointer; box-shadow:0 0 15px red; display:flex; justify-content:center; align-items:center; font-size:25px;">👾</div>
-        </div>
-        <p style="color:#aaa; margin-top:15px;">Tap the Virus before it hits the bottom!</p>
         <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
     </div>
 
@@ -458,10 +485,6 @@
     }
     function closeOverlay() {
         document.getElementById('welcome-overlay').style.display = 'none';
-        if ('speechSynthesis' in window) {
-            let msg = new SpeechSynthesisUtterance("Welcome to Adarsh Computer Services");
-            window.speechSynthesis.speak(msg);
-        }
     }
     function switchMediaTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -534,7 +557,7 @@
     function checkConnection() {
         if(!navigator.onLine) {
             document.getElementById('offlineGameContainer').style.display = 'flex';
-            closeGame(); // show menu by default
+            closeGame(); 
         } else {
             document.getElementById('offlineGameContainer').style.display = 'none';
             closeGame();
@@ -547,12 +570,12 @@
     function openGame(gameId) {
         document.getElementById('offlineMenu').style.display = 'none';
         document.getElementById(gameId).style.display = 'flex';
-        clearInterval(gameInterval); // clear any running game
+        clearInterval(gameInterval); 
         
         if(gameId === 'gameAir') startAirGame();
-        if(gameId === 'gameDino') startDinoGame();
         if(gameId === 'gameTtt') resetTtt();
-        if(gameId === 'gameVirus') startVirusGame();
+        if(gameId === 'gameLudo') initLudo();
+        if(gameId === 'gameSnake') startSnake();
     }
 
     function closeGame() {
@@ -561,7 +584,232 @@
         clearInterval(gameInterval);
     }
 
-    /* 1. AIR FIGHTER LOGIC */
+    /* ----------------------------------------------------
+       1. TIC TAC TOE (With Robot & 2 Player)
+    ----------------------------------------------------- */
+    let tttBoard = ["", "", "", "", "", "", "", "", ""];
+    let currentPlayer = "X"; let gameActive = true;
+    let tttMode = 'robot'; // default
+
+    function setTttMode(mode) {
+        tttMode = mode;
+        document.getElementById('tttModeRobot').classList.remove('active');
+        document.getElementById('tttModeHuman').classList.remove('active');
+        if(mode === 'robot') document.getElementById('tttModeRobot').classList.add('active');
+        else document.getElementById('tttModeHuman').classList.add('active');
+        resetTtt();
+    }
+
+    function resetTtt() {
+        tttBoard = ["", "", "", "", "", "", "", "", ""];
+        currentPlayer = "X"; gameActive = true;
+        document.getElementById('tttStatus').innerText = "Player X's turn";
+        for(let i=0; i<9; i++) {
+            let cell = document.getElementById('ttt'+i);
+            cell.innerText = ""; cell.style.color = "white";
+        }
+    }
+
+    function playTtt(index, isRobot = false) {
+        if(tttBoard[index] !== "" || !gameActive) return;
+        if(tttMode === 'robot' && currentPlayer === 'O' && !isRobot) return; // Block human from playing O
+
+        tttBoard[index] = currentPlayer;
+        let cell = document.getElementById('ttt'+index);
+        cell.innerText = currentPlayer;
+        cell.style.color = currentPlayer === "X" ? "var(--neon-blue)" : "red";
+        
+        checkTttWin();
+
+        // Robot's Turn
+        if(gameActive && tttMode === 'robot' && currentPlayer === 'O') {
+            document.getElementById('tttStatus').innerText = "🤖 Robot thinking...";
+            setTimeout(robotPlayTtt, 600);
+        }
+    }
+
+    function robotPlayTtt() {
+        if(!gameActive) return;
+        let empty = [];
+        for(let i=0; i<9; i++) if(tttBoard[i] === "") empty.push(i);
+        if(empty.length > 0) {
+            let pick = empty[Math.floor(Math.random() * empty.length)];
+            playTtt(pick, true);
+        }
+    }
+
+    function checkTttWin() {
+        const winConditions = [
+            [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
+        ];
+        let roundWon = false;
+        for(let i=0; i<8; i++) {
+            let [a, b, c] = winConditions[i];
+            if(tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) { roundWon = true; break; }
+        }
+        if(roundWon) { 
+            document.getElementById('tttStatus').innerText = "🎉 Player " + currentPlayer + " WINS!"; 
+            gameActive = false; return; 
+        }
+        if(!tttBoard.includes("")) { 
+            document.getElementById('tttStatus').innerText = "It's a DRAW!"; 
+            gameActive = false; return; 
+        }
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        if(tttMode === 'human' || currentPlayer === 'X') {
+            document.getElementById('tttStatus').innerText = "Player " + currentPlayer + "'s turn";
+        }
+    }
+
+    /* ----------------------------------------------------
+       2. MINI LUDO GOTI RACE (With Robot)
+    ----------------------------------------------------- */
+    let ludoMode = 'robot';
+    let p1Pos = 0, p2Pos = 0; // 0 is start, 24 is win
+    let ludoTurn = 1; // 1=Red, 2=Blue
+    let ludoActive = false;
+
+    function setLudoMode(mode) {
+        ludoMode = mode;
+        document.getElementById('ludoModeRobot').classList.remove('active');
+        document.getElementById('ludoModeHuman').classList.remove('active');
+        if(mode === 'robot') document.getElementById('ludoModeRobot').classList.add('active');
+        else document.getElementById('ludoModeHuman').classList.add('active');
+        initLudo();
+    }
+
+    function initLudo() {
+        p1Pos = 0; p2Pos = 0; ludoTurn = 1; ludoActive = true;
+        document.getElementById('ludoStatus').innerText = "🔴 Red's Turn! Roll Dice.";
+        drawLudoBoard();
+        document.getElementById('diceBtn').disabled = false;
+    }
+
+    function drawLudoBoard() {
+        let board = document.getElementById('ludoBoard');
+        board.innerHTML = '';
+        for(let i=0; i<25; i++) {
+            let cell = document.createElement('div');
+            cell.className = 'ludo-cell';
+            cell.innerText = i;
+            if(i === 24) cell.classList.add('ludo-home');
+            
+            if(i === p1Pos) { let g1 = document.createElement('div'); g1.className = 'goti goti-red'; cell.appendChild(g1); }
+            if(i === p2Pos) { let g2 = document.createElement('div'); g2.className = 'goti goti-blue'; cell.appendChild(g2); }
+            board.appendChild(cell);
+        }
+    }
+
+    function rollLudoDice(isRobot = false) {
+        if(!ludoActive) return;
+        if(ludoMode === 'robot' && ludoTurn === 2 && !isRobot) return; // Block human pressing for robot
+        
+        document.getElementById('diceBtn').disabled = true;
+        let diceVal = Math.floor(Math.random() * 6) + 1;
+        document.getElementById('diceBtn').innerText = `Rolled: ${diceVal} 🎲`;
+
+        setTimeout(() => {
+            if(ludoTurn === 1) {
+                p1Pos += diceVal;
+                if(p1Pos >= 24) p1Pos = 24;
+                if(p1Pos === p2Pos && p1Pos !== 24 && p2Pos !== 0) { p2Pos = 0; alert("🔴 Red ne Blue ko kaat diya!"); }
+            } else {
+                p2Pos += diceVal;
+                if(p2Pos >= 24) p2Pos = 24;
+                if(p2Pos === p1Pos && p2Pos !== 24 && p1Pos !== 0) { p1Pos = 0; alert("🔵 Blue ne Red ko kaat diya!"); }
+            }
+            
+            drawLudoBoard();
+
+            if(p1Pos === 24) { document.getElementById('ludoStatus').innerText = "🎉 RED WINS!"; ludoActive = false; return; }
+            if(p2Pos === 24) { document.getElementById('ludoStatus').innerText = "🎉 BLUE WINS!"; ludoActive = false; return; }
+
+            // Switch turn
+            ludoTurn = ludoTurn === 1 ? 2 : 1;
+            
+            if(ludoTurn === 1) {
+                document.getElementById('ludoStatus').innerText = "🔴 Red's Turn! Roll Dice.";
+                document.getElementById('diceBtn').innerText = "Roll Dice 🎲";
+                document.getElementById('diceBtn').disabled = false;
+            } else {
+                if(ludoMode === 'robot') {
+                    document.getElementById('ludoStatus').innerText = "🤖 Robot's Turn (Blue)...";
+                    setTimeout(() => rollLudoDice(true), 1000);
+                } else {
+                    document.getElementById('ludoStatus').innerText = "🔵 Blue's Turn! Roll Dice.";
+                    document.getElementById('diceBtn').innerText = "Roll Dice 🎲";
+                    document.getElementById('diceBtn').disabled = false;
+                }
+            }
+        }, 500);
+    }
+
+    /* ----------------------------------------------------
+       3. SNAKE GAME 
+    ----------------------------------------------------- */
+    let canvas = document.getElementById('snakeCanvas');
+    let ctx = canvas.getContext('2d');
+    let snake = [{x: 150, y: 150}];
+    let dx = 10, dy = 0;
+    let foodX, foodY;
+    let snakeScore = 0;
+
+    function startSnake() {
+        snake = [{x: 150, y: 150}]; dx = 10; dy = 0; snakeScore = 0;
+        document.getElementById('snakeScore').innerText = snakeScore;
+        createFood();
+        gameInterval = setInterval(mainSnake, 100);
+    }
+
+    function mainSnake() {
+        if (hasGameEnded()) {
+            alert("Game Over! Score: " + snakeScore);
+            startSnake(); return;
+        }
+        ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        drawFood(); advanceSnake(); drawSnake();
+    }
+
+    function changeSnakeDir(dir) {
+        if(dir === 'UP' && dy !== 10) { dx = 0; dy = -10; }
+        if(dir === 'DOWN' && dy !== -10) { dx = 0; dy = 10; }
+        if(dir === 'LEFT' && dx !== 10) { dx = -10; dy = 0; }
+        if(dir === 'RIGHT' && dx !== -10) { dx = 10; dy = 0; }
+    }
+
+    function advanceSnake() {
+        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+        snake.unshift(head);
+        if (head.x === foodX && head.y === foodY) {
+            snakeScore += 10; document.getElementById('snakeScore').innerText = snakeScore; createFood();
+        } else { snake.pop(); }
+    }
+
+    function drawSnake() {
+        ctx.fillStyle = 'var(--neon-blue)'; ctx.strokeStyle = 'black';
+        snake.forEach(part => { ctx.fillRect(part.x, part.y, 10, 10); ctx.strokeRect(part.x, part.y, 10, 10); });
+    }
+
+    function createFood() {
+        foodX = Math.round((Math.random() * 290) / 10) * 10;
+        foodY = Math.round((Math.random() * 290) / 10) * 10;
+        snake.forEach(part => { if (part.x == foodX && part.y == foodY) createFood(); });
+    }
+
+    function drawFood() {
+        ctx.fillStyle = 'red'; ctx.fillRect(foodX, foodY, 10, 10);
+    }
+
+    function hasGameEnded() {
+        for (let i = 4; i < snake.length; i++) {
+            if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
+        }
+        return snake[0].x < 0 || snake[0].x > 290 || snake[0].y < 0 || snake[0].y > 290;
+    }
+
+    /* ----------------------------------------------------
+       4. AIR FIGHTER (Purana Wala)
+    ----------------------------------------------------- */
     let planeX = 130; let airEnemies = []; let airBullets = []; let airScoreVal = 0;
     function startAirGame() {
         document.getElementById('airGameArea').innerHTML = '<div id="airPlayer" style="position:absolute; bottom:10px; left:130px; font-size:35px; transition:0.1s;">✈️</div>';
@@ -582,25 +830,20 @@
         airBullets.push({el: b, x: planeX + 8, y: 50});
     }
     function updateAirGame() {
-        // Move Bullets
         for(let i=0; i<airBullets.length; i++) {
             airBullets[i].y += 15;
             airBullets[i].el.style.bottom = airBullets[i].y + 'px';
             if(airBullets[i].y > 350) { airBullets[i].el.remove(); airBullets.splice(i, 1); i--; }
         }
-        // Spawn Enemy
         if(Math.random() < 0.08) {
             let e = document.createElement('div'); e.innerText = '🛸'; e.style.position = 'absolute';
             let ex = Math.random() * 260; e.style.left = ex + 'px'; e.style.top = '0px'; e.style.fontSize = '30px';
             document.getElementById('airGameArea').appendChild(e);
             airEnemies.push({el: e, x: ex, y: 0});
         }
-        // Move Enemy & Check Collision
         for(let i=0; i<airEnemies.length; i++) {
             airEnemies[i].y += 5;
             airEnemies[i].el.style.top = airEnemies[i].y + 'px';
-            
-            // Check hit by bullet
             for(let j=0; j<airBullets.length; j++) {
                 if(Math.abs(airEnemies[i].x - airBullets[j].x) < 30 && (350 - airEnemies[i].y - airBullets[j].y) < 30) {
                     airEnemies[i].el.innerText = '💥';
@@ -612,98 +855,10 @@
                 }
             }
             if(airEnemies[i] && airEnemies[i].y > 350) {
-                // Game Over if UFO reaches bottom
                 alert("Game Over! UFO Zameen par aa gaya. Score: " + airScoreVal);
                 startAirGame(); break;
             }
         }
-    }
-
-    /* 2. DINO JUMP LOGIC */
-    let dinoScoreVal = 0; let cactusX = 300; let isJumping = false;
-    function startDinoGame() {
-        dinoScoreVal = 0; cactusX = 300; isJumping = false;
-        document.getElementById('dinoScore').innerText = dinoScoreVal;
-        document.getElementById('dinoPlayer').style.bottom = '0px';
-        gameInterval = setInterval(() => {
-            cactusX -= 8;
-            if(cactusX < -40) { cactusX = 300; dinoScoreVal+=10; document.getElementById('dinoScore').innerText = dinoScoreVal; }
-            document.getElementById('cactusEnemy').style.left = cactusX + 'px';
-
-            let dinoBottom = parseInt(document.getElementById('dinoPlayer').style.bottom || 0);
-            if(cactusX > 10 && cactusX < 60 && dinoBottom < 40) {
-                alert("Out! Dino Cactus se takra gaya. Score: " + dinoScoreVal);
-                startDinoGame();
-            }
-        }, 30);
-    }
-    function jumpDino() {
-        if(isJumping) return;
-        isJumping = true;
-        let d = document.getElementById('dinoPlayer');
-        let upInt = setInterval(() => {
-            let b = parseInt(d.style.bottom || 0);
-            if(b >= 100) {
-                clearInterval(upInt);
-                let downInt = setInterval(() => {
-                    let b2 = parseInt(d.style.bottom || 0);
-                    if(b2 <= 0) { clearInterval(downInt); d.style.bottom = '0px'; isJumping = false; }
-                    else { d.style.bottom = (b2 - 8) + 'px'; }
-                }, 20);
-            } else { d.style.bottom = (b + 8) + 'px'; }
-        }, 20);
-    }
-
-    /* 3. TIC TAC TOE LOGIC */
-    let tttBoard = ["", "", "", "", "", "", "", "", ""];
-    let currentPlayer = "X"; let gameActive = true;
-    function resetTtt() {
-        tttBoard = ["", "", "", "", "", "", "", "", ""];
-        currentPlayer = "X"; gameActive = true;
-        document.getElementById('tttStatus').innerText = "Player X's turn";
-        let cells = document.querySelectorAll('.ttt-cell');
-        cells.forEach(cell => { cell.innerText = ""; cell.style.color = "white"; });
-    }
-    function playTtt(cell, index) {
-        if(tttBoard[index] !== "" || !gameActive) return;
-        tttBoard[index] = currentPlayer;
-        cell.innerText = currentPlayer;
-        cell.style.color = currentPlayer === "X" ? "var(--neon-blue)" : "red";
-        checkTttWin();
-    }
-    function checkTttWin() {
-        const winConditions = [
-            [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
-        ];
-        let roundWon = false;
-        for(let i=0; i<8; i++) {
-            let [a, b, c] = winConditions[i];
-            if(tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) { roundWon = true; break; }
-        }
-        if(roundWon) { document.getElementById('tttStatus').innerText = "🎉 Player " + currentPlayer + " WINS!"; gameActive = false; return; }
-        if(!tttBoard.includes("")) { document.getElementById('tttStatus').innerText = "It's a DRAW!"; gameActive = false; return; }
-        currentPlayer = currentPlayer === "X" ? "O" : "X";
-        document.getElementById('tttStatus').innerText = "Player " + currentPlayer + "'s turn";
-    }
-
-    /* 4. VIRUS CATCHER LOGIC */
-    let virusY = 0; let vSpeed = 3; let vScore = 0;
-    function startVirusGame() {
-        virusY = 0; vSpeed = 3; vScore = 0;
-        document.getElementById('virusScore').innerText = vScore;
-        gameInterval = setInterval(() => {
-            virusY += vSpeed;
-            if(virusY > 350) { 
-                alert("Game Over! Virus fail gaya. Score: " + vScore);
-                startVirusGame(); return;
-            }
-            document.getElementById('virusTarget').style.top = virusY + 'px';
-        }, 30);
-    }
-    function catchVirus() {
-        vScore++; document.getElementById('virusScore').innerText = vScore;
-        virusY = 0; vSpeed += 0.5;
-        document.getElementById('virusTarget').style.left = (Math.random() * 250) + 'px';
     }
 </script>
 
