@@ -3,7 +3,6 @@
 <head>
     <meta name="google-site-verification" content="2nslICfitlZaKX6jqNLEHAMXa6fEUGiUM-ecwCgKPnM" />
     <meta charset="UTF-8">
-    <!-- FIX: Prevent Zoom in/out and lock layout for Mobile App feel -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Adarsh Computer Services & Solve</title>
     <style>
@@ -14,7 +13,6 @@
             --card-bg: #16161a;
         }
 
-        /* FIX: Reset margin/padding and hide horizontal scrolling completely */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,7 +25,7 @@
             color: white;
             scroll-behavior: smooth;
             max-width: 100vw;
-            overflow-x: hidden; /* Stops horizontal scrolling */
+            overflow-x: hidden; 
         }
 
         /* --- Circle Booster Loading Animation with Logo --- */
@@ -78,7 +76,6 @@
         .nav-logo img { height: 45px; border-radius: 5px; }
         .menu-icon { font-size: 30px; cursor: pointer; color: var(--neon-blue); }
 
-        /* FIX: Hidden Menu positioning to avoid scrolling */
         .nav-links {
             position: fixed; top: 0; right: -300px; width: 260px; height: 100%;
             background: #111; display: flex; flex-direction: column;
@@ -171,6 +168,17 @@
         .search-box { width: 90%; max-width: 500px; padding: 15px; font-size: 1.1rem; border-radius: 30px; border: 2px solid var(--neon-blue); background: #111; color: white; outline: none; text-align: center; transition: 0.3s; margin: 0 auto 20px auto; display: block; }
         .search-box:focus { box-shadow: 0 0 20px var(--neon-blue); border-color: var(--neon-purple); }
 
+        /* --- OWNER SECTION RESPONSIVE TEXT --- */
+        .owner-name-title {
+            text-align: center; 
+            color: var(--neon-blue); 
+            font-size: clamp(1.8rem, 5vw, 2.8rem); /* Will scale down perfectly on mobile */
+            text-shadow: 0 0 15px var(--neon-blue); 
+            margin: 15px 0; 
+            text-transform: uppercase;
+            word-wrap: break-word;
+        }
+
         /* --- OFFLINE GAME UI & STYLES --- */
         #offlineGameContainer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center; overflow-y:auto; padding-bottom: 50px; }
         .offline-banner { width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem; font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5); animation: blinker 2s linear infinite; position: sticky; top: 0; z-index: 5001; }
@@ -184,12 +192,10 @@
 </head>
 <body>
 
-<!-- UPDATED: Circle Booster Loading Animation with Logo -->
+<!-- Circle Booster Loading Animation with Logo -->
 <div id="startup-loader">
     <div class="loader-center">
-        <!-- Logo inside the loader -->
         <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="loader-logo" alt="ACS Logo">
-        <!-- Rotating circle ring -->
         <div class="booster-circle"></div>
     </div>
     <div class="booster-text">ACS STARTING...</div>
@@ -356,26 +362,39 @@
     <div id="owner" class="section">
         <div class="container" style="text-align:center">
             <h2>OWNER INFORMATION</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:30px; border-radius:20px; border:2px solid var(--neon-purple); text-align: left; max-width: 650px; margin: auto; box-shadow: 0 0 20px rgba(157,0,255,0.2);">
+            <div style="background:rgba(255,255,255,0.05); padding:30px 20px; border-radius:20px; border:2px solid var(--neon-purple); text-align: left; max-width: 650px; margin: auto; box-shadow: 0 0 20px rgba(157,0,255,0.2);">
                 
-                <h3 style="text-align: center; color: white;">⭐ ADARSH COMPUTER SERVICES & SOLVE ⭐</h3>
+                <h3 style="text-align: center; color: white; margin-bottom: 5px;">⭐ ADARSH COMPUTER SERVICES & SOLVE ⭐</h3>
                 
-                <!-- HIGHLIGHTED NAME -->
-                <h1 style="text-align: center; color: var(--neon-blue); font-size: 2.8rem; text-shadow: 0 0 15px var(--neon-blue); margin: 15px 0; text-transform: uppercase;">Adarsh Kumar Chandravanshi</h1>
+                <!-- 1. NAME -->
+                <h1 class="owner-name-title">Adarsh Kumar Chandravanshi</h1>
                 <p style="text-align: center; color: #aaa; font-size: 1.2rem; margin-top: -10px;">Founder & CEO</p>
+
+                <div style="text-align: center; margin: 25px 0;">
+                    <!-- 2. WHATSAPP -->
+                    <p style="font-size: 1.3rem; margin: 10px 0;">
+                        📞 <strong>WhatsApp:</strong> <a href="https://wa.me/918252900810" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">+91 82529 00810</a>
+                    </p>
+                    
+                    <!-- 3. EMAIL -->
+                    <p style="font-size: 1.2rem; margin: 10px 0; word-wrap: break-word;">
+                        📧 <strong>Email:</strong> <a href="mailto:acs.adarsh.com@gmail.com" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">acs.adarsh.com@gmail.com</a>
+                    </p>
+                    
+                    <!-- 4. LOCATION -->
+                    <p style="font-size: 1.2rem; color: #ffcc00; font-weight: bold; padding: 12px; background: rgba(255,204,0,0.1); border-radius: 8px; border: 1px solid #ffcc00; display: inline-block; margin-top: 15px;">
+                        📍 Location: Chhota Basti, Itkhori, Chatra, Jharkhand
+                    </p>
+                </div>
 
                 <hr style="border-color: #333; margin: 25px 0;">
                 
-                <ul style="list-style: none; padding: 0; font-size: 1.2rem; line-height: 2;">
+                <!-- REST OF INFORMATION -->
+                <ul style="list-style: none; padding: 0; font-size: 1.15rem; line-height: 2;">
                     <li>📅 <strong>Business Opening Date:</strong> 25 Nov 2023</li>
                     <li>💻 <strong>Profession:</strong> IT Professional & AI Expert</li>
                     <li>🌐 <strong>Cyber Cafe:</strong> CSC Owner & Associate</li>
                     <li>🚀 <strong>Expertise:</strong> Web Development, App Development, Video Editing, AI Voice & Avatar creation.</li>
-                    
-                    <!-- HIGHLIGHTED LOCATION -->
-                    <li style="font-size: 1.4rem; color: #ffcc00; font-weight: bold; padding: 15px; background: rgba(255,204,0,0.1); border-radius: 8px; border: 1px solid #ffcc00; margin-top: 20px; text-align: center;">
-                        📍 Location: Chhota Basti, Itkhori, Chatra, Jharkhand
-                    </li>
                 </ul>
             </div>
         </div>
@@ -384,8 +403,13 @@
     <div id="contact" class="section">
         <div class="container" style="text-align:center">
             <h2>CONTACT US</h2>
-            <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
-            <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
+            <div style="margin-bottom: 25px; font-size: 1.1rem; color: #ddd; text-align: center;">
+                <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
+                <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
+                <!-- WHATSAPP AND EMAIL ADDED BACK -->
+                <p>📞 <strong>WhatsApp:</strong> <a href="https://wa.me/918252900810" style="color:var(--neon-blue); text-decoration:none; font-weight:bold;">+91 82529 00810</a></p>
+                <p>📧 <strong>Email:</strong> <a href="mailto:acs.adarsh.com@gmail.com" style="color:var(--neon-blue); text-decoration:none;">acs.adarsh.com@gmail.com</a></p>
+            </div>
             
             <div class="contact-form">
                 <h3 style="color:var(--neon-blue); margin-top:0;">Send us a message</h3>
@@ -559,7 +583,7 @@
 
     window.addEventListener('DOMContentLoaded', () => { renderProjects(); });
 
-    /* --- SMART AI CHATBOT SYSTEM --- */
+    /* --- SMART AI CHATBOT SYSTEM WITH TYPO TOLERANCE --- */
     function toggleChat() {
         const chatWindow = document.getElementById('chatbotWindow');
         chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
@@ -576,45 +600,57 @@
         chatBox.scrollTop = chatBox.scrollHeight;
 
         setTimeout(() => {
-            let botReply = getSmartReply(msg.toLowerCase());
+            let botReply = getSmartReply(msg);
             chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 1200);
     }
 
-    function getSmartReply(text) {
-        if(text.match(/\b(hi|hello|hey|namaste|pranam|hlw)\b/)) {
+    function getSmartReply(originalMsg) {
+        // Remove special chars for easier spelling match
+        let text = originalMsg.toLowerCase().replace(/[^a-z0-9\s]/g, "");
+
+        if(text.match(/\b(hi|hello|hey|namaste|pranam|hlw|hlo|helo)\b/)) {
             return "Hello, main ACS assistant! Main aapki aaj kis tarah ki sahayata kar sakti hun?";
         }
-        if(text.match(/\b(school|study|education|college|coaching|institute)\b/)) {
+        if(text.match(/\b(school|study|education|college|coaching|institute|schul|skul)\b/)) {
             return "Aapko School ya Education center ki website banwani hai? Bahut badhiya! Isme online admission, photo gallery, notice board aur result system lag sakta hai. Aap hamara ye education project demo dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/Google-Group-Of-Education/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>Study Centre Website Demo</a>";
         }
-        if(text.match(/\b(dukan|shop|ecommerce|kirana|store|sell)\b/)) {
+        if(text.match(/\b(dukan|shop|ecommerce|kirana|store|sell|sale|shope)\b/)) {
             return "Agar aapko apni dukan ya e-commerce ke liye online store banwana hai jaha se log order kar sakein, toh hum advance system banate hain. Iska demo aap yahan dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-JCB-PARTS/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>E-commerce Demo</a>";
         }
-        if(text.match(/\b(social media|instagram|facebook|youtube|link)\b/)) {
+        if(text.match(/\b(social media|instagram|facebook|youtube|link|socil|media)\b/)) {
             return "Aap hamara Social Media portal yahan check kar sakte hain, jaha saare platforms linked hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>ACS Social Media</a>";
         }
-        if(text.match(/\b(website|app|banwana|kaise banega|kya lagega)\b/)) {
-            return "Website banane ke liye hume sabse pehle ek Domain (website ka naam jaise .com/.in) aur Hosting (server jahan data rahega) chahiye hota hai. Hum aapke business ke hisaab se puri website design karke denge. Aapko kis tarah ki website chahiye? (Jaise: School, Dukan, Personal Portfolio)";
+        if(text.match(/\b(web|website|site|app|aplication|banwana|kaise|webaite|websit|wepsite)\b/)) {
+            return "Website banane ke liye hume sabse pehle ek Domain (website ka naam) aur Hosting (server) chahiye hota hai. Hum aapke business ke hisaab se puri website design karke denge. Aapko kis tarah ki website chahiye?";
         }
-        if(text.match(/\b(edit|video|photo|ai|voice|song|avatar|shoot)\b/)) {
-            return "Humare paas sabhi tarah ki editing aur advanced AI services available hain. Jaise AI Video Making, AI Voice Over (Hindi/English), Avatar creation, aur Video shoot. Aap hume apni requirement batayen, hum usko professionally complete kar denge.";
+        if(text.match(/\b(edit|video|vidio|vdo|photo|foto|ai|voice|song|avatar|shoot|shute|sut|edting|editing)\b/)) {
+            return "Humare paas sabhi tarah ki editing aur advanced AI services available hain. Jaise AI Video Making, AI Voice Over, Avatar creation, aur Video shoot. Aap hume apni requirement batayen, hum usko professionally complete kar denge.";
         }
-        if(text.match(/\b(mobile|internet|repair|server|sim)\b/)) {
+        if(text.match(/\b(mobile|mobil|internet|repair|server|sim|net|network|kharab)\b/)) {
             return "Aapko Mobile repairing, internet issue, ya server error solve karwana hai? Hum cyber aur technical problems ka solution dete hain. Aap problem detail mein bata sakte hain ya Sir se baat kar sakte hain.";
         }
-        if(text.match(/\b(demo|project|portfolio|kaam dekhao|work)\b/)) {
+        if(text.match(/\b(demo|project|portfolio|kaam|work|worc|kam|projek)\b/)) {
             return "Aap hamare sabhi live projects 'Our Portfolio/Projects' section me dekh sakte hain. Wahan humne School, POS, Chat app aur E-commerce sabhi ka demo rakha hai.";
         }
-        if(text.match(/\b(sir se baat|adarsh|owner|call|human|contact|malik|whatsapp)\b/)) {
+        
+        // If explicitly asking to talk to Sir
+        if(text.match(/\b(sir|adarsh|owner|call|human|contact|malik|whatsapp|bat|baat)\b/)) {
             setTimeout(() => {
-                let waMessage = encodeURIComponent("Hello Adarsh Sir, ");
+                let waMessage = encodeURIComponent("Hello Adarsh Sir, main official website se bol raha hun. Mujhe aapse baat karni hai.");
                 window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
             }, 2500);
-            return "Thik hai, main aapko Adarsh Sir (Owner) se connect kar rahi hun. Kuch seconds mein aapka WhatsApp khul jayega jahan aap unse direct baat kar sakte hain.";
+            return "Thik hai, main aapko Adarsh Sir se connect kar rahi hun. Kuch seconds mein aapka WhatsApp khul jayega...";
         }
-        return "Main ek AI Assistant hun aur lagatar seekh rahi hun. Agar aap kisi service (jaise website, video edit, AI work) ke bare me janna chahte hain to detail me likhein. Ya phir aap sidha Adarsh sir se baat karne ke liye yahan 'Sir se baat karao' likh sakte hain.";
+
+        // AUTO REDIRECT FOR UNKNOWN QUERIES WITH PRE-FILLED MESSAGE
+        setTimeout(() => {
+            let waMessage = encodeURIComponent("Hello Adarsh Sir, main official website se bol raha hun. Mujhe yah problem/query hai: " + originalMsg);
+            window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
+        }, 3500);
+        
+        return "Maaf kijiyega, mujhe is baare mein zyada jankari nahi hai. Par ghabrayiye mat, main aapki baat direct Adarsh Sir (Owner) se kara rahi hun. Kuch seconds mein WhatsApp open ho jayega jahan aap unhe apni problem bata sakte hain.";
     }
 
     function handleChatPress(event) { if(event.key === "Enter") sendChat(); }
