@@ -19,19 +19,42 @@
             background-color: var(--dark-bg);
             color: white;
             scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* --- Circle Booster Loading Animation --- */
+        #startup-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: opacity 0.5s ease;
+        }
+        .booster-circle {
+            width: 100px; height: 100px;
+            border: 6px solid transparent;
+            border-top-color: var(--neon-blue);
+            border-bottom-color: var(--neon-purple);
+            border-radius: 50%;
+            animation: spinBooster 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            box-shadow: 0 0 30px var(--neon-blue), inset 0 0 20px var(--neon-purple);
+        }
+        @keyframes spinBooster { 
+            0% { transform: rotate(0deg) scale(0.8); } 
+            50% { transform: rotate(180deg) scale(1.2); } 
+            100% { transform: rotate(360deg) scale(0.8); } 
+        }
+        .booster-text { margin-top: 25px; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; letter-spacing: 3px; animation: blinker 1s infinite; }
+        
+        #main-content { display: none; animation: pageLoad 1s ease-out forwards; }
+        @keyframes pageLoad {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* --- Navigation --- */
         .navbar {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(10, 10, 12, 0.95);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            z-index: 1001;
-            border-bottom: 2px solid var(--neon-purple);
+            position: fixed; top: 0; width: 100%; background: rgba(10, 10, 12, 0.95);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px; z-index: 1001; border-bottom: 2px solid var(--neon-purple);
             box-sizing: border-box;
         }
 
@@ -39,25 +62,12 @@
         .menu-icon { font-size: 30px; cursor: pointer; color: var(--neon-blue); }
 
         .nav-links {
-            position: fixed;
-            top: 0; right: -100%;
-            width: 260px; height: 100%;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            padding-top: 80px;
-            transition: 0.4s;
-            z-index: 1000;
+            position: fixed; top: 0; right: -100%; width: 260px; height: 100%;
+            background: #111; display: flex; flex-direction: column;
+            padding-top: 80px; transition: 0.4s; z-index: 1000;
         }
-
         .nav-links.active { right: 0; }
-        .nav-links a {
-            padding: 15px 25px;
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            border-bottom: 1px solid #222;
-        }
+        .nav-links a { padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #222; }
 
         /* --- Sections --- */
         .section { display: none; padding: 100px 20px 40px; min-height: 90vh; }
@@ -65,63 +75,22 @@
         .container { max-width: 1100px; margin: auto; }
 
         /* --- Service Cards (Home) --- */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
         .service-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            color: white;
-            display: block;
+            background: var(--card-bg); border-radius: 15px; overflow: hidden;
+            border: 1px solid #333; transition: 0.3s; cursor: pointer; text-decoration: none; color: white; display: block;
         }
-
         .service-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 20px rgba(0,212,255,0.2); }
         .service-img { width: 100%; height: 160px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
         .service-info { padding: 20px; }
-        .service-info h3 { color: var(--neon-blue); margin: 0 0 10px; }
-
-        /* --- Social Buttons --- */
-        .social-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
+        .service-info h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.2rem;}
 
         /* --- Animations & Effects --- */
         .big-btn {
-            display: block; width: 90%; max-width: 500px; margin: 30px auto;
-            padding: 20px; background: var(--neon-purple); color: white;
-            text-align: center; text-decoration: none; font-size: 1.3rem;
-            font-weight: bold; border-radius: 12px; animation: pulse 2s infinite alternate;
+            display: block; width: 90%; max-width: 500px; margin: 30px auto; padding: 20px; background: var(--neon-purple); color: white;
+            text-align: center; text-decoration: none; font-size: 1.3rem; font-weight: bold; border-radius: 12px; animation: pulse 2s infinite alternate;
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px var(--neon-purple); }
-            100% { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-blue); }
-        }
-
-        #welcome-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 2000; display: flex;
-            justify-content: center; align-items: center; cursor: pointer;
-        }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 10px var(--neon-purple); } 100% { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-blue); } }
 
         /* --- Album Section Styles --- */
         .tab-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
@@ -129,59 +98,31 @@
         .tab-btn.active { background: var(--neon-blue); color: black; font-weight: bold; box-shadow: 0 0 15px var(--neon-blue); }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.5s; }
-        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        
-        .media-item { 
-            width: 100%; height: 150px; border-radius: 10px; 
-            border: 2px solid var(--neon-purple); object-fit: cover; 
-            cursor: pointer; transition: 0.3s; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-        .media-item:hover { 
-            transform: scale(1.05); 
-            border-color: var(--neon-blue); 
-            box-shadow: 0 0 15px var(--neon-blue); 
-        }
-
-        .video-thumbnail {
-            background: #222; display: flex; justify-content: center; align-items: center;
-            color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: center;
-        }
+        .media-item { width: 100%; height: 150px; border-radius: 10px; border: 2px solid var(--neon-purple); object-fit: cover; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+        .media-item:hover { transform: scale(1.05); border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
+        .video-thumbnail { background: #222; display: flex; justify-content: center; align-items: center; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: center; }
 
         /* --- Full Screen Modal --- */
-        #mediaModal {
-            display: none; position: fixed; z-index: 3000; top: 0; left: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
-            justify-content: center; align-items: center; flex-direction: column;
-        }
+        #mediaModal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
         #modalContent { max-width: 95%; max-height: 85%; border-radius: 10px; border: 2px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue);}
-        #modalClose {
-            position: absolute; top: 20px; right: 30px; color: white;
-            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
+        #modalClose { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         #modalClose:hover { color: red; }
 
         /* --- Floating Chat Assistant --- */
         .floating-chat-btn {
-            position: fixed; bottom: 20px; right: 20px;
-            width: 60px; height: 60px; border-radius: 50%;
-            background: var(--neon-purple); color: white;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 30px; cursor: pointer; z-index: 1500;
-            box-shadow: 0 0 15px var(--neon-purple); transition: 0.3s;
-            border: 2px solid white;
+            position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; border-radius: 50%;
+            background: var(--neon-purple); display: flex; justify-content: center; align-items: center;
+            cursor: pointer; z-index: 1500; box-shadow: 0 0 20px var(--neon-purple); transition: 0.3s;
+            border: 2px solid white; padding: 2px;
         }
-        .floating-chat-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); background: var(--neon-blue); border-color: black; color: black;}
+        .floating-chat-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+        .floating-chat-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); border-color: var(--neon-blue); }
 
         /* --- FULL PAGE CHATBOT STYLES --- */
-        .chat-container { 
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: var(--dark-bg); 
-            z-index: 4000; flex-direction: column; 
-        }
+        .chat-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-bg); z-index: 4000; flex-direction: column; }
         .chat-header { background: var(--neon-purple); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.4rem; display: flex; justify-content: space-between; align-items: center;}
         .close-chat { cursor: pointer; font-size: 1.8rem; color: white; }
         .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: #0a0a0c; }
@@ -192,312 +133,287 @@
         .chat-input-area input { flex: 1; padding: 15px; font-size: 1.1rem; border-radius: 5px; border: 1px solid var(--neon-blue); outline: none; background: #222; color: white; }
         .chat-input-area button { padding: 15px 25px; font-size: 1.1rem; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;}
 
+        /* --- PORTFOLIO & PROJECTS STYLES --- */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .project-card { background: var(--card-bg); border-radius: 15px; border: 2px solid #333; text-decoration: none; color: white; transition: 0.4s; position: relative; display: flex; flex-direction: column; overflow: hidden; text-align: center; }
+        .project-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,212,255,0.3); }
+        .project-img { width: 100%; height: 180px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
+        .project-info { padding: 20px; }
+        .project-card h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; }
+        .heartbeat-effect { animation: portfolioPulse 1.2s infinite alternate; border-color: var(--neon-purple) !important; order: -1; }
+        @keyframes portfolioPulse { 0% { box-shadow: 0 0 10px var(--neon-purple); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--neon-blue), 0 0 20px var(--neon-purple); transform: scale(1.03); } }
+        .trending-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; box-shadow: 0 0 15px red; animation: blinker 1s linear infinite; z-index: 10; }
+
+        /* --- CONTACT FORM --- */
+        .contact-form { background: #16161a; padding: 30px; border-radius: 15px; border: 2px solid var(--neon-blue); max-width: 600px; margin: 20px auto; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; background: #222; color: white; font-size: 1rem; box-sizing: border-box; outline: none; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); }
+        .contact-form button { width: 100%; padding: 15px; background: var(--neon-blue); color: black; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .contact-form button:hover { background: var(--neon-purple); color: white; box-shadow: 0 0 15px var(--neon-purple); }
+        .search-box { width: 90%; max-width: 500px; padding: 15px; font-size: 1.1rem; border-radius: 30px; border: 2px solid var(--neon-blue); background: #111; color: white; outline: none; text-align: center; transition: 0.3s; margin: 0 auto 20px auto; display: block; }
+        .search-box:focus { box-shadow: 0 0 20px var(--neon-blue); border-color: var(--neon-purple); }
+
         /* --- OFFLINE GAME UI & STYLES --- */
-        #offlineGameContainer {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center; overflow-y:auto; padding-bottom: 50px;
-        }
-        .offline-banner {
-            width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem;
-            font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5);
-            animation: blinker 2s linear infinite; box-sizing: border-box; position: sticky; top: 0; z-index: 5001;
-        }
+        #offlineGameContainer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center; overflow-y:auto; padding-bottom: 50px; }
+        .offline-banner { width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem; font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5); animation: blinker 2s linear infinite; box-sizing: border-box; position: sticky; top: 0; z-index: 5001; }
         @keyframes blinker { 50% { opacity: 0.8; } }
-        
         #offlineMenu { text-align: center; margin-top: 30px; width: 100%; }
-        .game-menu-btn {
-            display: block; width: 85%; max-width: 320px; margin: 15px auto; padding: 20px;
-            font-size: 1.2rem; background: var(--card-bg); color: var(--neon-blue);
-            font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue);
-            cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.2);
-        }
+        .game-menu-btn { display: block; width: 85%; max-width: 320px; margin: 15px auto; padding: 20px; font-size: 1.2rem; background: var(--card-bg); color: var(--neon-blue); font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue); cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.2); }
         .game-menu-btn:hover { background: var(--neon-blue); color: black; transform: scale(1.05); }
-        
         .game-view { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
         .back-btn { margin-top: 25px; padding: 12px 25px; background: #444; color: white; border: 2px solid #666; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold;}
-        
-        .mode-btn { padding: 10px 20px; margin: 5px; background: var(--neon-purple); color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
-        .mode-btn.active { background: var(--neon-blue); color: black; font-weight: bold; box-shadow: 0 0 10px var(--neon-blue); }
-
-        /* Tic Tac Toe classes */
-        .ttt-cell { width: 80px; height: 80px; background: #222; border: 2px solid var(--neon-purple); font-size: 40px; color: white; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        
-        /* Ludo Goti classes */
-        #ludoBoard { display: grid; grid-template-columns: repeat(5, 50px); gap: 5px; margin-top: 15px; background: #111; padding: 10px; border-radius: 10px; border: 2px solid var(--neon-purple); }
-        .ludo-cell { width: 50px; height: 50px; background: #333; border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 25px; position: relative; }
-        .ludo-home { background: #4caf50; border: 2px solid white; }
-        #diceBtn { margin-top: 20px; padding: 15px 30px; font-size: 1.5rem; background: var(--neon-blue); border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .goti { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; position: absolute; box-shadow: 0 0 5px black; }
-        .goti-red { background: red; z-index: 2; margin-top:-10px; margin-left:-10px;}
-        .goti-blue { background: #00d4ff; z-index: 1; margin-top:10px; margin-left:10px;}
-
-        /* Snake classes */
-        #snakeCanvas { background: #111; border: 2px solid var(--neon-purple); margin-top: 15px; border-radius: 10px; }
-
-        /* --- PORTFOLIO & PROJECTS STYLES --- */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px 20px;
-            border: 2px solid #333;
-            text-decoration: none;
-            color: white;
-            transition: 0.4s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
-            text-align: center;
-            min-height: 120px;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--neon-blue);
-            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
-        }
-        
-        .project-card h3 {
-            color: var(--neon-blue);
-            margin: 0 0 10px;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Heartbeat Animation for Trending */
-        .heartbeat-effect {
-            animation: portfolioPulse 1.2s infinite alternate;
-            border-color: var(--neon-purple) !important;
-            order: -1; 
-        }
-        
-        @keyframes portfolioPulse {
-            0% { box-shadow: 0 0 10px var(--neon-purple); transform: scale(1); }
-            100% { box-shadow: 0 0 30px var(--neon-blue), 0 0 20px var(--neon-purple); transform: scale(1.03); }
-        }
-        
-        .trending-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: red;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            box-shadow: 0 0 15px red;
-            animation: blinker 1s linear infinite;
-        }
-        
-        .search-box {
-            width: 90%;
-            max-width: 500px;
-            padding: 15px;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            border: 2px solid var(--neon-blue);
-            background: #111;
-            color: white;
-            outline: none;
-            text-align: center;
-            transition: 0.3s;
-            margin: 0 auto;
-            display: block;
-        }
-        
-        .search-box:focus {
-            box-shadow: 0 0 20px var(--neon-blue);
-            border-color: var(--neon-purple);
-        }
     </style>
 </head>
 <body>
 
-<div id="welcome-overlay" onclick="closeOverlay()">
-    <div style="text-align:center">
-        <h1 style="color:var(--neon-blue)">ADARSH COMPUTER SERVICES</h1>
-        <p style="color:#888;">Tap to Enter</p>
+<!-- Circle Booster Loading Animation -->
+<div id="startup-loader">
+    <div class="booster-circle"></div>
+    <div class="booster-text">ACS STARTING...</div>
+</div>
+
+<!-- Main Wrapper -->
+<div id="main-content">
+
+    <nav class="navbar">
+        <div class="nav-logo"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo"></div>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="nav-links" id="navLinks">
+        <a href="#" onclick="showSection('home')">🏠 Home</a>
+        <a href="#" onclick="showSection('portfolio')" style="color:var(--neon-blue); font-weight:bold;">💼 Our Portfolio/Projects</a>
+        <a href="#" onclick="showSection('album')">🖼️ Photo Album</a>
+        <a href="#" onclick="showSection('owner')">👤 Owner Info</a>
+        <a href="https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/" target="_blank" style="color:var(--neon-purple); font-weight:bold;">🌐 Social Medias</a>
+        <a href="#" onclick="showSection('contact')">📞 Contact Us</a>
+        <a href="https://share.google/7bQp0x94iQ9wAqf2E" target="_blank" style="color:#ffcc00;">⭐ Rate & Review</a>
+        <a href="https://acsadarsh.github.io/SERVICE/" target="_blank" style="color:#ffcc00;">💌 SERVICE REQUEST</a>
     </div>
-</div>
 
-<nav class="navbar">
-    <div class="nav-logo"><img src="https://i.ibb.co/hFRHRQ97/image.jpg" alt="ACS Logo"></div>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-</nav>
+    <div id="home" class="section active">
+        <!-- UPDATED HEADER WITH YOUR NAME -->
+        <header style="text-align:center; padding-bottom: 20px;">
+            <img src="https://i.ibb.co/hFRHRQ97/image.jpg" style="width:100px; border-radius:50%; border:3px solid var(--neon-blue);" alt="Logo">
+            <h1>Adarsh Computer Services & Solve</h1>
+            <p style="color:var(--neon-blue); margin-bottom: 5px; font-size: 1.1rem;">Expert IT, AI & Digital Solutions in Itkhori</p>
+            <h3 style="color: white; margin-top: 5px; letter-spacing: 1px; text-shadow: 0 0 10px var(--neon-purple);">MR. ADARSH KUMAR CHANDRAVANSHI</h3>
+        </header>
 
-<div class="nav-links" id="navLinks">
-    <a href="#" onclick="showSection('home')">🏠 Home</a>
-    <a href="#" onclick="showSection('portfolio')" style="color:var(--neon-blue); font-weight:bold;">💼 Our Portfolio/Projects</a>
-    <a href="#" onclick="showSection('album')">🖼️ Photo Album</a>
-    <a href="#" onclick="showSection('owner')">👤 Owner Info</a>
-    <a href="#" onclick="showSection('contact')">📞 Contact Us</a>
-    <a href="https://share.google/7bQp0x94iQ9wAqf2E" target="_blank" style="color:#ffcc00;">⭐ Rate & Review</a>
-    <a href="https://acsadarsh.github.io/SERVICE/" target="_blank" style="color:#ffcc00;">💌 SERVICE REQUEST</a>
-</div>
-
-<div id="home" class="section active">
-    <header style="text-align:center; padding-bottom: 20px;">
-        <img src="https://i.ibb.co/hFRHRQ97/image.jpg" style="width:100px; border-radius:50%; border:3px solid var(--neon-blue);" alt="Logo">
-        <h1>Adarsh Computer Services & Solve</h1>
-        <p style="color:var(--neon-blue)">Expert IT & Digital Solutions in Itkhori</p>
-    </header>
-
-    <div class="container">
-        <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Our Premium IT Services</h2>
-        
-        <div class="services-grid">
-            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072" class="service-img" alt="Web">
-                <div class="service-info"><h3>Website Development</h3><p>Custom professional websites for your business.</p></div>
-            </a>
-            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070" class="service-img" alt="App">
-                <div class="service-info"><h3>App Development</h3><p>Android & iOS mobile applications.</p></div>
-            </a>
-            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=2070" class="service-img" alt="Edit">
-                <div class="service-info"><h3>Photo & Video Editing</h3><p>High-quality creative editing for YouTube & Ads.</p></div>
-            </a>
-            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=2070" class="service-img" alt="Hosting">
-                <div class="service-info"><h3>Hosting & Domain</h3><p>Fast server hosting and domain registration.</p></div>
-            </a>
-            <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015" class="service-img" alt="Publish">
-                <div class="service-info"><h3>Website Publishing</h3><p>Deploying and managing your site online.</p></div>
-            </a>
-             <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                <img src="https://i.ibb.co/8D8dxmGF/image.jpg" class="service-img" alt="Cyber">
-                <div class="service-info"><h3>Cyber Cafe Services</h3><p>Aadhaar, PAN, and Online Form filling.</p></div>
-            </a>
-        </div>
-
-        <a href="https://acsadarsh.github.io/SERVICE/" class="big-btn">FOR SERVICE REQUEST CLICK HERE</a>
-    </div>
-</div>
-
-<div id="portfolio" class="section">
-    <div class="container" style="text-align:center">
-        <h2 style="border-bottom: 2px solid var(--neon-purple); padding-bottom:10px; display:inline-block;">🚀 OUR PORTFOLIO & PROJECTS</h2>
-        <p style="color:#aaa; margin-bottom: 25px;">Mera banaya gaya sara live work yahan dekhein</p>
-        
-        <input type="text" id="projectSearch" class="search-box" placeholder="🔍 Search any project..." onkeyup="filterProjects()">
-        
-        <div id="projectList" class="portfolio-grid">
-            </div>
-    </div>
-</div>
-
-<div id="album" class="section">
-    <div class="container">
-        <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Photo & Video Album</h2>
-        
-        <div class="tab-container">
-            <button class="tab-btn active" onclick="switchMediaTab('photos', this)">📷 Photos</button>
-            <button class="tab-btn" onclick="switchMediaTab('videos', this)">🎥 Videos</button>
-        </div>
-
-        <div id="photos" class="tab-content active">
-            <p style="text-align:center; color:#888; font-size:0.9rem;">Click any photo to view full size</p>
-            <div class="media-grid">
-                <img src="https://i.ibb.co/DfCxCQfb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/zWtvsR6s/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/8gTPHg6z/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/4Z00SLpj/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/rRdQ2rKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/5gdwg40v/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/v6gbPdWV/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/8D2pYVtB/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/chTCzNKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/21gqJGjX/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/ymzjnq1f/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/7JvLCtW8/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/1tRQ502B/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/5x1yz6HT/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/bR5DzjD9/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/4Rv31Bxm/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/1YwTY6kb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/7tfbrbqq/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                <img src="https://i.ibb.co/tMh6bCRp/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-            </div>
-        </div>
-
-        <div id="videos" class="tab-content">
-             <p style="text-align:center; color:#888; font-size:0.9rem;">Click any video to play full screen</p>
-            <div class="media-grid">
-                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1a2D7As_4DzMIOrUYZAQ-K2yMIjWT9LkS/preview')">🎥 Play Video 1</div>
-                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ntFSbwDpDqX6erbUkIeZc3HEtB0eUlCI/preview')">🎥 Play Video 2</div>
-                <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ZmHVy25oa_01sQJUL_-iMSq3yDGW2eZ3/preview')">🎥 Play Video 3</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="owner" class="section">
-    <div class="container" style="text-align:center">
-        <h2>OWNER INFORMATION</h2>
-        <div style="background:rgba(255,255,255,0.05); padding:30px; border-radius:20px; border:1px solid var(--neon-blue);">
-            <h3>⭐ ADARSH COMPUTER SERVICES & SOLVE 🖥️ 💻 ⭐</h3>
-            <h3>Adarsh Kumar Chandravanshi</h3>
-            <p>Founder & IT Professional</p>
-            <hr style="border-color: #333; margin: 20px 0;">
+        <div class="container">
+            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Our Premium Services</h2>
             
-            <p>Follow us on Social Media:</p>
-            
-            <a href="https://youtube.com/@hk_gaming_india_yt?si=1q2o9oqvGcp0nxck" target="_blank" class="social-btn" style="background:#ff0000;">YouTube Channel</a>
-            <a href="https://www.instagram.com/royal_chandravanshi_0.7?igsh=NDU3aDBlbmRvbXk1" target="_blank" class="social-btn" style="background:#e1306c;">Instagram</a>
-            <a href="https://t.me/adarsh24361" target="_blank" class="social-btn" style="background:#0088cc;">Telegram Channel</a>
-            <a href="https://whatsapp.com/channel/0029Vb72goSFSAt3aaSAp11y" target="_blank" class="social-btn" style="background:#25d366;">WhatsApp Channel</a>
-            <a href="https://wa.me/message/63ES2UJAXGDGE1" target="_blank" class="social-btn" style="background:#fffc00; color: black;">WHATSAPP</a>
-            <a href="https://www.linkedin.com/in/adarsh-kumar-chandravanshi-562b75375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-btn" style="background:#0077b5;">LinkedIn Profile</a>
+            <input type="text" id="serviceSearch" class="search-box" placeholder="🔍 Search services (e.g. Video, AI, Web)..." onkeyup="filterServices()">
+
+            <div class="services-grid" id="servicesList">
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600" class="service-img" alt="Web">
+                    <div class="service-info"><h3>Website Development</h3><p>Custom professional websites for your business.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=600" class="service-img" alt="App">
+                    <div class="service-info"><h3>App Development</h3><p>Android & iOS mobile applications.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600" class="service-img" alt="Graphic">
+                    <div class="service-info"><h3>Graphic & Photo Editing</h3><p>High-quality graphic design and photo retouching.</p></div>
+                </a>
+                
+                <!-- FIXED VIDEO EDITING THUMBNAIL -->
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=600" class="service-img" alt="Video Edit">
+                    <div class="service-info"><h3>Video Editing</h3><p>Professional & cinematic video editing for YouTube & Ads.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600" class="service-img" alt="Video Shoot">
+                    <div class="service-info"><h3>Video Shoot & Videography</h3><p>High-quality video shooting for events and content creators.</p></div>
+                </a>
+                
+                <!-- FIXED MOBILE REPAIR THUMBNAIL -->
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=600" class="service-img" alt="Mobile Repair">
+                    <div class="service-info"><h3>Mobile Repairing & Problems</h3><p>Hardware and software solutions for all mobile phones.</p></div>
+                </a>
+
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600" class="service-img" alt="Server">
+                    <div class="service-info"><h3>Internet & Server Solutions</h3><p>Resolving network errors, slow internet, and server crashes.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600" class="service-img" alt="AI Video">
+                    <div class="service-info"><h3>AI Video Making & Avatar</h3><p>AI influencer videos, Avatars, and Advertisement making.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?q=80&w=600" class="service-img" alt="AI Voice">
+                    <div class="service-info"><h3>AI Voice Over & Song Making</h3><p>Indian, Hindi, English AI voiceovers & Real song making.</p></div>
+                </a>
+
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?q=80&w=600" class="service-img" alt="Script">
+                    <div class="service-info"><h3>Script Writing & All AI Work</h3><p>Creative script writing and all types of advanced AI tasks.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=600" class="service-img" alt="SIM">
+                    <div class="service-info"><h3>SIM, Temp Email & Number</h3><p>SIM services, temporary emails, and temp mobile numbers.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="service-img" alt="3D">
+                    <div class="service-info"><h3>3D Home Making</h3><p>Architectural 3D home design and mapping.</p></div>
+                </a>
+                
+                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
+                    <img src="https://i.ibb.co/8D8dxmGF/image.jpg" class="service-img" alt="Cyber">
+                    <div class="service-info"><h3>Cyber Cafe Services</h3><p>Aadhaar, PAN, Online Forms & All Internet Work.</p></div>
+                </a>
+                
+                <a href="javascript:toggleChat()" class="service-card" style="border-color: var(--neon-purple);">
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600" class="service-img" alt="Chat">
+                    <div class="service-info"><h3>Any Problem? Chat With Me</h3><p>I will try to solve any of your IT or technical problems.</p></div>
+                </a>
+            </div>
+
+            <a href="https://acsadarsh.github.io/SERVICE/" class="big-btn">FOR SERVICE REQUEST CLICK HERE</a>
         </div>
     </div>
-</div>
 
-<div id="contact" class="section">
-    <div class="container" style="text-align:center">
-        <h2>CONTACT US</h2>
-        <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
-        <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
-        <p>📞 WhatsApp: <a href="https://wa.me/918252900810" style="color:var(--neon-blue)">8252900810</a></p>
-        <p><strong>MAIL:</strong> acs.adarsh.com@gmail.com</p>
+    <div id="portfolio" class="section">
+        <div class="container" style="text-align:center">
+            <h2 style="border-bottom: 2px solid var(--neon-purple); padding-bottom:10px; display:inline-block;">🚀 OUR PORTFOLIO & PROJECTS</h2>
+            <p style="color:#aaa; margin-bottom: 25px;">Mera banaya gaya sara live work yahan dekhein, har project ka relative thumbnail laga hai.</p>
+            
+            <input type="text" id="projectSearch" class="search-box" placeholder="🔍 Search any project..." onkeyup="filterProjects()">
+            
+            <div id="projectList" class="portfolio-grid">
+                <!-- Projects will be injected here via JS -->
+            </div>
+        </div>
     </div>
-</div>
 
-<div class="floating-chat-btn" onclick="toggleChat()">💬</div>
+    <div id="album" class="section">
+        <div class="container">
+            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Photo & Video Album</h2>
+            
+            <div class="tab-container">
+                <button class="tab-btn active" onclick="switchMediaTab('photos', this)">📷 Photos</button>
+                <button class="tab-btn" onclick="switchMediaTab('videos', this)">🎥 Videos</button>
+            </div>
+
+            <div id="photos" class="tab-content active">
+                <p style="text-align:center; color:#888; font-size:0.9rem;">Click any photo to view full size</p>
+                <div class="media-grid">
+                    <img src="https://i.ibb.co/DfCxCQfb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/zWtvsR6s/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/8gTPHg6z/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/4Z00SLpj/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/rRdQ2rKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/5gdwg40v/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/v6gbPdWV/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/8D2pYVtB/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/chTCzNKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/21gqJGjX/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <img src="https://i.ibb.co/ymzjnq1f/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                </div>
+            </div>
+
+            <div id="videos" class="tab-content">
+                 <p style="text-align:center; color:#888; font-size:0.9rem;">Click any video to play full screen</p>
+                <div class="media-grid">
+                    <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1a2D7As_4DzMIOrUYZAQ-K2yMIjWT9LkS/preview')">🎥 Play Video 1</div>
+                    <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ntFSbwDpDqX6erbUkIeZc3HEtB0eUlCI/preview')">🎥 Play Video 2</div>
+                    <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ZmHVy25oa_01sQJUL_-iMSq3yDGW2eZ3/preview')">🎥 Play Video 3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="owner" class="section">
+        <div class="container" style="text-align:center">
+            <h2>OWNER INFORMATION</h2>
+            <div style="background:rgba(255,255,255,0.05); padding:30px; border-radius:20px; border:2px solid var(--neon-purple); text-align: left; max-width: 650px; margin: auto; box-shadow: 0 0 20px rgba(157,0,255,0.2);">
+                
+                <h3 style="text-align: center; color: white;">⭐ ADARSH COMPUTER SERVICES & SOLVE ⭐</h3>
+                
+                <!-- HIGHLIGHTED NAME -->
+                <h1 style="text-align: center; color: var(--neon-blue); font-size: 2.8rem; text-shadow: 0 0 15px var(--neon-blue); margin: 15px 0; text-transform: uppercase;">Adarsh Kumar Chandravanshi</h1>
+                <p style="text-align: center; color: #aaa; font-size: 1.2rem; margin-top: -10px;">Founder & CEO</p>
+
+                <hr style="border-color: #333; margin: 25px 0;">
+                
+                <ul style="list-style: none; padding: 0; font-size: 1.2rem; line-height: 2;">
+                    <li>📅 <strong>Business Opening Date:</strong> 25 Nov 2023</li>
+                    <li>💻 <strong>Profession:</strong> IT Professional & AI Expert</li>
+                    <li>🌐 <strong>Cyber Cafe:</strong> CSC Owner & Associate</li>
+                    <li>🚀 <strong>Expertise:</strong> Web Development, App Development, Video Editing, AI Voice & Avatar creation.</li>
+                    
+                    <!-- HIGHLIGHTED LOCATION -->
+                    <li style="font-size: 1.4rem; color: #ffcc00; font-weight: bold; padding: 15px; background: rgba(255,204,0,0.1); border-radius: 8px; border: 1px solid #ffcc00; margin-top: 20px; text-align: center;">
+                        📍 Location: Chhota Basti, Itkhori, Chatra, Jharkhand
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="section">
+        <div class="container" style="text-align:center">
+            <h2>CONTACT US</h2>
+            <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
+            <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
+            
+            <div class="contact-form">
+                <h3 style="color:var(--neon-blue); margin-top:0;">Send us a message</h3>
+                <form action="https://formsubmit.co/acs.adarsh.com@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="New Request from ACS Website!">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="tel" name="Mobile_Number" placeholder="Mobile Number" required>
+                    <input type="tel" name="WhatsApp_Number" placeholder="WhatsApp Number" required>
+                    <input type="email" name="Email_ID" placeholder="Email ID" required>
+                    <textarea name="Reason_Description" rows="4" placeholder="Describe the reason for contact..." required></textarea>
+                    <button type="submit">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- End of Main Content -->
+
+<!-- Advanced AI Chat Assistant Button with Image -->
+<div class="floating-chat-btn" onclick="toggleChat()" title="Chat with AI">
+    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=200" alt="AI Bot">
+</div>
 
 <div class="chat-container" id="chatbotWindow">
     <div class="chat-header">
-        🤖 ACS Full Assistant
+        🤖 ACS Smart Assistant
         <span class="close-chat" onclick="toggleChat()">✖</span>
     </div>
     <div class="chat-box" id="chatBox">
-        <div class="message bot-msg">Namaste! Main ACS ka Smart Assistant hoon. Aapko Adarsh Sir ke bare me, services ya contact number ki jankari chahiye toh mujhse puchiye!</div>
+        <div class="message bot-msg">Hello, main aaj aapki kis tarah se sahayata karun? (Aapko website banwani hai, AI work karwana hai, ya projects dekhne hain?)</div>
     </div>
     <div class="chat-input-area">
-        <input type="text" id="userInput" placeholder="Type message..." onkeypress="handleChatPress(event)">
+        <input type="text" id="userInput" placeholder="Kuch bhi likhiye..." onkeypress="handleChatPress(event)">
         <button onclick="sendChat()">Send</button>
     </div>
 </div>
 
+<!-- Modal for Images/Videos -->
 <div id="mediaModal">
     <span id="modalClose" onclick="closeModal()">&times;</span>
     <div id="modalContentContainer" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"></div>
 </div>
 
+<!-- Offline Games Section -->
 <div id="offlineGameContainer">
     <div class="offline-banner">🔴 YOU ARE OFFLINE - Aapka internet band hai! Tab tak game kheliye:</div>
-    
     <div id="offlineMenu">
         <h2 style="color:var(--neon-blue);">OFFLINE ARCADE 🎮</h2>
         <p style="color:#aaa; margin-bottom:20px;">Choose a game to pass the time:</p>
@@ -507,74 +423,21 @@
         <button class="game-menu-btn" onclick="openGame('gameAir')">✈️ Air Fighter</button>
         <p style="color:#666; margin-top: 30px;">Data on hote hi website chalu ho jayegi.</p>
     </div>
-
-    <div id="gameLudo" class="game-view">
-        <h2 style="color:var(--neon-blue);">🎲 Mini Ludo Goti</h2>
-        <div>
-            <button class="mode-btn active" id="ludoModeRobot" onclick="setLudoMode('robot')">Play with Robot 🤖</button>
-            <button class="mode-btn" id="ludoModeHuman" onclick="setLudoMode('human')">2 Players 👨‍🤝‍👨</button>
-        </div>
-        <h3 id="ludoStatus" style="color:white; margin:10px 0;">Red's Turn!</h3>
-        
-        <div id="ludoBoard">
-            </div>
-
-        <button id="diceBtn" onclick="rollLudoDice()">Roll Dice 🎲</button>
-        <p style="color:#aaa; margin-top:10px; font-size:0.9rem;">Roll & reach Box 24 first! Kattne par wapas Start.</p>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameTtt" class="game-view">
-        <h2 style="color:var(--neon-blue);">❌ Tic Tac Toe ⭕</h2>
-        <div>
-            <button class="mode-btn active" id="tttModeRobot" onclick="setTttMode('robot')">Play with Robot 🤖</button>
-            <button class="mode-btn" id="tttModeHuman" onclick="setTttMode('human')">2 Players 👨‍🤝‍👨</button>
-        </div>
-        <h3 id="tttStatus" style="color:white; margin:10px 0;">Player X's turn</h3>
-        <div id="tttBoard" style="display:grid; grid-template-columns:repeat(3, 80px); gap:5px; margin-top:10px;">
-            <div class="ttt-cell" id="ttt0" onclick="playTtt(0)"></div>
-            <div class="ttt-cell" id="ttt1" onclick="playTtt(1)"></div>
-            <div class="ttt-cell" id="ttt2" onclick="playTtt(2)"></div>
-            <div class="ttt-cell" id="ttt3" onclick="playTtt(3)"></div>
-            <div class="ttt-cell" id="ttt4" onclick="playTtt(4)"></div>
-            <div class="ttt-cell" id="ttt5" onclick="playTtt(5)"></div>
-            <div class="ttt-cell" id="ttt6" onclick="playTtt(6)"></div>
-            <div class="ttt-cell" id="ttt7" onclick="playTtt(7)"></div>
-            <div class="ttt-cell" id="ttt8" onclick="playTtt(8)"></div>
-        </div>
-        <button onclick="resetTtt()" style="margin-top:20px; padding:10px 20px; background:var(--neon-purple); color:white; border:none; border-radius:5px; font-size:1.1rem; cursor:pointer;">🔄 Restart Game</button>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameSnake" class="game-view">
-        <h2 style="color:var(--neon-blue);">🐍 Classic Snake</h2>
-        <h3 style="color:white; margin:0;">Score: <span id="snakeScore">0</span></h3>
-        <canvas id="snakeCanvas" width="300" height="300"></canvas>
-        <div style="display:grid; grid-template-columns: 60px 60px 60px; gap:10px; margin-top:15px; justify-content:center;">
-            <div></div><button class="mode-btn" onclick="changeSnakeDir('UP')">⬆️</button><div></div>
-            <button class="mode-btn" onclick="changeSnakeDir('LEFT')">⬅️</button>
-            <button class="mode-btn" onclick="changeSnakeDir('DOWN')">⬇️</button>
-            <button class="mode-btn" onclick="changeSnakeDir('RIGHT')">➡️</button>
-        </div>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
-    <div id="gameAir" class="game-view">
-        <h2 style="color:var(--neon-blue);">✈️ Air Fighter</h2>
-        <h3 style="color:white; margin:0;">Score: <span id="airScore">0</span></h3>
-        <div id="airGameArea" style="position:relative; width:300px; height:350px; background:#000; overflow:hidden; border:2px solid var(--neon-purple); border-radius:10px; margin-top:10px;">
-        </div>
-        <div style="display:flex; justify-content:space-between; width:300px; margin-top:15px;">
-            <button onclick="movePlane(-30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">⬅️</button>
-            <button onclick="shootBullet()" style="padding:15px 30px; font-size:20px; background:red; border:none; border-radius:10px; color:white;">🔥 FIRE</button>
-            <button onclick="movePlane(30)" style="padding:15px 30px; font-size:20px; background:var(--neon-blue); border:none; border-radius:10px;">➡️</button>
-        </div>
-        <button class="back-btn" onclick="closeGame()">🔙 Back to Menu</button>
-    </div>
-
 </div>
 
 <script>
+    /* --- CIRCLE BOOSTER LOADER SCRIPT --- */
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            let loader = document.getElementById('startup-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            }, 500);
+        }, 1500);
+    });
+
     /* --- Normal Website Scripts --- */
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     function showSection(sectionId) {
@@ -583,15 +446,14 @@
         document.getElementById('navLinks').classList.remove('active');
         window.scrollTo(0,0);
     }
-    function closeOverlay() {
-        document.getElementById('welcome-overlay').style.display = 'none';
-    }
+    
     function switchMediaTab(tabId, btn) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         btn.classList.add('active');
     }
+
     function openModal(type, src) {
         const modal = document.getElementById('mediaModal');
         const container = document.getElementById('modalContentContainer');
@@ -607,373 +469,31 @@
         document.getElementById('modalContentContainer').innerHTML = ""; 
     }
 
-    /* --- Chatbot Script --- */
-    function toggleChat() {
-        const chatWindow = document.getElementById('chatbotWindow');
-        chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
-    }
-    function sendChat() {
-        let inputField = document.getElementById("userInput");
-        let msg = inputField.value.trim();
-        if(msg === "") return;
-        
-        let chatBox = document.getElementById("chatBox");
-        let userDiv = document.createElement("div");
-        userDiv.className = "message user-msg";
-        userDiv.textContent = msg;
-        chatBox.appendChild(userDiv);
-        inputField.value = "";
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        setTimeout(() => {
-            let botDiv = document.createElement("div");
-            botDiv.className = "message bot-msg";
-            let lowerMsg = msg.toLowerCase();
-            
-            if(lowerMsg.includes("service") || lowerMsg.includes("kam") || lowerMsg.includes("work")) {
-                botDiv.innerHTML = "Hum website/app development, editing, aur cyber cafe services dete hain.";
-            } else if(lowerMsg.includes("contact") || lowerMsg.includes("number") || lowerMsg.includes("phone")) {
-                botDiv.innerHTML = "Sirf ek hi Official Number hai: <br><b style='color:var(--neon-blue); font-size:1.3rem;'>8252900810</b>";
-            } else if(lowerMsg.includes("address") || lowerMsg.includes("location")) {
-                botDiv.textContent = "Humara address hai: Chhota Basti, Itkhori, Chatra, Jharkhand.";
-            } else if(lowerMsg.includes("owner") || lowerMsg.includes("malik") || lowerMsg.includes("adarsh")) {
-                botDiv.innerHTML = "Is business ke Owner aur Founder ka naam hai: <b style='color:var(--neon-blue); font-size:1.2rem;'>Adarsh Kumar Chandravanshi</b>.<br>Unka direct WhatsApp number <b>8252900810</b> hai.";
-            } else {
-                botDiv.textContent = "Mujhe iski poori jankari nahi hai. Main aapko Adarsh Sir ke direct WhatsApp par bhej raha hoon...";
-                setTimeout(() => {
-                    let waMessage = encodeURIComponent("Hello Adarsh Sir, mera ek sawal hai: " + msg);
-                    window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
-                }, 2000); 
-            }
-            chatBox.appendChild(botDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 1000);
-    }
-    function handleChatPress(event) { if(event.key === "Enter") sendChat(); }
-
-    /* --- OFFLINE ZONE MANAGER --- */
-    let gameInterval = null;
-
-    function checkConnection() {
-        if(!navigator.onLine) {
-            document.getElementById('offlineGameContainer').style.display = 'flex';
-            closeGame(); 
-        } else {
-            document.getElementById('offlineGameContainer').style.display = 'none';
-            closeGame();
-        }
-    }
-    window.addEventListener('offline', checkConnection);
-    window.addEventListener('online', checkConnection);
-    window.onload = checkConnection;
-
-    function openGame(gameId) {
-        document.getElementById('offlineMenu').style.display = 'none';
-        document.getElementById(gameId).style.display = 'flex';
-        clearInterval(gameInterval); 
-        
-        if(gameId === 'gameAir') startAirGame();
-        if(gameId === 'gameTtt') resetTtt();
-        if(gameId === 'gameLudo') initLudo();
-        if(gameId === 'gameSnake') startSnake();
+    /* --- HOME SERVICES SEARCH --- */
+    function filterServices() {
+        let input = document.getElementById('serviceSearch').value.toLowerCase();
+        let cards = document.querySelectorAll('#servicesList .service-card');
+        cards.forEach(card => {
+            let text = card.innerText.toLowerCase();
+            card.style.display = text.includes(input) ? "block" : "none";
+        });
     }
 
-    function closeGame() {
-        document.querySelectorAll('.game-view').forEach(g => g.style.display = 'none');
-        document.getElementById('offlineMenu').style.display = 'block';
-        clearInterval(gameInterval);
-    }
-
-    /* ----------------------------------------------------
-       1. TIC TAC TOE (With Robot & 2 Player)
-    ----------------------------------------------------- */
-    let tttBoard = ["", "", "", "", "", "", "", "", ""];
-    let currentPlayer = "X"; let gameActive = true;
-    let tttMode = 'robot'; 
-
-    function setTttMode(mode) {
-        tttMode = mode;
-        document.getElementById('tttModeRobot').classList.remove('active');
-        document.getElementById('tttModeHuman').classList.remove('active');
-        if(mode === 'robot') document.getElementById('tttModeRobot').classList.add('active');
-        else document.getElementById('tttModeHuman').classList.add('active');
-        resetTtt();
-    }
-
-    function resetTtt() {
-        tttBoard = ["", "", "", "", "", "", "", "", ""];
-        currentPlayer = "X"; gameActive = true;
-        document.getElementById('tttStatus').innerText = "Player X's turn";
-        for(let i=0; i<9; i++) {
-            let cell = document.getElementById('ttt'+i);
-            cell.innerText = ""; cell.style.color = "white";
-        }
-    }
-
-    function playTtt(index, isRobot = false) {
-        if(tttBoard[index] !== "" || !gameActive) return;
-        if(tttMode === 'robot' && currentPlayer === 'O' && !isRobot) return;
-
-        tttBoard[index] = currentPlayer;
-        let cell = document.getElementById('ttt'+index);
-        cell.innerText = currentPlayer;
-        cell.style.color = currentPlayer === "X" ? "var(--neon-blue)" : "red";
-        
-        checkTttWin();
-
-        if(gameActive && tttMode === 'robot' && currentPlayer === 'O') {
-            document.getElementById('tttStatus').innerText = "🤖 Robot thinking...";
-            setTimeout(robotPlayTtt, 600);
-        }
-    }
-
-    function robotPlayTtt() {
-        if(!gameActive) return;
-        let empty = [];
-        for(let i=0; i<9; i++) if(tttBoard[i] === "") empty.push(i);
-        if(empty.length > 0) {
-            let pick = empty[Math.floor(Math.random() * empty.length)];
-            playTtt(pick, true);
-        }
-    }
-
-    function checkTttWin() {
-        const winConditions = [
-            [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]
-        ];
-        let roundWon = false;
-        for(let i=0; i<8; i++) {
-            let [a, b, c] = winConditions[i];
-            if(tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) { roundWon = true; break; }
-        }
-        if(roundWon) { 
-            document.getElementById('tttStatus').innerText = "🎉 Player " + currentPlayer + " WINS!"; 
-            gameActive = false; return; 
-        }
-        if(!tttBoard.includes("")) { 
-            document.getElementById('tttStatus').innerText = "It's a DRAW!"; 
-            gameActive = false; return; 
-        }
-        currentPlayer = currentPlayer === "X" ? "O" : "X";
-        if(tttMode === 'human' || currentPlayer === 'X') {
-            document.getElementById('tttStatus').innerText = "Player " + currentPlayer + "'s turn";
-        }
-    }
-
-    /* ----------------------------------------------------
-       2. MINI LUDO GOTI RACE (With Robot)
-    ----------------------------------------------------- */
-    let ludoMode = 'robot';
-    let p1Pos = 0, p2Pos = 0;
-    let ludoTurn = 1;
-    let ludoActive = false;
-
-    function setLudoMode(mode) {
-        ludoMode = mode;
-        document.getElementById('ludoModeRobot').classList.remove('active');
-        document.getElementById('ludoModeHuman').classList.remove('active');
-        if(mode === 'robot') document.getElementById('ludoModeRobot').classList.add('active');
-        else document.getElementById('ludoModeHuman').classList.add('active');
-        initLudo();
-    }
-
-    function initLudo() {
-        p1Pos = 0; p2Pos = 0; ludoTurn = 1; ludoActive = true;
-        document.getElementById('ludoStatus').innerText = "🔴 Red's Turn! Roll Dice.";
-        drawLudoBoard();
-        document.getElementById('diceBtn').disabled = false;
-    }
-
-    function drawLudoBoard() {
-        let board = document.getElementById('ludoBoard');
-        board.innerHTML = '';
-        for(let i=0; i<25; i++) {
-            let cell = document.createElement('div');
-            cell.className = 'ludo-cell';
-            cell.innerText = i;
-            if(i === 24) cell.classList.add('ludo-home');
-            
-            if(i === p1Pos) { let g1 = document.createElement('div'); g1.className = 'goti goti-red'; cell.appendChild(g1); }
-            if(i === p2Pos) { let g2 = document.createElement('div'); g2.className = 'goti goti-blue'; cell.appendChild(g2); }
-            board.appendChild(cell);
-        }
-    }
-
-    function rollLudoDice(isRobot = false) {
-        if(!ludoActive) return;
-        if(ludoMode === 'robot' && ludoTurn === 2 && !isRobot) return;
-        
-        document.getElementById('diceBtn').disabled = true;
-        let diceVal = Math.floor(Math.random() * 6) + 1;
-        document.getElementById('diceBtn').innerText = `Rolled: ${diceVal} 🎲`;
-
-        setTimeout(() => {
-            if(ludoTurn === 1) {
-                p1Pos += diceVal;
-                if(p1Pos >= 24) p1Pos = 24;
-                if(p1Pos === p2Pos && p1Pos !== 24 && p2Pos !== 0) { p2Pos = 0; alert("🔴 Red ne Blue ko kaat diya!"); }
-            } else {
-                p2Pos += diceVal;
-                if(p2Pos >= 24) p2Pos = 24;
-                if(p2Pos === p1Pos && p2Pos !== 24 && p1Pos !== 0) { p1Pos = 0; alert("🔵 Blue ne Red ko kaat diya!"); }
-            }
-            
-            drawLudoBoard();
-
-            if(p1Pos === 24) { document.getElementById('ludoStatus').innerText = "🎉 RED WINS!"; ludoActive = false; return; }
-            if(p2Pos === 24) { document.getElementById('ludoStatus').innerText = "🎉 BLUE WINS!"; ludoActive = false; return; }
-
-            ludoTurn = ludoTurn === 1 ? 2 : 1;
-            
-            if(ludoTurn === 1) {
-                document.getElementById('ludoStatus').innerText = "🔴 Red's Turn! Roll Dice.";
-                document.getElementById('diceBtn').innerText = "Roll Dice 🎲";
-                document.getElementById('diceBtn').disabled = false;
-            } else {
-                if(ludoMode === 'robot') {
-                    document.getElementById('ludoStatus').innerText = "🤖 Robot's Turn (Blue)...";
-                    setTimeout(() => rollLudoDice(true), 1000);
-                } else {
-                    document.getElementById('ludoStatus').innerText = "🔵 Blue's Turn! Roll Dice.";
-                    document.getElementById('diceBtn').innerText = "Roll Dice 🎲";
-                    document.getElementById('diceBtn').disabled = false;
-                }
-            }
-        }, 500);
-    }
-
-    /* ----------------------------------------------------
-       3. SNAKE GAME 
-    ----------------------------------------------------- */
-    let canvas = document.getElementById('snakeCanvas');
-    let ctx = canvas.getContext('2d');
-    let snake = [{x: 150, y: 150}];
-    let dx = 10, dy = 0;
-    let foodX, foodY;
-    let snakeScore = 0;
-
-    function startSnake() {
-        snake = [{x: 150, y: 150}]; dx = 10; dy = 0; snakeScore = 0;
-        document.getElementById('snakeScore').innerText = snakeScore;
-        createFood();
-        gameInterval = setInterval(mainSnake, 100);
-    }
-
-    function mainSnake() {
-        if (hasGameEnded()) {
-            alert("Game Over! Score: " + snakeScore);
-            startSnake(); return;
-        }
-        ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        drawFood(); advanceSnake(); drawSnake();
-    }
-
-    function changeSnakeDir(dir) {
-        if(dir === 'UP' && dy !== 10) { dx = 0; dy = -10; }
-        if(dir === 'DOWN' && dy !== -10) { dx = 0; dy = 10; }
-        if(dir === 'LEFT' && dx !== 10) { dx = -10; dy = 0; }
-        if(dir === 'RIGHT' && dx !== -10) { dx = 10; dy = 0; }
-    }
-
-    function advanceSnake() {
-        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
-        snake.unshift(head);
-        if (head.x === foodX && head.y === foodY) {
-            snakeScore += 10; document.getElementById('snakeScore').innerText = snakeScore; createFood();
-        } else { snake.pop(); }
-    }
-
-    function drawSnake() {
-        ctx.fillStyle = 'var(--neon-blue)'; ctx.strokeStyle = 'black';
-        snake.forEach(part => { ctx.fillRect(part.x, part.y, 10, 10); ctx.strokeRect(part.x, part.y, 10, 10); });
-    }
-
-    function createFood() {
-        foodX = Math.round((Math.random() * 290) / 10) * 10;
-        foodY = Math.round((Math.random() * 290) / 10) * 10;
-        snake.forEach(part => { if (part.x == foodX && part.y == foodY) createFood(); });
-    }
-
-    function drawFood() {
-        ctx.fillStyle = 'red'; ctx.fillRect(foodX, foodY, 10, 10);
-    }
-
-    function hasGameEnded() {
-        for (let i = 4; i < snake.length; i++) {
-            if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true;
-        }
-        return snake[0].x < 0 || snake[0].x > 290 || snake[0].y < 0 || snake[0].y > 290;
-    }
-
-    /* ----------------------------------------------------
-       4. AIR FIGHTER 
-    ----------------------------------------------------- */
-    let planeX = 130; let airEnemies = []; let airBullets = []; let airScoreVal = 0;
-    function startAirGame() {
-        document.getElementById('airGameArea').innerHTML = '<div id="airPlayer" style="position:absolute; bottom:10px; left:130px; font-size:35px; transition:0.1s;">✈️</div>';
-        planeX = 130; airEnemies = []; airBullets = []; airScoreVal = 0;
-        document.getElementById('airScore').innerText = airScoreVal;
-        gameInterval = setInterval(updateAirGame, 50);
-    }
-    function movePlane(val) {
-        planeX += val;
-        if(planeX < 0) planeX = 0;
-        if(planeX > 260) planeX = 260;
-        if(document.getElementById('airPlayer')) document.getElementById('airPlayer').style.left = planeX + 'px';
-    }
-    function shootBullet() {
-        let b = document.createElement('div'); b.innerText = '🔥';
-        b.style.position = 'absolute'; b.style.left = (planeX + 8) + 'px'; b.style.bottom = '50px';
-        document.getElementById('airGameArea').appendChild(b);
-        airBullets.push({el: b, x: planeX + 8, y: 50});
-    }
-    function updateAirGame() {
-        for(let i=0; i<airBullets.length; i++) {
-            airBullets[i].y += 15;
-            airBullets[i].el.style.bottom = airBullets[i].y + 'px';
-            if(airBullets[i].y > 350) { airBullets[i].el.remove(); airBullets.splice(i, 1); i--; }
-        }
-        if(Math.random() < 0.08) {
-            let e = document.createElement('div'); e.innerText = '🛸'; e.style.position = 'absolute';
-            let ex = Math.random() * 260; e.style.left = ex + 'px'; e.style.top = '0px'; e.style.fontSize = '30px';
-            document.getElementById('airGameArea').appendChild(e);
-            airEnemies.push({el: e, x: ex, y: 0});
-        }
-        for(let i=0; i<airEnemies.length; i++) {
-            airEnemies[i].y += 5;
-            airEnemies[i].el.style.top = airEnemies[i].y + 'px';
-            for(let j=0; j<airBullets.length; j++) {
-                if(Math.abs(airEnemies[i].x - airBullets[j].x) < 30 && (350 - airEnemies[i].y - airBullets[j].y) < 30) {
-                    airEnemies[i].el.innerText = '💥';
-                    setTimeout((el) => el.remove(), 100, airEnemies[i].el);
-                    airBullets[j].el.remove();
-                    airEnemies.splice(i, 1); airBullets.splice(j, 1); i--;
-                    airScoreVal += 10; document.getElementById('airScore').innerText = airScoreVal;
-                    break;
-                }
-            }
-            if(airEnemies[i] && airEnemies[i].y > 350) {
-                alert("Game Over! UFO Zameen par aa gaya. Score: " + airScoreVal);
-                startAirGame(); break;
-            }
-        }
-    }
-
-    /* ----------------------------------------------------
-       5. PORTFOLIO & TRENDING SYSTEM
-    ----------------------------------------------------- */
+    /* --- PORTFOLIO & TRENDING SYSTEM (FIXED THUMBNAILS) --- */
     let projectsData = [
-        { id: 1, name: "ACS POS", url: "https://acsadarsh.github.io/ACS-POS/", clicks: 0 },
-        { id: 2, name: "ACS CHAT", url: "https://acsadarsh.github.io/ACS-CHAT/", clicks: 0 },
-        { id: 3, name: "COLOUR ARTIST ANSHIKA", url: "https://acsadarsh.github.io/COLOUR-ARTIST-ANSHIKA/", clicks: 0 },
-        { id: 4, name: "Travelling form", url: "https://acsadarsh.github.io/itkhori-to-pitaz-1/", clicks: 0 },
-        { id: 5, name: "Official website", url: "https://acsadarsh.github.io/Acs/", clicks: 0 },
-        { id: 6, name: "Service form", url: "https://acsadarsh.github.io/SERVICE/", clicks: 0 },
-        { id: 7, name: "Photo source", url: "https://acsadarsh.github.io/pan-Mafia-Bittu/", clicks: 0 },
-        { id: 8, name: "E-commerce website", url: "https://acsadarsh.github.io/ACS-JCB-PARTS/", clicks: 0 },
-        { id: 9, name: "Customer customise POS", url: "https://acsadarsh.github.io/Kamdeo-kirana-store/", clicks: 0 },
-        { id: 10, name: "'AI' ACS work assistant", url: "https://acsadarsh.github.io/ACS-WORK-ASSISTANT/", clicks: 0 },
-        { id: 11, name: "Survey form", url: "https://acsadarsh.github.io/CLASS-XI-SURVEY/", clicks: 0 }
+        { id: 1, name: "ACS POS", url: "https://acsadarsh.github.io/ACS-POS/", clicks: 0, img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400" },
+        { id: 2, name: "ACS CHAT", url: "https://acsadarsh.github.io/ACS-CHAT/", clicks: 0, img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400" },
+        { id: 3, name: "COLOUR ARTIST ANSHIKA", url: "https://acsadarsh.github.io/COLOUR-ARTIST-ANSHIKA/", clicks: 0, img: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=400" },
+        // FIXED STUDY CENTRE THUMBNAIL
+        { id: 4, name: "Study centre website", url: "https://acsadarsh.github.io/Google-Group-Of-Education/", clicks: 0, img: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=400" }, 
+        { id: 5, name: "Social media", url: "https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/", clicks: 0, img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=400" },
+        { id: 6, name: "Service form", url: "https://acsadarsh.github.io/SERVICE/", clicks: 0, img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=400" },
+        { id: 7, name: "E-commerce website", url: "https://acsadarsh.github.io/ACS-JCB-PARTS/", clicks: 0, img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=400" },
+        { id: 8, name: "Customer customise POS", url: "https://acsadarsh.github.io/Kamdeo-kirana-store/", clicks: 0, img: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?q=80&w=400" },
+        { id: 9, name: "'AI' ACS work assistant", url: "https://acsadarsh.github.io/ACS-WORK-ASSISTANT/", clicks: 0, img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=400" },
+        { id: 10, name: "Travelling form", url: "https://acsadarsh.github.io/itkhori-to-pitaz-1/", clicks: 0, img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=400" },
+        { id: 11, name: "Official website", url: "https://acsadarsh.github.io/Acs/", clicks: 0, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" },
+        { id: 12, name: "Survey form", url: "https://acsadarsh.github.io/CLASS-XI-SURVEY/", clicks: 0, img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400" }
     ];
 
     function renderProjects() {
@@ -999,34 +519,98 @@
             
             a.innerHTML = `
                 ${isTrending ? '<span class="trending-badge">🔥 TRENDING</span>' : ''}
-                <h3>${proj.name}</h3>
-                <p style="color: ${isTrending ? 'white' : '#888'}; font-weight: bold;">Click to visit project 🌐</p>
+                <img src="${proj.img}" class="project-img" alt="${proj.name}">
+                <div class="project-info">
+                    <h3>${proj.name}</h3>
+                    <p style="color: ${isTrending ? 'white' : '#888'}; font-weight: bold; margin:0;">Click to visit project 🌐</p>
+                </div>
             `;
             container.appendChild(a);
         });
-        
-        filterProjects();
     }
 
     function filterProjects() {
         let input = document.getElementById('projectSearch').value.toLowerCase();
         let cards = document.querySelectorAll('.project-card');
-        
         cards.forEach(card => {
             let title = card.querySelector('h3').innerText.toLowerCase();
-            if(title.includes(input)) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
+            card.style.display = title.includes(input) ? "flex" : "none";
         });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        renderProjects();
-    });
+    window.addEventListener('DOMContentLoaded', () => { renderProjects(); });
 
+    /* --- SMART AI CHATBOT SYSTEM --- */
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatbotWindow');
+        chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
+    }
+
+    function sendChat() {
+        let inputField = document.getElementById("userInput");
+        let msg = inputField.value.trim();
+        if(msg === "") return;
+        
+        let chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML += `<div class="message user-msg">${msg}</div>`;
+        inputField.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(() => {
+            let botReply = getSmartReply(msg.toLowerCase());
+            chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1200);
+    }
+
+    function getSmartReply(text) {
+        if(text.match(/\b(hi|hello|hey|namaste|pranam|hlw)\b/)) {
+            return "Hello, main ACS assistant! Main aapki aaj kis tarah ki sahayata kar sakti hun?";
+        }
+        if(text.match(/\b(school|study|education|college|coaching|institute)\b/)) {
+            return "Aapko School ya Education center ki website banwani hai? Bahut badhiya! Isme online admission, photo gallery, notice board aur result system lag sakta hai. Aap hamara ye education project demo dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/Google-Group-Of-Education/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>Study Centre Website Demo</a>";
+        }
+        if(text.match(/\b(dukan|shop|ecommerce|kirana|store|sell)\b/)) {
+            return "Agar aapko apni dukan ya e-commerce ke liye online store banwana hai jaha se log order kar sakein, toh hum advance system banate hain. Iska demo aap yahan dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-JCB-PARTS/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>E-commerce Demo</a>";
+        }
+        if(text.match(/\b(social media|instagram|facebook|youtube|link)\b/)) {
+            return "Aap hamara Social Media portal yahan check kar sakte hain, jaha saare platforms linked hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>ACS Social Media</a>";
+        }
+        if(text.match(/\b(website|app|banwana|kaise banega|kya lagega)\b/)) {
+            return "Website banane ke liye hume sabse pehle ek Domain (website ka naam jaise .com/.in) aur Hosting (server jahan data rahega) chahiye hota hai. Hum aapke business ke hisaab se puri website design karke denge. Aapko kis tarah ki website chahiye? (Jaise: School, Dukan, Personal Portfolio)";
+        }
+        if(text.match(/\b(edit|video|photo|ai|voice|song|avatar|shoot)\b/)) {
+            return "Humare paas sabhi tarah ki editing aur advanced AI services available hain. Jaise AI Video Making, AI Voice Over (Hindi/English), Avatar creation, aur Video shoot. Aap hume apni requirement batayen, hum usko professionally complete kar denge.";
+        }
+        if(text.match(/\b(mobile|internet|repair|server|sim)\b/)) {
+            return "Aapko Mobile repairing, internet issue, ya server error solve karwana hai? Hum cyber aur technical problems ka solution dete hain. Aap problem detail mein bata sakte hain ya Sir se baat kar sakte hain.";
+        }
+        if(text.match(/\b(demo|project|portfolio|kaam dekhao|work)\b/)) {
+            return "Aap hamare sabhi live projects 'Our Portfolio/Projects' section me dekh sakte hain. Wahan humne School, POS, Chat app aur E-commerce sabhi ka demo rakha hai.";
+        }
+        if(text.match(/\b(sir se baat|adarsh|owner|call|human|contact|malik|whatsapp)\b/)) {
+            setTimeout(() => {
+                let waMessage = encodeURIComponent("Hello Adarsh Sir, ");
+                window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
+            }, 2500);
+            return "Thik hai, main aapko Adarsh Sir (Owner) se connect kar rahi hun. Kuch seconds mein aapka WhatsApp khul jayega jahan aap unse direct baat kar sakte hain.";
+        }
+        return "Main ek AI Assistant hun aur lagatar seekh rahi hun. Agar aap kisi service (jaise website, video edit, AI work) ke bare me janna chahte hain to detail me likhein. Ya phir aap sidha Adarsh sir se baat karne ke liye yahan 'Sir se baat karao' likh sakte hain.";
+    }
+
+    function handleChatPress(event) { if(event.key === "Enter") sendChat(); }
+
+    /* --- OFFLINE ZONE MANAGER --- */
+    function checkConnection() {
+        if(!navigator.onLine) {
+            document.getElementById('offlineGameContainer').style.display = 'flex';
+        } else {
+            document.getElementById('offlineGameContainer').style.display = 'none';
+        }
+    }
+    window.addEventListener('offline', checkConnection);
+    window.addEventListener('online', checkConnection);
+    window.onload = checkConnection;
 </script>
-
 </body>
 </html>
