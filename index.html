@@ -3,7 +3,7 @@
 <head>
     <meta name="google-site-verification" content="2nslICfitlZaKX6jqNLEHAMXa6fEUGiUM-ecwCgKPnM" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Adarsh Computer Services & Solve</title>
     <style>
         :root {
@@ -17,10 +17,11 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--dark-bg);
             color: white;
             scroll-behavior: smooth;
@@ -28,7 +29,15 @@
             overflow-x: hidden; 
         }
 
-        /* --- Circle Booster Loading Animation with Logo --- */
+        /* --- GLOBAL HIGH QUALITY IMAGE RENDERING --- */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: high-quality;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* --- Circle Booster Loading Animation --- */
         #startup-loader {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 9999; display: flex; flex-direction: column;
@@ -59,34 +68,33 @@
             100% { transform: rotate(360deg) scale(0.9); } 
         }
         .booster-text { margin-top: 30px; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; letter-spacing: 3px; animation: blinker 1s infinite; }
+        @keyframes blinker { 50% { opacity: 0.5; } }
         
         #main-content { display: none; animation: pageLoad 1s ease-out forwards; width: 100%; overflow-x: hidden; }
-        @keyframes pageLoad {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes pageLoad { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
         /* --- Navigation --- */
         .navbar {
             position: fixed; top: 0; width: 100%; background: rgba(10, 10, 12, 0.95);
             display: flex; justify-content: space-between; align-items: center;
             padding: 10px 20px; z-index: 1001; border-bottom: 2px solid var(--neon-purple);
+            backdrop-filter: blur(10px);
         }
-
         .nav-logo img { height: 45px; border-radius: 5px; }
         .menu-icon { font-size: 30px; cursor: pointer; color: var(--neon-blue); }
 
         .nav-links {
             position: fixed; top: 0; right: -300px; width: 260px; height: 100%;
             background: #111; display: flex; flex-direction: column;
-            padding-top: 80px; transition: 0.4s; z-index: 1000;
+            padding-top: 80px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000;
         }
-        .nav-links.active { right: 0; box-shadow: -5px 0 15px rgba(0,0,0,0.8); }
-        .nav-links a { padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #222; }
+        .nav-links.active { right: 0; box-shadow: -5px 0 25px rgba(0,0,0,0.9); }
+        .nav-links a { padding: 15px 25px; color: white; text-decoration: none; font-size: 1.1rem; border-bottom: 1px solid #222; transition: 0.3s; }
+        .nav-links a:hover { background: #222; padding-left: 30px; color: var(--neon-blue); }
 
         /* --- Sections --- */
         .section { display: none; padding: 100px 20px 40px; min-height: 90vh; width: 100%; }
-        .section.active { display: block; }
+        .section.active { display: block; animation: fadeIn 0.5s; }
         .container { max-width: 1100px; margin: auto; }
 
         /* --- Service Cards (Home) --- */
@@ -95,19 +103,18 @@
             background: var(--card-bg); border-radius: 15px; overflow: hidden;
             border: 1px solid #333; transition: 0.3s; cursor: pointer; text-decoration: none; color: white; display: block;
         }
-        .service-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 20px rgba(0,212,255,0.2); }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(0,212,255,0.2); }
         .service-img { width: 100%; height: 160px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
         .service-info { padding: 20px; }
         .service-info h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.2rem;}
 
-        /* --- Animations & Effects --- */
         .big-btn {
-            display: block; width: 90%; max-width: 500px; margin: 30px auto; padding: 20px; background: var(--neon-purple); color: white;
+            display: block; width: 90%; max-width: 500px; margin: 40px auto; padding: 20px; background: var(--neon-purple); color: white;
             text-align: center; text-decoration: none; font-size: 1.3rem; font-weight: bold; border-radius: 12px; animation: pulse 2s infinite alternate;
         }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 10px var(--neon-purple); } 100% { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-blue); } }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 15px rgba(157,0,255,0.5); } 100% { transform: scale(1.03); box-shadow: 0 0 30px var(--neon-blue); } }
 
-        /* --- Album Section Styles --- */
+        /* --- Album Section --- */
         .tab-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
         .tab-btn { padding: 10px 30px; background: #333; color: white; border: 2px solid var(--neon-blue); border-radius: 30px; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
         .tab-btn.active { background: var(--neon-blue); color: black; font-weight: bold; box-shadow: 0 0 15px var(--neon-blue); }
@@ -116,83 +123,97 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
-        .media-item { width: 100%; height: 150px; border-radius: 10px; border: 2px solid var(--neon-purple); object-fit: cover; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
-        .media-item:hover { transform: scale(1.05); border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
+        .media-item { 
+            width: 100%; height: 180px; /* Thoda bada size kiya gaya hai clear dekhne ke liye */
+            border-radius: 10px; border: 2px solid var(--neon-purple); 
+            object-fit: cover; cursor: pointer; transition: 0.3s; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5); 
+        }
+        .media-item:hover { transform: scale(1.05); border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); z-index: 2; position: relative; }
         .video-thumbnail { background: #222; display: flex; justify-content: center; align-items: center; color: var(--neon-blue); font-size: 1.2rem; font-weight: bold; text-align: center; }
 
         /* --- Full Screen Modal --- */
-        #mediaModal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
-        #modalContent { max-width: 95%; max-height: 85%; border-radius: 10px; border: 2px solid var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue);}
+        #mediaModal { display: none; position: fixed; z-index: 3000; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; flex-direction: column; backdrop-filter: blur(5px); }
+        #modalContent { max-width: 95%; max-height: 85%; border-radius: 10px; border: 2px solid var(--neon-blue); box-shadow: 0 0 30px rgba(0,212,255,0.4); object-fit: contain;}
         #modalClose { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        #modalClose:hover { color: red; }
+        #modalClose:hover { color: red; transform: scale(1.1); }
 
-        /* --- Floating Chat Assistant --- */
+        /* --- PORTFOLIO & PROJECTS --- */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .project-card { background: var(--card-bg); border-radius: 15px; border: 2px solid #333; text-decoration: none; color: white; transition: 0.4s; position: relative; display: flex; flex-direction: column; overflow: hidden; text-align: center; }
+        .project-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,212,255,0.3); z-index: 2; }
+        .project-img { width: 100%; height: 180px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
+        .project-info { padding: 20px; }
+        .project-card h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; }
+        .heartbeat-effect { animation: portfolioPulse 1.2s infinite alternate; border-color: var(--neon-purple) !important; order: -1; }
+        @keyframes portfolioPulse { 0% { box-shadow: 0 0 10px rgba(157,0,255,0.3); transform: scale(1); } 100% { box-shadow: 0 0 25px rgba(0,212,255,0.5); transform: scale(1.02); } }
+        .trending-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; box-shadow: 0 0 15px red; animation: blinker 1s linear infinite; z-index: 10; }
+
+        /* --- OWNER SECTION (HD PHOTO & TEXT) --- */
+        .owner-name-title { text-align: center; color: var(--neon-blue); font-size: clamp(1.8rem, 5vw, 2.8rem); text-shadow: 0 0 15px rgba(0,212,255,0.5); margin: 15px 0; text-transform: uppercase; word-wrap: break-word; }
+        
+        .owner-photo {
+            width: 170px; height: 170px; border-radius: 50%;
+            border: 3px solid var(--neon-blue); box-shadow: 0 0 25px rgba(0,212,255,0.4);
+            object-fit: cover; object-position: top center; margin-bottom: 15px;
+            transform: translateZ(0); /* Hardware Acceleration for sharpness */
+        }
+
+        /* --- CONTACT & SEARCH FORMS --- */
+        .contact-form { background: #16161a; padding: 30px; border-radius: 15px; border: 2px solid var(--neon-blue); max-width: 600px; margin: 20px auto; width: 100%; box-shadow: 0 0 20px rgba(0,212,255,0.1); }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; background: #222; color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(157,0,255,0.3); }
+        .contact-form button { width: 100%; padding: 15px; background: var(--neon-blue); color: black; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .contact-form button:hover { background: var(--neon-purple); color: white; box-shadow: 0 0 20px var(--neon-purple); transform: translateY(-2px); }
+        
+        .search-box { width: 90%; max-width: 500px; padding: 15px; font-size: 1.1rem; border-radius: 30px; border: 2px solid var(--neon-blue); background: #111; color: white; outline: none; text-align: center; transition: 0.3s; margin: 0 auto 25px auto; display: block; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        .search-box:focus { box-shadow: 0 0 20px rgba(0,212,255,0.3); border-color: var(--neon-purple); }
+
+        /* --- FLOATING CHAT BUTTON --- */
         .floating-chat-btn {
-            position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; border-radius: 50%;
+            position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; border-radius: 50%;
             background: var(--neon-purple); display: flex; justify-content: center; align-items: center;
             cursor: pointer; z-index: 1500; box-shadow: 0 0 20px var(--neon-purple); transition: 0.3s;
             border: 2px solid white; padding: 2px;
         }
         .floating-chat-btn img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-        .floating-chat-btn:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--neon-blue); border-color: var(--neon-blue); }
+        .floating-chat-btn:hover { transform: scale(1.1) rotate(5deg); box-shadow: 0 0 25px var(--neon-blue); border-color: var(--neon-blue); }
 
-        /* --- FULL PAGE CHATBOT STYLES --- */
-        .chat-container { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--dark-bg); z-index: 4000; flex-direction: column; }
-        .chat-header { background: var(--neon-purple); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.4rem; display: flex; justify-content: space-between; align-items: center;}
-        .close-chat { cursor: pointer; font-size: 1.8rem; color: white; }
-        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: #0a0a0c; }
-        .message { max-width: 85%; padding: 15px; border-radius: 10px; font-size: 1.1rem; line-height: 1.4; }
-        .bot-msg { background: #222; color: white; align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid var(--neon-purple); }
+        /* --- SMART AI CHAT WINDOW (Mobile Optimized) --- */
+        .chat-container { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--dark-bg); z-index: 4000; flex-direction: column; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .chat-header { background: var(--neon-purple); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.4rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+        .close-chat { cursor: pointer; font-size: 1.8rem; color: white; transition: 0.3s; }
+        .close-chat:hover { color: #ff4444; transform: scale(1.1); }
+        
+        .chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; background: #0a0a0c; scroll-behavior: smooth; }
+        .message { max-width: 85%; padding: 15px; border-radius: 12px; font-size: 1.1rem; line-height: 1.4; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .bot-msg { background: #1e1e24; color: white; align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid var(--neon-purple); }
         .user-msg { background: var(--neon-blue); color: black; align-self: flex-end; border-bottom-right-radius: 0; font-weight: bold; }
-        .chat-input-area { display: flex; padding: 15px; background: #111; border-top: 1px solid #333; padding-bottom: 30px; }
-        .chat-input-area input { flex: 1; padding: 15px; font-size: 1.1rem; border-radius: 5px; border: 1px solid var(--neon-blue); outline: none; background: #222; color: white; }
-        .chat-input-area button { padding: 15px 25px; font-size: 1.1rem; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 5px; color: black; cursor: pointer; font-weight: bold;}
-
-        /* --- PORTFOLIO & PROJECTS STYLES --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-        .project-card { background: var(--card-bg); border-radius: 15px; border: 2px solid #333; text-decoration: none; color: white; transition: 0.4s; position: relative; display: flex; flex-direction: column; overflow: hidden; text-align: center; }
-        .project-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--neon-blue); box-shadow: 0 10px 30px rgba(0,212,255,0.3); }
-        .project-img { width: 100%; height: 180px; object-fit: cover; border-bottom: 2px solid var(--neon-purple); }
-        .project-info { padding: 20px; }
-        .project-card h3 { color: var(--neon-blue); margin: 0 0 10px; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 1px; }
-        .heartbeat-effect { animation: portfolioPulse 1.2s infinite alternate; border-color: var(--neon-purple) !important; order: -1; }
-        @keyframes portfolioPulse { 0% { box-shadow: 0 0 10px var(--neon-purple); transform: scale(1); } 100% { box-shadow: 0 0 30px var(--neon-blue), 0 0 20px var(--neon-purple); transform: scale(1.03); } }
-        .trending-badge { position: absolute; top: 10px; right: 10px; background: red; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; box-shadow: 0 0 15px red; animation: blinker 1s linear infinite; z-index: 10; }
-
-        /* --- CONTACT FORM --- */
-        .contact-form { background: #16161a; padding: 30px; border-radius: 15px; border: 2px solid var(--neon-blue); max-width: 600px; margin: 20px auto; width: 100%; }
-        .contact-form input, .contact-form textarea { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #333; border-radius: 8px; background: #222; color: white; font-size: 1rem; outline: none; }
-        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); }
-        .contact-form button { width: 100%; padding: 15px; background: var(--neon-blue); color: black; font-size: 1.2rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; }
-        .contact-form button:hover { background: var(--neon-purple); color: white; box-shadow: 0 0 15px var(--neon-purple); }
-        .search-box { width: 90%; max-width: 500px; padding: 15px; font-size: 1.1rem; border-radius: 30px; border: 2px solid var(--neon-blue); background: #111; color: white; outline: none; text-align: center; transition: 0.3s; margin: 0 auto 20px auto; display: block; }
-        .search-box:focus { box-shadow: 0 0 20px var(--neon-blue); border-color: var(--neon-purple); }
-
-        /* --- OWNER SECTION RESPONSIVE TEXT --- */
-        .owner-name-title {
-            text-align: center; 
-            color: var(--neon-blue); 
-            font-size: clamp(1.8rem, 5vw, 2.8rem); /* Will scale down perfectly on mobile */
-            text-shadow: 0 0 15px var(--neon-blue); 
-            margin: 15px 0; 
-            text-transform: uppercase;
-            word-wrap: break-word;
+        
+        /* Mobile Navigation Overlay Fix */
+        .chat-input-area { 
+            display: flex; 
+            padding: 15px 15px calc(20px + env(safe-area-inset-bottom, 20px)) 15px; 
+            background: #111; border-top: 1px solid #333; 
         }
+        .chat-input-area input { flex: 1; padding: 15px; font-size: 1.1rem; border-radius: 8px; border: 1px solid var(--neon-blue); outline: none; background: #222; color: white; transition: 0.3s; }
+        .chat-input-area input:focus { border-color: var(--neon-purple); }
+        .chat-input-area button { padding: 15px 25px; font-size: 1.1rem; margin-left: 10px; background: var(--neon-blue); border: none; border-radius: 8px; color: black; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .chat-input-area button:hover { background: var(--neon-purple); color: white; }
 
-        /* --- OFFLINE GAME UI & STYLES --- */
+        /* --- OFFLINE GAME UI --- */
         #offlineGameContainer { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--dark-bg); z-index: 5000; flex-direction: column; align-items: center; overflow-y:auto; padding-bottom: 50px; }
-        .offline-banner { width: 100%; background: red; color: white; padding: 15px; font-size: 1.1rem; font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5); animation: blinker 2s linear infinite; position: sticky; top: 0; z-index: 5001; }
-        @keyframes blinker { 50% { opacity: 0.8; } }
-        #offlineMenu { text-align: center; margin-top: 30px; width: 100%; }
-        .game-menu-btn { display: block; width: 85%; max-width: 320px; margin: 15px auto; padding: 20px; font-size: 1.2rem; background: var(--card-bg); color: var(--neon-blue); font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue); cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+        .offline-banner { width: 100%; background: #ff3333; color: white; padding: 15px; font-size: 1.1rem; font-weight: bold; text-align: center; box-shadow: 0 5px 15px rgba(255,0,0,0.5); animation: blinker 2s linear infinite; position: sticky; top: 0; z-index: 5001; }
+        #offlineMenu { text-align: center; margin-top: 40px; width: 100%; }
+        .game-menu-btn { display: block; width: 85%; max-width: 320px; margin: 15px auto; padding: 20px; font-size: 1.2rem; background: var(--card-bg); color: var(--neon-blue); font-weight: bold; border-radius: 10px; border: 2px solid var(--neon-blue); cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px rgba(0,212,255,0.1); }
         .game-menu-btn:hover { background: var(--neon-blue); color: black; transform: scale(1.05); }
-        .game-view { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 10px; }
-        .back-btn { margin-top: 25px; padding: 12px 25px; background: #444; color: white; border: 2px solid #666; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold;}
     </style>
 </head>
 <body>
 
-<!-- Circle Booster Loading Animation with Logo -->
+<!-- Loader -->
 <div id="startup-loader">
     <div class="loader-center">
         <img src="https://i.ibb.co/hFRHRQ97/image.jpg" class="loader-logo" alt="ACS Logo">
@@ -201,7 +222,7 @@
     <div class="booster-text">ACS STARTING...</div>
 </div>
 
-<!-- Main Wrapper -->
+<!-- Main Content -->
 <div id="main-content">
 
     <nav class="navbar">
@@ -211,97 +232,65 @@
 
     <div class="nav-links" id="navLinks">
         <a href="#" onclick="showSection('home')">🏠 Home</a>
-        <a href="#" onclick="showSection('portfolio')" style="color:var(--neon-blue); font-weight:bold;">💼 Our Portfolio/Projects</a>
-        <a href="#" onclick="showSection('album')">🖼️ Photo Album</a>
-        <a href="#" onclick="showSection('owner')">👤 Owner Info</a>
+        <a href="#" onclick="showSection('portfolio')" style="color:var(--neon-blue); font-weight:bold;">💼 Our Portfolio / Projects</a>
+        <a href="#" onclick="showSection('album')">🖼️ Photo & Video Album</a>
+        <a href="#" onclick="showSection('owner')">👤 Owner Information</a>
         <a href="https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/" target="_blank" style="color:var(--neon-purple); font-weight:bold;">🌐 Social Medias</a>
         <a href="#" onclick="showSection('contact')">📞 Contact Us</a>
         <a href="https://share.google/7bQp0x94iQ9wAqf2E" target="_blank" style="color:#ffcc00;">⭐ Rate & Review</a>
         <a href="https://acsadarsh.github.io/SERVICE/" target="_blank" style="color:#ffcc00;">💌 SERVICE REQUEST</a>
     </div>
 
+    <!-- HOME SECTION -->
     <div id="home" class="section active">
         <header style="text-align:center; padding-bottom: 20px;">
-            <img src="https://i.ibb.co/hFRHRQ97/image.jpg" style="width:100px; border-radius:50%; border:3px solid var(--neon-blue);" alt="Logo">
-            <h1>Adarsh Computer Services & Solve</h1>
+            <img src="https://i.ibb.co/hFRHRQ97/image.jpg" style="width:110px; border-radius:50%; border:3px solid var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue);" alt="Logo">
+            <h1 style="margin-top: 10px;">Adarsh Computer Services & Solve</h1>
             <p style="color:var(--neon-blue); margin-bottom: 5px; font-size: 1.1rem;">Expert IT, AI & Digital Solutions in Itkhori</p>
             <h3 style="color: white; margin-top: 5px; letter-spacing: 1px; text-shadow: 0 0 10px var(--neon-purple);">MR. ADARSH KUMAR CHANDRAVANSHI</h3>
         </header>
 
         <div class="container">
-            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Our Premium Services</h2>
+            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:15px; margin-bottom: 25px;">Our Premium Services</h2>
             
-            <input type="text" id="serviceSearch" class="search-box" placeholder="🔍 Search services (e.g. Video, AI, Web)..." onkeyup="filterServices()">
+            <input type="text" id="serviceSearch" class="search-box" placeholder="🔍 Search services (e.g. AI, Web, Video)..." onkeyup="filterServices()">
 
             <div class="services-grid" id="servicesList">
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600" class="service-img" alt="Web">
-                    <div class="service-info"><h3>Website Development</h3><p>Custom professional websites for your business.</p></div>
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600" class="service-img" alt="Web" loading="lazy">
+                    <div class="service-info"><h3>Website Development</h3><p>Custom professional websites for your business & brand.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=600" class="service-img" alt="App">
-                    <div class="service-info"><h3>App Development</h3><p>Android & iOS mobile applications.</p></div>
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=600" class="service-img" alt="App" loading="lazy">
+                    <div class="service-info"><h3>App Development</h3><p>Android & iOS mobile applications with UI/UX design.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600" class="service-img" alt="Graphic">
-                    <div class="service-info"><h3>Graphic & Photo Editing</h3><p>High-quality graphic design and photo retouching.</p></div>
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600" class="service-img" alt="Graphic" loading="lazy">
+                    <div class="service-info"><h3>Graphic & Photo Editing</h3><p>High-quality graphic design, branding and photo retouching.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=600" class="service-img" alt="Video Edit">
+                    <img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=600" class="service-img" alt="Video Edit" loading="lazy">
                     <div class="service-info"><h3>Video Editing</h3><p>Professional & cinematic video editing for YouTube & Ads.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600" class="service-img" alt="Video Shoot">
-                    <div class="service-info"><h3>Video Shoot & Videography</h3><p>High-quality video shooting for events and content creators.</p></div>
-                </a>
-                
-                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=600" class="service-img" alt="Mobile Repair">
-                    <div class="service-info"><h3>Mobile Repairing & Problems</h3><p>Hardware and software solutions for all mobile phones.</p></div>
-                </a>
-
-                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600" class="service-img" alt="Server">
-                    <div class="service-info"><h3>Internet & Server Solutions</h3><p>Resolving network errors, slow internet, and server crashes.</p></div>
-                </a>
-                
-                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600" class="service-img" alt="AI Video">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=600" class="service-img" alt="AI Video" loading="lazy">
                     <div class="service-info"><h3>AI Video Making & Avatar</h3><p>AI influencer videos, Avatars, and Advertisement making.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?q=80&w=600" class="service-img" alt="AI Voice">
-                    <div class="service-info"><h3>AI Voice Over & Song Making</h3><p>Indian, Hindi, English AI voiceovers & Real song making.</p></div>
+                    <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?q=80&w=600" class="service-img" alt="AI Voice" loading="lazy">
+                    <div class="service-info"><h3>AI Voice Over & Song Making</h3><p>Indian, Hindi, English AI voiceovers & Real song generation.</p></div>
                 </a>
-
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?q=80&w=600" class="service-img" alt="Script">
-                    <div class="service-info"><h3>Script Writing & All AI Work</h3><p>Creative script writing and all types of advanced AI tasks.</p></div>
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="service-img" alt="3D" loading="lazy">
+                    <div class="service-info"><h3>3D Home Making</h3><p>Architectural 3D home design, structural engineering and mapping.</p></div>
                 </a>
-                
                 <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=600" class="service-img" alt="SIM">
-                    <div class="service-info"><h3>SIM, Temp Email & Number</h3><p>SIM services, temporary emails, and temp mobile numbers.</p></div>
+                    <img src="https://i.ibb.co/8D8dxmGF/image.jpg" class="service-img" alt="Cyber" loading="lazy">
+                    <div class="service-info"><h3>Cyber Cafe Services</h3><p>Aadhaar, PAN, Online Forms & All Internet/CSC Work.</p></div>
                 </a>
-                
-                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600" class="service-img" alt="3D">
-                    <div class="service-info"><h3>3D Home Making</h3><p>Architectural 3D home design and mapping.</p></div>
-                </a>
-                
-                <a href="https://acsadarsh.github.io/SERVICE/" class="service-card">
-                    <img src="https://i.ibb.co/8D8dxmGF/image.jpg" class="service-img" alt="Cyber">
-                    <div class="service-info"><h3>Cyber Cafe Services</h3><p>Aadhaar, PAN, Online Forms & All Internet Work.</p></div>
-                </a>
-                
                 <a href="javascript:toggleChat()" class="service-card" style="border-color: var(--neon-purple);">
-                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600" class="service-img" alt="Chat">
-                    <div class="service-info"><h3>Any Problem? Chat With Me</h3><p>I will try to solve any of your IT or technical problems.</p></div>
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600" class="service-img" alt="Chat" loading="lazy">
+                    <div class="service-info"><h3>Any Problem? Chat With Me</h3><p>I will instantly try to solve your technical or general queries using AI.</p></div>
                 </a>
             </div>
 
@@ -309,22 +298,24 @@
         </div>
     </div>
 
+    <!-- PORTFOLIO SECTION -->
     <div id="portfolio" class="section">
         <div class="container" style="text-align:center">
             <h2 style="border-bottom: 2px solid var(--neon-purple); padding-bottom:10px; display:inline-block;">🚀 OUR PORTFOLIO & PROJECTS</h2>
-            <p style="color:#aaa; margin-bottom: 25px;">Mera banaya gaya sara live work yahan dekhein, har project ka relative thumbnail laga hai.</p>
+            <p style="color:#aaa; margin-bottom: 25px; font-size:1.1rem;">Mera banaya gaya sara live work yahan dekhein, har project ka relative thumbnail laga hai.</p>
             
             <input type="text" id="projectSearch" class="search-box" placeholder="🔍 Search any project..." onkeyup="filterProjects()">
             
             <div id="projectList" class="portfolio-grid">
-                <!-- Projects will be injected here via JS -->
+                <!-- Injected via JS -->
             </div>
         </div>
     </div>
 
+    <!-- ALBUM SECTION -->
     <div id="album" class="section">
         <div class="container">
-            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:10px;">Photo & Video Album</h2>
+            <h2 style="text-align:center; border-bottom: 2px solid var(--neon-purple); padding-bottom:15px; margin-bottom: 20px;">Photo & Video Album</h2>
             
             <div class="tab-container">
                 <button class="tab-btn active" onclick="switchMediaTab('photos', this)">📷 Photos</button>
@@ -332,24 +323,26 @@
             </div>
 
             <div id="photos" class="tab-content active">
-                <p style="text-align:center; color:#888; font-size:0.9rem;">Click any photo to view full size</p>
+                <p style="text-align:center; color:#888; margin-bottom: 15px;">Click any photo to view full size</p>
                 <div class="media-grid">
-                    <img src="https://i.ibb.co/DfCxCQfb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/zWtvsR6s/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/8gTPHg6z/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/4Z00SLpj/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/rRdQ2rKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/5gdwg40v/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/v6gbPdWV/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/8D2pYVtB/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/chTCzNKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/21gqJGjX/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
-                    <img src="https://i.ibb.co/ymzjnq1f/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)">
+                    <!-- NEW FULL QUALITY IMAGES ADDED HERE -->
+                    <img src="1000150428.jpg" class="media-item" alt="ACS Poster 1" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="1000149791.png" class="media-item" alt="ACS Services" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="1000150276.png" class="media-item" alt="ACS QR Code" onclick="openModal('image', this.src)" loading="lazy">
+
+                    <!-- Other Existing Images -->
+                    <img src="https://i.ibb.co/DfCxCQfb/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/zWtvsR6s/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/8gTPHg6z/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/4Z00SLpj/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/rRdQ2rKS/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/5gdwg40v/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
+                    <img src="https://i.ibb.co/v6gbPdWV/image.jpg" class="media-item" alt="ACS Photo" onclick="openModal('image', this.src)" loading="lazy">
                 </div>
             </div>
 
             <div id="videos" class="tab-content">
-                 <p style="text-align:center; color:#888; font-size:0.9rem;">Click any video to play full screen</p>
+                 <p style="text-align:center; color:#888; margin-bottom: 15px;">Click any video to play full screen</p>
                 <div class="media-grid">
                     <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1a2D7As_4DzMIOrUYZAQ-K2yMIjWT9LkS/preview')">🎥 Play Video 1</div>
                     <div class="media-item video-thumbnail" onclick="openModal('video', 'https://drive.google.com/file/d/1ntFSbwDpDqX6erbUkIeZc3HEtB0eUlCI/preview')">🎥 Play Video 2</div>
@@ -359,60 +352,57 @@
         </div>
     </div>
 
+    <!-- OWNER SECTION -->
     <div id="owner" class="section">
         <div class="container" style="text-align:center">
-            <h2>OWNER INFORMATION</h2>
-            <div style="background:rgba(255,255,255,0.05); padding:30px 20px; border-radius:20px; border:2px solid var(--neon-purple); text-align: left; max-width: 650px; margin: auto; box-shadow: 0 0 20px rgba(157,0,255,0.2);">
+            <h2 style="margin-bottom: 25px;">OWNER INFORMATION</h2>
+            <div style="background:rgba(255,255,255,0.03); padding:40px 20px; border-radius:20px; border:2px solid var(--neon-purple); text-align: center; max-width: 650px; margin: auto; box-shadow: 0 0 30px rgba(157,0,255,0.15); position: relative; overflow: hidden;">
                 
-                <h3 style="text-align: center; color: white; margin-bottom: 5px;">⭐ ADARSH COMPUTER SERVICES & SOLVE ⭐</h3>
+                <h3 style="text-align: center; color: white; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;">⭐ ADARSH COMPUTER SERVICES & SOLVE ⭐</h3>
                 
-                <!-- 1. NAME -->
+                <!-- HD OWNER PHOTO -->
+                <img src="https://i.ibb.co/VWmkB99n/image.jpg" alt="Adarsh Kumar Chandravanshi" class="owner-photo" loading="lazy">
+                
                 <h1 class="owner-name-title">Adarsh Kumar Chandravanshi</h1>
-                <p style="text-align: center; color: #aaa; font-size: 1.2rem; margin-top: -10px;">Founder & CEO</p>
+                <p style="text-align: center; color: #aaa; font-size: 1.2rem; margin-top: -5px; font-weight: bold;">Founder & CEO</p>
 
-                <div style="text-align: center; margin: 25px 0;">
-                    <!-- 2. WHATSAPP -->
-                    <p style="font-size: 1.3rem; margin: 10px 0;">
-                        📞 <strong>WhatsApp:</strong> <a href="https://wa.me/918252900810" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">+91 82529 00810</a>
+                <div style="text-align: center; margin: 30px 0;">
+                    <p style="font-size: 1.3rem; margin: 15px 0;">
+                        📞 <strong>WhatsApp:</strong> <a href="https://wa.me/918252900810" style="color: var(--neon-blue); text-decoration: none; font-weight: bold; text-shadow: 0 0 5px rgba(0,212,255,0.3);">+91 82529 00810</a>
                     </p>
-                    
-                    <!-- 3. EMAIL -->
-                    <p style="font-size: 1.2rem; margin: 10px 0; word-wrap: break-word;">
+                    <p style="font-size: 1.2rem; margin: 15px 0; word-wrap: break-word;">
                         📧 <strong>Email:</strong> <a href="mailto:acs.adarsh.com@gmail.com" style="color: var(--neon-blue); text-decoration: none; font-weight: bold;">acs.adarsh.com@gmail.com</a>
                     </p>
-                    
-                    <!-- 4. LOCATION -->
-                    <p style="font-size: 1.2rem; color: #ffcc00; font-weight: bold; padding: 12px; background: rgba(255,204,0,0.1); border-radius: 8px; border: 1px solid #ffcc00; display: inline-block; margin-top: 15px;">
+                    <p style="font-size: 1.2rem; color: #ffcc00; font-weight: bold; padding: 12px 20px; background: rgba(255,204,0,0.1); border-radius: 8px; border: 1px solid #ffcc00; display: inline-block; margin-top: 15px;">
                         📍 Location: Chhota Basti, Itkhori, Chatra, Jharkhand
                     </p>
                 </div>
 
                 <hr style="border-color: #333; margin: 25px 0;">
                 
-                <!-- REST OF INFORMATION -->
-                <ul style="list-style: none; padding: 0; font-size: 1.15rem; line-height: 2;">
+                <ul style="list-style: none; padding: 0 15px; font-size: 1.15rem; line-height: 2.2; text-align: left; color: #ddd;">
                     <li>📅 <strong>Business Opening Date:</strong> 25 Nov 2023</li>
-                    <li>💻 <strong>Profession:</strong> IT Professional & AI Expert</li>
+                    <li>💻 <strong>Profession:</strong> IT Professional, Developer & AI Expert</li>
                     <li>🌐 <strong>Cyber Cafe:</strong> CSC Owner & Associate</li>
-                    <li>🚀 <strong>Expertise:</strong> Web Development, App Development, Video Editing, AI Voice & Avatar creation.</li>
+                    <li>🚀 <strong>Expertise:</strong> Web/App Dev, Video Editing, AI Voice & Avatar creation.</li>
                 </ul>
             </div>
         </div>
     </div>
 
+    <!-- CONTACT SECTION -->
     <div id="contact" class="section">
         <div class="container" style="text-align:center">
             <h2>CONTACT US</h2>
-            <div style="margin-bottom: 25px; font-size: 1.1rem; color: #ddd; text-align: center;">
+            <div style="margin-bottom: 25px; font-size: 1.1rem; color: #ddd; text-align: center; line-height: 1.8;">
                 <p><strong>OWNER:</strong> ADARSH KUMAR CHANDRAVANSHI</p>
                 <p>📍 Chhota Basti, Itkhori, Chatra, Jharkhand</p>
-                <!-- WHATSAPP AND EMAIL ADDED BACK -->
                 <p>📞 <strong>WhatsApp:</strong> <a href="https://wa.me/918252900810" style="color:var(--neon-blue); text-decoration:none; font-weight:bold;">+91 82529 00810</a></p>
                 <p>📧 <strong>Email:</strong> <a href="mailto:acs.adarsh.com@gmail.com" style="color:var(--neon-blue); text-decoration:none;">acs.adarsh.com@gmail.com</a></p>
             </div>
             
             <div class="contact-form">
-                <h3 style="color:var(--neon-blue); margin-top:0;">Send us a message</h3>
+                <h3 style="color:var(--neon-blue); margin-top:0; margin-bottom: 20px;">Send us a request</h3>
                 <form action="https://formsubmit.co/acs.adarsh.com@gmail.com" method="POST">
                     <input type="hidden" name="_subject" value="New Request from ACS Website!">
                     <input type="hidden" name="_captcha" value="false">
@@ -428,49 +418,49 @@
         </div>
     </div>
 
-</div> <!-- End of Main Content -->
+</div>
 
-<!-- Advanced AI Chat Assistant Button -->
+<!-- AI Chat Floating Button -->
 <div class="floating-chat-btn" onclick="toggleChat()" title="Chat with AI">
     <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=200" alt="AI Bot">
 </div>
 
+<!-- Smart AI Chat Window -->
 <div class="chat-container" id="chatbotWindow">
     <div class="chat-header">
-        🤖 ACS Smart Assistant
+        🤖 ACS Smart AI Assistant
         <span class="close-chat" onclick="toggleChat()">✖</span>
     </div>
     <div class="chat-box" id="chatBox">
-        <div class="message bot-msg">Hello, main aaj aapki kis tarah se sahayata karun? (Aapko website banwani hai, AI work karwana hai, ya projects dekhne hain?)</div>
+        <div class="message bot-msg">Hello, main ACS AI Assistant! Main aapki kis tarah se sahayata kar sakti hun? (Aapko website banwani hai, internet ki problem hai, ya koi jankari chahiye?)</div>
     </div>
     <div class="chat-input-area">
-        <input type="text" id="userInput" placeholder="Kuch bhi likhiye..." onkeypress="handleChatPress(event)">
+        <input type="text" id="userInput" placeholder="Kuch bhi puchiye..." onkeypress="handleChatPress(event)">
         <button onclick="sendChat()">Send</button>
     </div>
 </div>
 
-<!-- Modal for Images/Videos -->
+<!-- Modal for Media -->
 <div id="mediaModal">
     <span id="modalClose" onclick="closeModal()">&times;</span>
     <div id="modalContentContainer" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;"></div>
 </div>
 
-<!-- Offline Games Section -->
+<!-- Offline Banner & Games -->
 <div id="offlineGameContainer">
-    <div class="offline-banner">🔴 YOU ARE OFFLINE - Aapka internet band hai! Tab tak game kheliye:</div>
+    <div class="offline-banner">🔴 YOU ARE OFFLINE - Internet Connection Lost! Tab tak game kheliye:</div>
     <div id="offlineMenu">
-        <h2 style="color:var(--neon-blue);">OFFLINE ARCADE 🎮</h2>
-        <p style="color:#aaa; margin-bottom:20px;">Choose a game to pass the time:</p>
-        <button class="game-menu-btn" onclick="openGame('gameLudo')">🎲 Ludo Goti Race</button>
-        <button class="game-menu-btn" onclick="openGame('gameTtt')">❌⭕ Tic Tac Toe</button>
-        <button class="game-menu-btn" onclick="openGame('gameSnake')">🐍 Snake Game</button>
-        <button class="game-menu-btn" onclick="openGame('gameAir')">✈️ Air Fighter</button>
-        <p style="color:#666; margin-top: 30px;">Data on hote hi website chalu ho jayegi.</p>
+        <h2 style="color:var(--neon-blue); margin-bottom: 10px;">OFFLINE ARCADE 🎮</h2>
+        <p style="color:#aaa; margin-bottom:30px;">Choose a game to pass the time:</p>
+        <button class="game-menu-btn" onclick="alert('Ludo game logic here')">🎲 Ludo Goti Race</button>
+        <button class="game-menu-btn" onclick="alert('Tic Tac Toe logic here')">❌⭕ Tic Tac Toe</button>
+        <button class="game-menu-btn" onclick="alert('Snake logic here')">🐍 Snake Game</button>
+        <p style="color:#666; margin-top: 40px;">Jaise hi Data ON hoga, website wapas chalu ho jayegi.</p>
     </div>
 </div>
 
 <script>
-    /* --- CIRCLE BOOSTER LOADER SCRIPT --- */
+    /* --- LOADER --- */
     window.addEventListener('load', () => {
         setTimeout(() => {
             let loader = document.getElementById('startup-loader');
@@ -482,7 +472,7 @@
         }, 1500);
     });
 
-    /* --- Normal Website Scripts --- */
+    /* --- NAVIGATION & TABS --- */
     function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     function showSection(sectionId) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -498,12 +488,13 @@
         btn.classList.add('active');
     }
 
+    /* --- MODAL --- */
     function openModal(type, src) {
         const modal = document.getElementById('mediaModal');
         const container = document.getElementById('modalContentContainer');
         modal.style.display = "flex";
         if(type === 'image') {
-            container.innerHTML = `<img id="modalContent" src="${src}" alt="Full Screen Image">`;
+            container.innerHTML = `<img id="modalContent" src="${src}" alt="Full Screen">`;
         } else if(type === 'video') {
             container.innerHTML = `<iframe id="modalContent" src="${src}" width="90%" height="80%" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
         }
@@ -513,17 +504,16 @@
         document.getElementById('modalContentContainer').innerHTML = ""; 
     }
 
-    /* --- HOME SERVICES SEARCH --- */
+    /* --- SEARCH SERVICES --- */
     function filterServices() {
         let input = document.getElementById('serviceSearch').value.toLowerCase();
         let cards = document.querySelectorAll('#servicesList .service-card');
         cards.forEach(card => {
-            let text = card.innerText.toLowerCase();
-            card.style.display = text.includes(input) ? "block" : "none";
+            card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none";
         });
     }
 
-    /* --- PORTFOLIO & TRENDING SYSTEM --- */
+    /* --- PORTFOLIO DYNAMIC RENDERING --- */
     let projectsData = [
         { id: 1, name: "ACS POS", url: "https://acsadarsh.github.io/ACS-POS/", clicks: 0, img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=400" },
         { id: 2, name: "ACS CHAT", url: "https://acsadarsh.github.io/ACS-CHAT/", clicks: 0, img: "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?q=80&w=400" },
@@ -534,35 +524,29 @@
         { id: 7, name: "E-commerce website", url: "https://acsadarsh.github.io/ACS-JCB-PARTS/", clicks: 0, img: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=400" },
         { id: 8, name: "Customer customise POS", url: "https://acsadarsh.github.io/Kamdeo-kirana-store/", clicks: 0, img: "https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?q=80&w=400" },
         { id: 9, name: "'AI' ACS work assistant", url: "https://acsadarsh.github.io/ACS-WORK-ASSISTANT/", clicks: 0, img: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=400" },
-        { id: 10, name: "Travelling form", url: "https://acsadarsh.github.io/itkhori-to-pitaz-1/", clicks: 0, img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=400" },
-        { id: 11, name: "Official website", url: "https://acsadarsh.github.io/Acs/", clicks: 0, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" },
-        { id: 12, name: "Survey form", url: "https://acsadarsh.github.io/CLASS-XI-SURVEY/", clicks: 0, img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400" }
+        { id: 10, name: "Official website", url: "https://acsadarsh.github.io/Acs/", clicks: 0, img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400" }
     ];
 
     function renderProjects() {
         const container = document.getElementById('projectList');
         container.innerHTML = '';
-        
         let sortedProjects = [...projectsData].sort((a, b) => b.clicks - a.clicks);
         let maxClicks = sortedProjects[0].clicks;
 
         sortedProjects.forEach((proj) => {
             let isTrending = (proj.clicks > 0 && proj.clicks === maxClicks);
-            
             let a = document.createElement('a');
-            a.href = proj.url;
-            a.target = "_blank";
+            a.href = proj.url; a.target = "_blank";
             a.className = "project-card " + (isTrending ? "heartbeat-effect" : "");
             
             a.onclick = () => {
                 let index = projectsData.findIndex(p => p.id === proj.id);
-                projectsData[index].clicks++;
-                renderProjects(); 
+                projectsData[index].clicks++; renderProjects(); 
             };
             
             a.innerHTML = `
                 ${isTrending ? '<span class="trending-badge">🔥 TRENDING</span>' : ''}
-                <img src="${proj.img}" class="project-img" alt="${proj.name}">
+                <img src="${proj.img}" class="project-img" alt="${proj.name}" loading="lazy">
                 <div class="project-info">
                     <h3>${proj.name}</h3>
                     <p style="color: ${isTrending ? 'white' : '#888'}; font-weight: bold; margin:0;">Click to visit project 🌐</p>
@@ -576,20 +560,20 @@
         let input = document.getElementById('projectSearch').value.toLowerCase();
         let cards = document.querySelectorAll('.project-card');
         cards.forEach(card => {
-            let title = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = title.includes(input) ? "flex" : "none";
+            card.style.display = card.querySelector('h3').innerText.toLowerCase().includes(input) ? "flex" : "none";
         });
     }
-
     window.addEventListener('DOMContentLoaded', () => { renderProjects(); });
 
-    /* --- SMART AI CHATBOT SYSTEM WITH TYPO TOLERANCE --- */
+    /* --- SMART AI CHATBOT (Wikipedia + Custom Logic) --- */
     function toggleChat() {
         const chatWindow = document.getElementById('chatbotWindow');
         chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
     }
 
-    function sendChat() {
+    let pendingRedirectUrl = "";
+
+    async function sendChat() {
         let inputField = document.getElementById("userInput");
         let msg = inputField.value.trim();
         if(msg === "") return;
@@ -599,69 +583,75 @@
         inputField.value = "";
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        setTimeout(() => {
-            let botReply = getSmartReply(msg);
-            chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 1200);
+        let typingId = "typing-" + Date.now();
+        chatBox.innerHTML += `<div id="${typingId}" class="message bot-msg" style="color:#aaa;"><i>AI is typing...</i></div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        let botReply = await getSmartReply(msg);
+        
+        document.getElementById(typingId).remove();
+        chatBox.innerHTML += `<div class="message bot-msg">${botReply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function getSmartReply(originalMsg) {
-        // Remove special chars for easier spelling match
+    async function getSmartReply(originalMsg) {
         let text = originalMsg.toLowerCase().replace(/[^a-z0-9\s]/g, "");
 
-        if(text.match(/\b(hi|hello|hey|namaste|pranam|hlw|hlo|helo)\b/)) {
-            return "Hello, main ACS assistant! Main aapki aaj kis tarah ki sahayata kar sakti hun?";
+        // 1. Redirect Logic (Yes/No)
+        if (pendingRedirectUrl !== "" && text.match(/\b(yes|ha|haan|yep|sure|ok|thik|karo)\b/)) {
+            let urlToOpen = pendingRedirectUrl; pendingRedirectUrl = ""; 
+            setTimeout(() => { window.open(urlToOpen, '_blank'); }, 1000);
+            return "Perfect! Main aapko us page par lekar ja rahi hun...";
         }
-        if(text.match(/\b(school|study|education|college|coaching|institute|schul|skul)\b/)) {
-            return "Aapko School ya Education center ki website banwani hai? Bahut badhiya! Isme online admission, photo gallery, notice board aur result system lag sakta hai. Aap hamara ye education project demo dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/Google-Group-Of-Education/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>Study Centre Website Demo</a>";
+        pendingRedirectUrl = ""; 
+
+        // 2. ACS Specific Knowledge
+        if(text.match(/\b(acs kya hai|about acs|acs detail)\b/)) {
+            return "ACS yani 'Adarsh Computer Services & Solve'. Yah Itkhori, Jharkhand mein ek expert IT aur Digital Solution center hai jiske founder Mr. Adarsh Kumar Chandravanshi hain.";
         }
-        if(text.match(/\b(dukan|shop|ecommerce|kirana|store|sell|sale|shope)\b/)) {
-            return "Agar aapko apni dukan ya e-commerce ke liye online store banwana hai jaha se log order kar sakein, toh hum advance system banate hain. Iska demo aap yahan dekh sakte hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-JCB-PARTS/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>E-commerce Demo</a>";
+        if(text.match(/\b(pm kisan|kisan samman nidhi|pmkisan)\b/)) {
+            pendingRedirectUrl = "https://pmkisan.gov.in/";
+            return "PM Kisan portal par e-KYC, status check aur new registration kiya jata hai. Iske liye Aadhar Card aur Bank details chahiye hoti hain.<br><br><b>Kya Main aapko us portal par lekar chalo? (Yes likhein)</b>";
         }
-        if(text.match(/\b(social media|instagram|facebook|youtube|link|socil|media)\b/)) {
-            return "Aap hamara Social Media portal yahan check kar sakte hain, jaha saare platforms linked hain: <br><br>👉 <a href='https://acsadarsh.github.io/ACS-SOCIAL-MEDIA/' target='_blank' style='color:var(--neon-blue); font-weight:bold;'>ACS Social Media</a>";
+        if(text.match(/\b(school|study|education|college)\b/)) {
+            pendingRedirectUrl = "https://acsadarsh.github.io/Google-Group-Of-Education/";
+            return "Hum School ya Coaching ke liye advance website banate hain jisme admission aur gallery features hote hain.<br><br><b>Kya aap demo dekhna chahenge? (Yes likhein)</b>";
         }
-        if(text.match(/\b(web|website|site|app|aplication|banwana|kaise|webaite|websit|wepsite)\b/)) {
-            return "Website banane ke liye hume sabse pehle ek Domain (website ka naam) aur Hosting (server) chahiye hota hai. Hum aapke business ke hisaab se puri website design karke denge. Aapko kis tarah ki website chahiye?";
-        }
-        if(text.match(/\b(edit|video|vidio|vdo|photo|foto|ai|voice|song|avatar|shoot|shute|sut|edting|editing)\b/)) {
-            return "Humare paas sabhi tarah ki editing aur advanced AI services available hain. Jaise AI Video Making, AI Voice Over, Avatar creation, aur Video shoot. Aap hume apni requirement batayen, hum usko professionally complete kar denge.";
-        }
-        if(text.match(/\b(mobile|mobil|internet|repair|server|sim|net|network|kharab)\b/)) {
-            return "Aapko Mobile repairing, internet issue, ya server error solve karwana hai? Hum cyber aur technical problems ka solution dete hain. Aap problem detail mein bata sakte hain ya Sir se baat kar sakte hain.";
-        }
-        if(text.match(/\b(demo|project|portfolio|kaam|work|worc|kam|projek)\b/)) {
-            return "Aap hamare sabhi live projects 'Our Portfolio/Projects' section me dekh sakte hain. Wahan humne School, POS, Chat app aur E-commerce sabhi ka demo rakha hai.";
-        }
-        
-        // If explicitly asking to talk to Sir
-        if(text.match(/\b(sir|adarsh|owner|call|human|contact|malik|whatsapp|bat|baat)\b/)) {
-            setTimeout(() => {
-                let waMessage = encodeURIComponent("Hello Adarsh Sir, main official website se bol raha hun. Mujhe aapse baat karni hai.");
-                window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
-            }, 2500);
-            return "Thik hai, main aapko Adarsh Sir se connect kar rahi hun. Kuch seconds mein aapka WhatsApp khul jayega...";
+        if(text.match(/\b(dukan|shop|ecommerce|kirana|store)\b/)) {
+            pendingRedirectUrl = "https://acsadarsh.github.io/ACS-JCB-PARTS/";
+            return "Dukan ya Store ke liye hum E-commerce platform banate hain jahan log online order kar sakte hain.<br><br><b>Kya E-commerce demo check karna hai? (Yes likhein)</b>";
         }
 
-        // AUTO REDIRECT FOR UNKNOWN QUERIES WITH PRE-FILLED MESSAGE
+        // 3. Instant Knowledge Graph via Wikipedia API (Hindi/English)
+        try {
+            let resHi = await fetch(`https://hi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(originalMsg)}`);
+            if (resHi.ok) { let dataHi = await resHi.json(); if (dataHi.extract) return dataHi.extract; }
+            
+            let resEn = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(originalMsg)}`);
+            if (resEn.ok) { let dataEn = await resEn.json(); if (dataEn.extract) return dataEn.extract; }
+        } catch (error) { console.log("Wiki API Error", error); }
+
+        // 4. Ultimate Fallback (WhatsApp Redirect)
+        if(text.match(/\b(sir|adarsh|owner|call|human|contact|whatsapp|baat|anuj)\b/)) {
+            setTimeout(() => {
+                let waMessage = encodeURIComponent("Hello Adarsh Sir, main website se aapse baat karna chahta hun.");
+                window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
+            }, 2000);
+            return "Main aapko Adarsh Sir (Anuj) se connect kar rahi hun. Kuch seconds mein aapka WhatsApp khul jayega...";
+        }
+
         setTimeout(() => {
-            let waMessage = encodeURIComponent("Hello Adarsh Sir, main official website se bol raha hun. Mujhe yah problem/query hai: " + originalMsg);
+            let waMessage = encodeURIComponent("Hello Adarsh Sir, mujhe yah janna hai: " + originalMsg);
             window.open('https://wa.me/918252900810?text=' + waMessage, '_blank');
-        }, 3500);
-        
-        return "Maaf kijiyega, mujhe is baare mein zyada jankari nahi hai. Par ghabrayiye mat, main aapki baat direct Adarsh Sir (Owner) se kara rahi hun. Kuch seconds mein WhatsApp open ho jayega jahan aap unhe apni problem bata sakte hain.";
+        }, 3000);
+        return "Lagta hai iska jawab mere AI database mein nahi hai. Par fikar mat kijiye, main aapko turant Adarsh Sir ke WhatsApp par bhej rahi hun, wo aapko sahi jankari de denge.";
     }
 
     function handleChatPress(event) { if(event.key === "Enter") sendChat(); }
 
-    /* --- OFFLINE ZONE MANAGER --- */
+    /* --- OFFLINE DETECTOR --- */
     function checkConnection() {
-        if(!navigator.onLine) {
-            document.getElementById('offlineGameContainer').style.display = 'flex';
-        } else {
-            document.getElementById('offlineGameContainer').style.display = 'none';
-        }
+        document.getElementById('offlineGameContainer').style.display = (!navigator.onLine) ? 'flex' : 'none';
     }
     window.addEventListener('offline', checkConnection);
     window.addEventListener('online', checkConnection);
